@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Checkout – Agency Pro</title>
-  <meta name="description" content="Complete your subscription to 3CH0's Agency Pro plan.">
+  <title>Checkout – 3CH0</title>
+  <meta name="description" content="Complete your subscription to 3CH0's compliance plans.">
   
-  <!-- SECURITY HEADERS - Updated to allow sandbox PayPal -->
+  <!-- SECURITY HEADERS -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.paypal.com https://www.sandbox.paypal.com https://www.paypalobjects.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.paypal.com https://www.sandbox.paypal.com https://hook.us2.make.com; frame-src https://www.paypal.com https://www.sandbox.paypal.com">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="X-Frame-Options" content="DENY">
@@ -14,23 +14,26 @@
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
   
   <link rel="icon" href="3CH0 logo.png" type="image/png">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  
-  <!-- PayPal SDK loaded dynamically - NO static script tag -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
     :root {
       --main-bg: #0a0a0a;
       --gradient: linear-gradient(135deg, #ffffff, #92cdec, #0069d9);
+      --gradient-subtle: linear-gradient(135deg, rgba(146, 205, 236, 0.15), rgba(0, 105, 217, 0.1));
       --text-color: #ffffff;
       --button-text: #0a0a0a;
       --card-bg: rgba(20, 20, 20, 0.95);
+      --card-bg-hover: rgba(25, 25, 30, 0.98);
       --border-color: rgba(255, 255, 255, 0.1);
+      --border-highlight: rgba(146, 205, 236, 0.3);
       --accent: #92cdec;
+      --accent-bright: #a8d8f0;
       --secondary-text: #a0a0a0;
       --glass-panel: rgba(15, 15, 15, 0.8);
       --success: #10b981;
       --warning: #f59e0b;
+      --glow: 0 0 40px rgba(146, 205, 236, 0.12);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -48,6 +51,7 @@
       min-height: 100vh;
     }
 
+    /* Original animated background */
     body::before {
       content: '';
       position: fixed;
@@ -102,12 +106,13 @@
     .logo-img { height: 60px; filter: brightness(120%); }
 
     .container {
-      max-width: 1100px;
-      margin: 80px auto;
+      max-width: 1200px;
+      margin: 60px auto;
       padding: 0 20px;
       text-align: center;
     }
 
+    /* Typography */
     h1 {
       font-size: 36px;
       background: var(--gradient);
@@ -116,188 +121,471 @@
       margin-bottom: 16px;
     }
 
-    p { font-size: 16px; color: var(--secondary-text); margin-bottom: 60px; }
+    .subheader {
+      font-size: 16px;
+      color: var(--secondary-text);
+      margin-bottom: 40px;
+    }
+
+    /* Currency Indicator */
+    .currency-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      padding: 8px 20px;
+      margin-bottom: 30px;
+    }
+    
+    .currency-indicator span { 
+      color: var(--accent); 
+      font-weight: 600;
+    }
+    
+    .currency-change-btn {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 4px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.3s ease;
+    }
+    
+    .currency-change-btn:hover {
+      background: var(--accent);
+      color: var(--main-bg);
+    }
+
+    /* Billing Toggle */
+    .billing-toggle {
+      display: flex;
+      justify-content: center;
+      margin: 20px auto 40px;
+      max-width: 300px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50px;
+      padding: 5px;
+      border: 1px solid var(--border-color);
+    }
+
+    .toggle-btn {
+      flex: 1;
+      padding: 12px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-radius: 50px;
+      font-weight: 500;
+      color: var(--secondary-text);
+      background: transparent;
+      border: none;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .toggle-btn.active {
+      background: rgba(146, 205, 236, 0.2);
+      color: white;
+    }
+
+    .toggle-btn .save-badge {
+      display: inline-block;
+      background: var(--success);
+      color: white;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-left: 6px;
+    }
 
     /* ZAR Notice */
     .zar-notice {
       display: none;
-      background: rgba(146, 205, 236, 0.1);
-      border: 1px solid rgba(146, 205, 236, 0.3);
-      border-radius: 12px;
-      padding: 16px 24px;
-      margin-bottom: 30px;
-      max-width: 500px;
+      background: linear-gradient(135deg, rgba(146, 205, 236, 0.08), rgba(0, 105, 217, 0.05));
+      border: 1px solid rgba(146, 205, 236, 0.15);
+      border-radius: 16px;
+      padding: 20px 28px;
+      margin-bottom: 40px;
+      max-width: 600px;
       margin-left: auto;
       margin-right: auto;
       font-size: 14px;
       color: var(--secondary-text);
     }
     .zar-notice.visible { display: block; }
-    .zar-notice strong { color: var(--accent); }
+    .zar-notice strong { color: var(--accent); font-weight: 600; }
 
-    /* Pricing Toggle */
-    .pricing-toggle {
-      display: flex;
-      justify-content: center;
-      margin: 30px auto;
-      max-width: 400px;
-      background: rgba(255,255,255,0.05);
-      border-radius: 50px;
-      padding: 6px;
-      border: 1px solid var(--border-color);
-    }
-
-    .toggle-option {
-      flex: 1;
-      padding: 12px 20px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border-radius: 50px;
-    }
-
-    .toggle-option.active {
-      background: rgba(146, 205, 236, 0.2);
-      color: white;
-      font-weight: 600;
-    }
-
-    .toggle-option .price {
-      font-size: 18px;
-      margin-top: 5px;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .toggle-option .discount {
-      background: #0069d9;
-      color: white;
-      font-size: 12px;
-      padding: 2px 8px;
-      border-radius: 10px;
-      display: inline-block;
-      margin-top: 5px;
-    }
-
-    /* Payment Cards */
-    .payment-options {
+    /* Plans Grid */
+    .plans-grid {
       display: grid;
+      gap: 24px;
+      max-width: 880px;
+      margin: 0 auto 56px;
+    }
+
+    .plans-grid.two-col {
       grid-template-columns: repeat(2, 1fr);
-      gap: 30px;
-      max-width: 700px;
-      margin: 0 auto;
     }
 
-    .payment-options.single-option {
-      grid-template-columns: 1fr;
-      max-width: 380px;
+    .plans-grid.three-col {
+      grid-template-columns: repeat(3, 1fr);
+      max-width: 1000px;
     }
 
-    .payment-card {
+    .plans-grid.four-col {
+      grid-template-columns: repeat(4, 1fr);
+      max-width: 1150px;
+      gap: 20px;
+    }
+
+    /* Plan Card */
+    .plan-card {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 16px;
-      padding: 30px;
-      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+      padding: 30px 24px;
+      text-align: left;
+      position: relative;
       transition: all 0.3s ease;
       display: flex;
       flex-direction: column;
       backdrop-filter: blur(10px);
-      position: relative;
-      overflow: hidden;
     }
 
-    .payment-card::before {
+    .plan-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(146, 205, 236, 0.4);
+    }
+
+    /* HIGHLIGHTED CARD */
+    .plan-card.highlighted {
+      border: 1px solid rgba(146, 205, 236, 0.4);
+      box-shadow: 0 0 0 3px rgba(146, 205, 236, 0.1);
+    }
+
+    .plan-card.highlighted::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 3px;
       background: var(--gradient);
-      transform: scaleX(0);
-      transition: transform 0.4s ease;
+      border-radius: 16px 16px 0 0;
     }
 
-    .payment-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(146, 205, 236, 0.5);
+    /* REFINED POPULAR INDICATOR */
+    .popular-indicator {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 20px;
+      padding: 4px 12px;
     }
 
-    .payment-card:hover::before { transform: scaleX(1); }
-
-    .payment-card.highlighted {
-      border: 1px solid #92cdec;
-      box-shadow: 0 0 0 3px rgba(146, 205, 236, 0.2);
+    .popular-indicator::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse-dot 2s ease-in-out infinite;
     }
 
-    .payment-card img { height: 27px; margin: 0 10px 20px; }
+    .popular-indicator span {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--success);
+    }
 
-    .dynamic-price {
-      font-size: 28px;
+    /* Popular badge at top of card - matches screenshot */
+    .popular-badge-top {
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(146, 205, 236, 0.15);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 6px 16px;
+      border-radius: 0 0 10px 10px;
+      border: 1px solid rgba(146, 205, 236, 0.3);
+      border-top: none;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.3); }
+    }
+
+    /* Side accent for highlighted card */
+    .plan-card.highlighted .side-accent {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 50px;
+      background: var(--gradient);
+      border-radius: 0 3px 3px 0;
+    }
+
+    .plan-name {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: white;
+    }
+
+    .plan-subtitle {
+      font-size: 13px;
+      color: var(--secondary-text);
+      margin-bottom: 20px;
+    }
+
+    .plan-price {
+      font-size: 32px;
       font-weight: 700;
-      margin: 10px 0;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 4px;
+    }
+
+    .plan-price-note {
+      font-size: 13px;
+      color: var(--secondary-text);
+      margin-bottom: 24px;
+    }
+
+    .plan-features {
+      flex: 1;
+      margin-bottom: 24px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: var(--secondary-text);
+    }
+
+    .feature-item svg {
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .feature-item.disabled {
+      opacity: 0.5;
+    }
+
+    /* Buttons */
+    .plan-btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      text-align: center;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .plan-btn.primary {
+      background: var(--gradient);
+      color: var(--button-text);
+      border: none;
+    }
+
+    .plan-btn.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(146, 205, 236, 0.4);
+    }
+
+    .plan-btn.secondary {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+
+    .plan-btn.secondary:hover {
+      background: rgba(146, 205, 236, 0.1);
+    }
+
+    /* Payment Modal */
+    .payment-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .payment-modal.active {
+      display: flex;
+    }
+
+    .payment-modal-content {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 480px;
+      width: 100%;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: var(--secondary-text);
+      font-size: 28px;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .modal-close:hover {
+      color: white;
+    }
+
+    .modal-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
       background: var(--gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    .price-note {
-      font-size: 14px;
+    .modal-subtitle {
       color: var(--secondary-text);
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
 
-    .paypal-container { 
-      margin-top: auto;
-      padding-top: 60px;
-      width: 100%;
-      max-width: 280px;
-      margin-left: auto;
-      margin-right: auto;
-      display: none;
-      text-align: center;
-      overflow: hidden;
-      max-height: 230px;
+    .payment-options-grid {
+      display: grid;
+      gap: 16px;
     }
-    
-    .paypal-container.ready {
+
+    .payment-option {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .payment-option:hover {
+      border-color: var(--accent);
+      background: rgba(146, 205, 236, 0.05);
+    }
+
+    .payment-option-header {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .payment-option-header img {
+      height: 28px;
+    }
+
+    .payment-option-header span {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .paypal-container {
+      display: none;
+      margin-top: 15px;
+    }
+
+    .paypal-container.ready {
+      display: block;
     }
 
     .paypal-loading {
       display: none;
       text-align: center;
       color: var(--secondary-text);
+      padding: 20px;
       font-size: 14px;
-      padding: 20px 0;
-      margin-top: auto;
     }
-    .paypal-loading.active { display: block; }
 
-    .btn {
-      display: inline-block;
-      background: var(--gradient);
-      color: var(--button-text);
-      padding: 14px 28px;
-      border-radius: 50px;
+    .paypal-loading.active {
+      display: block;
+    }
+
+    /* Discounts Section - HIDDEN BY DEFAULT */
+    .discounts-section {
+      display: none;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 30px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+    }
+
+    .discounts-section.visible {
+      display: block;
+    }
+
+    .discount-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .discount-item:last-child {
+      border-bottom: none;
+    }
+
+    .discount-info h4 {
+      color: white;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .discount-info p {
+      color: var(--secondary-text);
+      font-size: 13px;
+    }
+
+    .discount-badge {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--success);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
       font-weight: 600;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      font-size: 17px;
-      width: 100%;
-      text-align: center;
-      margin-top: auto;
     }
 
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(146, 205, 236, 0.4);
-    }
-
+    /* Trust Badges */
     .trust-badges {
       display: flex;
       justify-content: center;
@@ -318,6 +606,7 @@
       padding: 8px 16px;
     }
 
+    /* Guarantee Banner */
     .guarantee-banner {
       background: rgba(146, 205, 236, 0.1);
       border: 1px solid rgba(146, 205, 236, 0.3);
@@ -325,6 +614,17 @@
       padding: 20px;
       margin: 40px auto;
       max-width: 600px;
+    }
+
+    .guarantee-banner h3 {
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .guarantee-banner p {
+      color: var(--secondary-text);
+      font-size: 14px;
+      margin-bottom: 0;
     }
 
     .error-message {
@@ -345,7 +645,12 @@
       color: #777;
       border-top: 1px solid var(--border-color);
     }
-    footer a { color: #ccc; text-decoration: underline; margin: 0 8px; }
+    
+    footer a { 
+      color: #ccc; 
+      text-decoration: underline;
+      margin: 0 8px;
+    }
 
     .security-badge {
       position: fixed;
@@ -360,9 +665,19 @@
       z-index: 1000;
     }
 
-    @media (max-width: 768px) {
-      .pricing-toggle { flex-direction: column; border-radius: 12px; }
-      .payment-options { grid-template-columns: 1fr; max-width: 400px; }
+    @media (max-width: 900px) {
+      .plans-grid.three-col,
+      .plans-grid.four-col {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .plans-grid.two-col,
+      .plans-grid.three-col,
+      .plans-grid.four-col {
+        grid-template-columns: 1fr;
+      }
       body { padding-top: 70px; }
     }
   </style>
@@ -373,78 +688,323 @@
       <div><img src="3CH0_logo_transparent_fixed.png" alt="3CH0 Logo" class="logo-img"></div>
       <div>
         <a href="home.html">Home</a>
+        <a href="compliance_dashboard.html">Dashboard</a>
         <a href="subscription.html">Subscription</a>
         <a href="settings.html">Settings</a>
       </div>
     </nav>
 
     <div class="container">
-      <h1>Complete Your Purchase</h1>
-      <p>Choose your preferred billing cycle for the Agency Pro Plan</p>
+      <h1>Choose Your Plan</h1>
+      <p class="subheader">Get compliant in minutes, not weeks. All plans include our AI-powered document generation.</p>
 
+      <!-- Currency Indicator -->
+      <div class="currency-indicator">
+        <span id="current-currency">USD ($)</span>
+        <button class="currency-change-btn" onclick="window.location.href='settings.html'">Change</button>
+      </div>
+
+      <!-- ZAR Notice -->
       <div class="zar-notice" id="zar-notice">
-        <strong>🇿🇦 South African Customers:</strong> Bank invoice is currently the only payment option. More local methods coming soon!
+        <strong>🇿🇦 South African Customers:</strong> Bank invoice is currently the only payment option for paid plans. PayPal coming soon!
       </div>
 
-      <div class="pricing-toggle">
-        <div class="toggle-option active" id="annual-option" onclick="AgencyCheckoutManager.switchPlan('annual')">
-          <div>Annual</div>
-          <div class="price" id="annual-price">$948</div>
-          <div class="discount">20% OFF</div>
-        </div>
-        <div class="toggle-option" id="monthly-option" onclick="AgencyCheckoutManager.switchPlan('monthly')">
-          <div>Monthly</div>
-          <div class="price" id="monthly-price">$99</div>
-          <div class="discount">Flexible</div>
-        </div>
+      <!-- Billing Toggle -->
+      <div class="billing-toggle" id="billing-toggle">
+        <button class="toggle-btn active" id="monthly-toggle" onclick="CheckoutManager.switchBilling('monthly')">
+          Monthly
+        </button>
+        <button class="toggle-btn" id="annual-toggle" onclick="CheckoutManager.switchBilling('annual')">
+          Annual <span class="save-badge">Save 17%</span>
+        </button>
       </div>
-      
-      <br><br>
 
-      <div class="payment-options" id="payment-options">
-        <div class="payment-card highlighted" id="paypal-card">
-          <div style="text-align: center; margin-bottom: 24px;">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" style="height: 34px;">
-            <div class="dynamic-price" id="paypal-price">$948</div>
-            <div class="price-note" id="paypal-note">$79/month billed annually</div>
+      <!-- Plans Grid - International (USD/EUR/GBP) -->
+      <div class="plans-grid two-col" id="plans-international">
+        <!-- Free Plan -->
+        <div class="plan-card" id="plan-free">
+          <div class="plan-name">Free</div>
+          <div class="plan-subtitle">Try before you buy</div>
+          <div class="plan-price" id="free-price">$0</div>
+          <div class="plan-price-note">forever</div>
+          <div class="plan-features">
+            <div class="feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17L4 12" stroke="#92cdec" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>1 full compliance document per month</span>
+            </div>
+            <div class="feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17L4 12" stroke="#92cdec" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>No watermarks</span>
+            </div>
+            <div class="feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17L4 12" stroke="#92cdec" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>Basic Discord support</span>
+            </div>
+            <div class="feature-item disabled">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 18L18 6M6 6l12 12" stroke="#666" stroke-width="2"/></svg>
+              <span>No real-time updates</span>
+            </div>
           </div>
-          <div class="paypal-loading" id="paypal-loading">Loading secure payment...</div>
-          <div id="paypal-button-container" class="paypal-container"></div>
-          <div class="error-message" id="paypal-error" style="display: none;"></div>
+          <a href="checkout-free.html" class="plan-btn secondary">Start Free</a>
         </div>
 
-        <div class="payment-card highlighted" id="bank-card">
-          <div style="font-size: 48px; margin-bottom: 24px; text-align: center;">🏦</div>
-          <div class="dynamic-price" id="bank-price" style="text-align: center;">$948</div>
-          <div class="price-note" id="bank-note" style="text-align: center;">$79/month billed annually</div>
-          <button class="btn" id="bank-invoice-btn">Request Bank Invoice</button>
-          <p style="font-size: 14px; color: var(--secondary-text); margin-top: 16px; text-align: center;">Traditional bank transfer</p>
+        <!-- Agency Pro Plan -->
+        <div class="plan-card highlighted" id="plan-agency-pro">
+          <div class="side-accent"></div>
+          <div class="popular-indicator">
+            <span>Popular</span>
+          </div>
+          <div class="plan-name">Agency Pro</div>
+          <div class="plan-subtitle">SMEs, agencies, growing teams</div>
+          <div class="plan-price" id="agency-price">$99</div>
+          <div class="plan-price-note" id="agency-price-note">per month</div>
+          <div class="plan-features">
+            <div class="feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17L4 12" stroke="#92cdec" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>All 9 POPIA documents</span>
+            </div>
+            <div class="feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17L4 12" stroke="#92cdec" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>Prior Auth Register</span>
+            </div>
+            <div class="feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17L4 12" stroke="#92cdec" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>DPA & Processing Agreements</span>
+            </div>
+            <div class="feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17L4 12" stroke="#92cdec" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>Audit-ready documentation</span>
+            </div>
+            <div class="feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17L4 12" stroke="#92cdec" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>3 user seats</span>
+            </div>
+            <div class="feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17L4 12" stroke="#92cdec" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>Priority support</span>
+            </div>
+            <div class="feature-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17L4 12" stroke="#92cdec" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>Quarterly doc refresh</span>
+            </div>
+          </div>
+          <button class="plan-btn primary" onclick="CheckoutManager.openPaymentModal('agency-pro')">Get Started</button>
         </div>
       </div>
 
-      <br><br>
+      <!-- Plans Grid - ZAR (POPIA - 3 tiers: Starter, Agency Pro, Enterprise) -->
+      <div class="plans-grid three-col" id="plans-zar" style="display: none;">
+        <!-- Starter Plan ZAR -->
+        <div class="plan-card" id="plan-starter-zar">
+          <div class="plan-name">Starter</div>
+          <div class="plan-subtitle">Sole traders & micro SMEs</div>
+          <div class="plan-price" id="starter-price-zar">R799</div>
+          <div class="plan-price-note" id="starter-note-zar">/mo</div>
+          <div class="plan-features">
+            <div class="feature-item">
+              <span style="color: var(--secondary-text);">–</span>
+              <span>Privacy policy generator</span>
+            </div>
+            <div class="feature-item">
+              <span style="color: var(--secondary-text);">–</span>
+              <span>Employee training script</span>
+            </div>
+            <div class="feature-item">
+              <span style="color: var(--secondary-text);">–</span>
+              <span>Data retention schedule</span>
+            </div>
+            <div class="feature-item">
+              <span style="color: var(--secondary-text);">–</span>
+              <span>Basic incident response doc</span>
+            </div>
+            <div class="feature-item">
+              <span style="color: var(--secondary-text);">–</span>
+              <span>1 user seat</span>
+            </div>
+            <div class="feature-item">
+              <span style="color: var(--secondary-text);">–</span>
+              <span>Email support only</span>
+            </div>
+          </div>
+          <button class="plan-btn secondary" onclick="CheckoutManager.openPaymentModal('starter')">Choose Starter</button>
+        </div>
 
+        <!-- Agency Pro Plan ZAR -->
+        <div class="plan-card highlighted" id="plan-agency-zar">
+          <div class="popular-badge-top">Most popular</div>
+          <div class="plan-name">Agency Pro</div>
+          <div class="plan-subtitle">SMEs, agencies, growing teams</div>
+          <div class="plan-price" id="agency-price-zar">R1 899</div>
+          <div class="plan-price-note" id="agency-note-zar">/mo</div>
+          <div class="plan-features">
+            <div class="feature-item">
+              <span style="color: var(--secondary-text);">–</span>
+              <span>All 9 POPIA documents</span>
+            </div>
+            <div class="feature-item">
+              <span style="color: var(--secondary-text);">–</span>
+              <span>Prior Auth Register</span>
+            </div>
+            <div class="feature-item">
+              <span style="color: var(--secondary-text);">–</span>
+              <span>DPA & Processing Agreements</span>
+            </div>
+            <div class="feature-item">
+              <span style="color: var(--secondary-text);">–</span>
+              <span>Audit-ready documentation</span>
+            </div>
+            <div class="feature-item">
+              <span style="color: var(--secondary-text);">–</span>
+              <span>3 user seats</span>
+            </div>
+            <div class="feature-item">
+              <span style="color: var(--secondary-text);">–</span>
+              <span>Priority support</span>
+            </div>
+            <div class="feature-item">
+              <span style="color: var(--secondary-text);">–</span>
+              <span>Quarterly doc refresh</span>
+            </div>
+          </div>
+          <button class="plan-btn primary" onclick="CheckoutManager.openPaymentModal('agency-pro')">Get Agency Pro</button>
+        </div>
+
+        <!-- Enterprise Plan ZAR -->
+        <div class="plan-card" id="plan-enterprise-zar">
+          <div class="plan-name">Enterprise</div>
+          <div class="plan-subtitle">Large firms, legal teams, resellers</div>
+          <div class="plan-price" id="enterprise-price-zar">R4 990</div>
+          <div class="plan-price-note" id="enterprise-note-zar">/mo</div>
+          <div class="plan-features">
+            <div class="feature-item">
+              <span style="color: var(--secondary-text);">–</span>
+              <span>Everything in Agency Pro</span>
+            </div>
+            <div class="feature-item">
+              <span style="color: var(--secondary-text);">–</span>
+              <span>White-label client reports</span>
+            </div>
+            <div class="feature-item">
+              <span style="color: var(--secondary-text);">–</span>
+              <span>Unlimited user seats</span>
+            </div>
+            <div class="feature-item">
+              <span style="color: var(--secondary-text);">–</span>
+              <span>Custom branding</span>
+            </div>
+            <div class="feature-item">
+              <span style="color: var(--secondary-text);">–</span>
+              <span>EU AI Act + ISO 42001 docs</span>
+            </div>
+            <div class="feature-item">
+              <span style="color: var(--secondary-text);">–</span>
+              <span>Dedicated account manager</span>
+            </div>
+            <div class="feature-item">
+              <span style="color: var(--secondary-text);">–</span>
+              <span>Monthly doc refresh + alerts</span>
+            </div>
+            <div class="feature-item">
+              <span style="color: var(--secondary-text);">–</span>
+              <span>API access</span>
+            </div>
+          </div>
+          <button class="plan-btn secondary" onclick="CheckoutManager.openPaymentModal('enterprise')">Contact Sales</button>
+        </div>
+      </div>
+
+      <!-- DISCOUNTS SECTION - HIDDEN -->
+      <div class="discounts-section" id="discounts-section">
+        <h3 style="color: var(--accent); margin-bottom: 24px; font-size: 18px; font-weight: 600;">Available Discounts</h3>
+        <div class="discount-item">
+          <div class="discount-info">
+            <h4>🚀 Launch Special — First 50 Clients</h4>
+            <p>30% off first 3 months on any plan</p>
+          </div>
+          <div class="discount-badge">-30%</div>
+        </div>
+        <div class="discount-item">
+          <div class="discount-info">
+            <h4>📅 Annual Upfront</h4>
+            <p>17% off when paying 12 months upfront</p>
+          </div>
+          <div class="discount-badge">-17%</div>
+        </div>
+        <div class="discount-item">
+          <div class="discount-info">
+            <h4>🤝 Referral Reward</h4>
+            <p>Refer a paying client and get 1 free month</p>
+          </div>
+          <div class="discount-badge">+1 Month</div>
+        </div>
+        <div class="discount-item">
+          <div class="discount-info">
+            <h4>🏢 Startup Discount</h4>
+            <p>20% off first year for CIPC registered &lt;1 year</p>
+          </div>
+          <div class="discount-badge">-20%</div>
+        </div>
+        <div class="discount-item" id="eu-ai-discount" style="display: none;">
+          <div class="discount-info">
+            <h4>🔔 EU AI Act Bundle</h4>
+            <p>POPIA + EU AI Act compliance pack</p>
+          </div>
+          <div class="discount-badge">Save R700</div>
+        </div>
+      </div>
+
+      <!-- Trust Badges -->
       <div class="trust-badges">
         <div class="trust-badge"><span>🔒</span> <span>256-bit Encryption</span></div>
         <div class="trust-badge"><span>🔄</span> <span>Cancel Anytime</span></div>
         <div class="trust-badge"><span>👍</span> <span>500+ Agencies Trust Us</span></div>
       </div>
 
+      <!-- Guarantee Banner -->
       <div class="guarantee-banner">
-        <h3 style="margin-top: 0; color: #92cdec;">7-Day Money Back Guarantee</h3>
-        <p style="margin-bottom: 0;">If you're not satisfied within your first week, we'll refund 100% of your payment. No questions asked.</p>
+        <h3>14-Day Money Back Guarantee</h3>
+        <p>Not satisfied? Get a full refund within 14 days. No questions asked.</p>
       </div>
 
       <div style="margin-top: 40px;">
-        <p>Need help deciding? <a href="https://discord.gg/W5SrbqK7j3" style="color: #92cdec; text-decoration: underline;">Chat with our team</a> in real-time.</p>
+        <p style="color: var(--secondary-text);">Need help deciding? <a href="https://discord.gg/W5SrbqK7j3" style="color: var(--accent); text-decoration: underline;">Chat with our team</a> in real-time.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Modal -->
+  <div class="payment-modal" id="payment-modal">
+    <div class="payment-modal-content">
+      <button class="modal-close" onclick="CheckoutManager.closePaymentModal()">×</button>
+      <h2 class="modal-title" id="modal-plan-name">Agency Pro</h2>
+      <p class="modal-subtitle" id="modal-plan-details">$99/month billed monthly</p>
+
+      <div class="payment-options-grid">
+        <div class="payment-option" id="paypal-option">
+          <div class="payment-option-header">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal">
+            <span>Pay with PayPal</span>
+          </div>
+          <div class="paypal-loading" id="paypal-loading">Loading secure payment...</div>
+          <div id="paypal-button-container" class="paypal-container"></div>
+          <div class="error-message" id="paypal-error" style="display: none;"></div>
+        </div>
+
+        <div class="payment-option" onclick="CheckoutManager.requestBankInvoice()">
+          <div class="payment-option-header">
+            <span style="font-size: 26px;">🏦</span>
+            <span>Bank Invoice / EFT</span>
+          </div>
+          <p style="font-size: 13px; color: var(--secondary-text); margin: 0;">Traditional bank transfer</p>
+        </div>
       </div>
     </div>
   </div>
 
   <footer>
-    &copy; 3CH0 Compliance. All rights reserved.<br>
+    &copy; 2025 3CH0 Compliance. All rights reserved.<br>
     <a href="settings.html">Privacy & Terms</a> |
-    <a href="mailto:support@3ch0.com">Support</a> |
+    <a href="/cdn-cgi/l/email-protection#d1a2a4a1a1bea3a591e2b2b9e1ffb2bebc">Support</a> |
     <a href="https://discord.gg/W5SrbqK7j3" target="_blank">Join the Community</a>
   </footer>
 
@@ -452,92 +1012,264 @@
 
   <script>
     // ================================================
-    // 🧪 TESTING MODE CONFIGURATION
+    // 🧪 CONFIGURATION
     // ================================================
-    // Set to true for PayPal Sandbox testing, false for production
-    const TESTING_MODE = false;  // ← CHANGE TO true FOR TESTING, false BEFORE GOING LIVE!
+    const TESTING_MODE = false;
+    const SHOW_DISCOUNTS = false;
     // ================================================
 
-    const AgencyCheckoutManager = {
-        // PayPal Client IDs
+    // Debug: Log localStorage values immediately
+    console.log('=== CHECKOUT PAGE LOADED ===');
+    console.log('localStorage.userCountry:', localStorage.getItem('userCountry'));
+    console.log('localStorage.userCurrency:', localStorage.getItem('userCurrency'));
+
+    const CheckoutManager = {
         LIVE_CLIENT_ID: 'AVTshKcvivgfNuXQ5m8wQDY2mpa1yOyslAIETs2qOK5jSnQKOQP0ZQE9mh8eBI_klGTKdri4tgLVNWnB',
         SANDBOX_CLIENT_ID: 'Aa_1aC2oZR6PotjBand6hWpscKPilESP7eSAF6X3aWxDz2JV-TqX2wGNr5CIChfWlnP8egEJcMEYbz6l',
         
-        FIXED_PRICES: {
-            USD: { annual: 948.00, monthly: 99.00, symbol: '$', note: { annual: '/month billed annually', monthly: 'billed monthly' }},
-            EUR: { annual: 828.00, monthly: 89.00, symbol: '€', note: { annual: '/month billed annually', monthly: 'billed monthly' }},
-            GBP: { annual: 708.00, monthly: 79.00, symbol: '£', note: { annual: '/month billed annually', monthly: 'billed monthly' }},
-            ZAR: { annual: 13200.00, monthly: 1899.00, symbol: 'R', note: { annual: '/month billed annually', monthly: 'billed monthly' }}
+        PRICES: {
+            USD: {
+                free: 0,
+                'agency-pro': { monthly: 99.00, annual: 988.00 },
+                symbol: '$',
+                displayName: 'USD ($)'
+            },
+            EUR: {
+                free: 0,
+                'agency-pro': { monthly: 89.00, annual: 888.00 },
+                symbol: '€',
+                displayName: 'EUR (€)'
+            },
+            GBP: {
+                free: 0,
+                'agency-pro': { monthly: 79.00, annual: 788.00 },
+                symbol: '£',
+                displayName: 'GBP (£)'
+            },
+            ZAR: {
+                free: 0,
+                starter: { monthly: 799.00, annual: 7990.00 },
+                'agency-pro': { monthly: 1899.00, annual: 18990.00 },
+                enterprise: { monthly: 4990.00, annual: 49900.00 },
+                symbol: 'R',
+                displayName: 'ZAR (R)'
+            }
         },
 
-        currentPlan: 'annual',
         currentCurrency: 'USD',
+        currentBilling: 'monthly',
+        selectedPlan: null,
         makeWebhookUrl: 'https://hook.us2.make.com/1uatntmkvmo8rsn9nj0mq7l7q5ozkcl6',
         paypalButtons: null,
-        isTestMode: false,
+        isTestMode: TESTING_MODE,
         sdkLoaded: false,
 
         init() {
             this.loadUserPreferences();
-            this.setupEventListeners();
+            this.setupUI();
             this.updatePrices();
-            
-            // Use the TESTING_MODE constant
-            this.isTestMode = TESTING_MODE;
             this.showTestingModeIndicator();
+            this.showDiscountsSection();
             
-            this.handleCurrencyVisibility();
+            // Debug: Show what currency was detected
+            console.log('Checkout loaded with currency:', this.currentCurrency);
+            console.log('localStorage userCountry:', localStorage.getItem('userCountry'));
+            console.log('localStorage userCurrency:', localStorage.getItem('userCurrency'));
         },
 
-        // Show testing mode indicator (like home.html)
+        loadUserPreferences() {
+            try {
+                // Check URL parameters first (for testing: ?currency=ZAR)
+                const urlParams = new URLSearchParams(window.location.search);
+                const urlCurrency = urlParams.get('currency');
+                
+                if (urlCurrency && ['USD', 'EUR', 'GBP', 'ZAR'].includes(urlCurrency.toUpperCase())) {
+                    this.currentCurrency = urlCurrency.toUpperCase();
+                    return;
+                }
+                
+                const savedCountry = localStorage.getItem('userCountry') || 'US';
+                const savedCurrency = localStorage.getItem('userCurrency') || 'USD';
+                const euroCountries = ['DE','FR','IT','ES','NL','BE','IE','PT','AT'];
+                
+                if (savedCountry === 'ZA' || savedCurrency === 'ZAR') {
+                    this.currentCurrency = 'ZAR';
+                } else if (euroCountries.includes(savedCountry) || savedCurrency === 'EUR') {
+                    this.currentCurrency = 'EUR';
+                } else if (savedCountry === 'GB' || savedCurrency === 'GBP') {
+                    this.currentCurrency = 'GBP';
+                } else {
+                    this.currentCurrency = 'USD';
+                }
+            } catch (error) {
+                this.currentCurrency = 'USD';
+            }
+        },
+
+        setupUI() {
+            const isZAR = this.currentCurrency === 'ZAR';
+            
+            document.getElementById('plans-international').style.display = isZAR ? 'none' : 'grid';
+            document.getElementById('plans-zar').style.display = isZAR ? 'grid' : 'none';
+            document.getElementById('zar-notice').classList.toggle('visible', isZAR);
+            
+            if (isZAR) {
+                document.getElementById('paypal-option').style.display = 'none';
+            }
+
+            if (isZAR && SHOW_DISCOUNTS) {
+                const euDiscount = document.getElementById('eu-ai-discount');
+                if (euDiscount) euDiscount.style.display = 'flex';
+            }
+
+            document.getElementById('current-currency').textContent = this.PRICES[this.currentCurrency].displayName;
+        },
+
         showTestingModeIndicator() {
             if (TESTING_MODE) {
                 const indicator = document.createElement('div');
-                indicator.id = 'testing-mode-indicator';
                 indicator.innerHTML = `
                     <div style="
                         position: fixed;
                         top: 90px;
                         right: 20px;
-                        background: rgba(245, 158, 11, 0.9);
+                        background: linear-gradient(135deg, #fbbf24, #f59e0b);
                         color: #000;
-                        padding: 10px 16px;
-                        border-radius: 8px;
-                        font-size: 12px;
+                        padding: 10px 18px;
+                        border-radius: 100px;
+                        font-size: 11px;
                         font-weight: 600;
                         z-index: 9999;
-                        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-                        display: flex;
-                        align-items: center;
-                        gap: 8px;
+                        letter-spacing: 0.05em;
+                        text-transform: uppercase;
                     ">
-                        <span style="font-size: 16px;">🧪</span>
-                        <div>
-                            <div>TESTING MODE</div>
-                            <div style="font-weight: 400; font-size: 10px; opacity: 0.8;">PayPal Sandbox Active</div>
-                        </div>
+                        🧪 Testing Mode
                     </div>
                 `;
                 document.body.appendChild(indicator);
-                console.log('🧪 TESTING MODE ACTIVE - Using PayPal Sandbox');
             }
         },
 
-        handleCurrencyVisibility() {
-            const paypalCard = document.getElementById('paypal-card');
-            const paymentOptions = document.getElementById('payment-options');
-            const zarNotice = document.getElementById('zar-notice');
-            
-            if (this.currentCurrency === 'ZAR') {
-                paypalCard.style.display = 'none';
-                paymentOptions.classList.add('single-option');
-                zarNotice.classList.add('visible');
-            } else {
-                paypalCard.style.display = '';
-                paymentOptions.classList.remove('single-option');
-                zarNotice.classList.remove('visible');
-                this.loadPayPalSDK();
+        showDiscountsSection() {
+            if (SHOW_DISCOUNTS) {
+                document.getElementById('discounts-section').classList.add('visible');
             }
+        },
+
+        switchBilling(billing) {
+            this.currentBilling = billing;
+            document.getElementById('monthly-toggle').classList.toggle('active', billing === 'monthly');
+            document.getElementById('annual-toggle').classList.toggle('active', billing === 'annual');
+            this.updatePrices();
+        },
+
+        updatePrices() {
+            const prices = this.PRICES[this.currentCurrency];
+            const isAnnual = this.currentBilling === 'annual';
+
+            if (this.currentCurrency === 'ZAR') {
+                this.updateZARPrices(prices, isAnnual);
+            } else {
+                this.updateInternationalPrices(prices, isAnnual);
+            }
+        },
+
+        updateInternationalPrices(prices, isAnnual) {
+            const agencyPrices = prices['agency-pro'];
+            const amount = isAnnual ? agencyPrices.annual : agencyPrices.monthly;
+            const monthlyEquiv = isAnnual ? (agencyPrices.annual / 12).toFixed(0) : agencyPrices.monthly;
+            const note = isAnnual 
+                ? `${prices.symbol}${monthlyEquiv}/mo · save ${prices.symbol}${((agencyPrices.monthly * 12) - agencyPrices.annual).toFixed(0)}`
+                : 'per month';
+
+            document.getElementById('agency-price').textContent = `${prices.symbol}${this.formatNumber(amount)}`;
+            document.getElementById('agency-price-note').textContent = note;
+        },
+
+        updateZARPrices(prices, isAnnual) {
+            // Starter
+            const starterMonthly = prices.starter.monthly;
+            const starterAnnual = prices.starter.annual;
+            const starterSavings = (starterMonthly * 12) - starterAnnual;
+            
+            if (isAnnual) {
+                document.getElementById('starter-price-zar').textContent = `R${this.formatNumber(starterMonthly)}`;
+                document.getElementById('starter-note-zar').textContent = `R${this.formatNumber(starterAnnual)}/yr — save R${this.formatNumber(starterSavings)} (17%)`;
+            } else {
+                document.getElementById('starter-price-zar').textContent = `R${this.formatNumber(starterMonthly)}`;
+                document.getElementById('starter-note-zar').textContent = '/mo';
+            }
+
+            // Agency Pro
+            const agencyMonthly = prices['agency-pro'].monthly;
+            const agencyAnnual = prices['agency-pro'].annual;
+            const agencySavings = (agencyMonthly * 12) - agencyAnnual;
+            
+            if (isAnnual) {
+                document.getElementById('agency-price-zar').textContent = `R${this.formatNumber(agencyMonthly)}`;
+                document.getElementById('agency-note-zar').textContent = `R${this.formatNumber(agencyAnnual)}/yr — save R${this.formatNumber(agencySavings)} (17%)`;
+            } else {
+                document.getElementById('agency-price-zar').textContent = `R${this.formatNumber(agencyMonthly)}`;
+                document.getElementById('agency-note-zar').textContent = '/mo';
+            }
+
+            // Enterprise
+            const enterpriseMonthly = prices.enterprise.monthly;
+            const enterpriseAnnual = prices.enterprise.annual;
+            const enterpriseSavings = (enterpriseMonthly * 12) - enterpriseAnnual;
+            
+            if (isAnnual) {
+                document.getElementById('enterprise-price-zar').textContent = `R${this.formatNumber(enterpriseMonthly)}`;
+                document.getElementById('enterprise-note-zar').textContent = `R${this.formatNumber(enterpriseAnnual)}/yr — save R${this.formatNumber(enterpriseSavings)} (17%)`;
+            } else {
+                document.getElementById('enterprise-price-zar').textContent = `R${this.formatNumber(enterpriseMonthly)}`;
+                document.getElementById('enterprise-note-zar').textContent = '/mo';
+            }
+        },
+
+        formatNumber(num) {
+            if (this.currentCurrency === 'ZAR') {
+                return num.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+            }
+            return num.toFixed(2);
+        },
+
+        openPaymentModal(plan) {
+            this.selectedPlan = plan;
+            const prices = this.PRICES[this.currentCurrency];
+            const planPrices = prices[plan];
+            
+            if (!planPrices) {
+                alert('This plan is not available. Please contact sales.');
+                return;
+            }
+
+            const amount = this.currentBilling === 'annual' ? planPrices.annual : planPrices.monthly;
+            const billingText = this.currentBilling === 'annual' ? 'billed annually' : 'billed monthly';
+            
+            const planNames = {
+                'starter': 'Starter',
+                'agency-pro': 'Agency Pro',
+                'enterprise': 'Enterprise'
+            };
+
+            document.getElementById('modal-plan-name').textContent = planNames[plan] || plan;
+            document.getElementById('modal-plan-details').textContent = 
+                `${prices.symbol}${this.formatNumber(amount)} ${billingText}`;
+
+            document.getElementById('payment-modal').classList.add('active');
+            
+            if (this.currentCurrency !== 'ZAR') {
+                document.getElementById('paypal-option').style.display = 'block';
+                this.loadPayPalSDK();
+            } else {
+                document.getElementById('paypal-option').style.display = 'none';
+            }
+        },
+
+        closePaymentModal() {
+            document.getElementById('payment-modal').classList.remove('active');
+            this.selectedPlan = null;
         },
 
         loadPayPalSDK() {
@@ -556,7 +1288,6 @@
             this.showPayPalLoading(true);
 
             const clientId = this.isTestMode ? this.SANDBOX_CLIENT_ID : this.LIVE_CLIENT_ID;
-            // Only disable paylater and other regional methods - keep PayPal and Card
             const sdkUrl = `https://www.paypal.com/sdk/js?client-id=${clientId}&vault=true&intent=subscription&components=buttons&disable-funding=paylater,venmo,sepa,bancontact,eps,giropay,ideal,mybank,p24,sofort`;
             
             const script = document.createElement('script');
@@ -573,67 +1304,6 @@
             };
             
             document.head.appendChild(script);
-        },
-
-        loadUserPreferences() {
-            try {
-                const savedCountry = localStorage.getItem('userCountry') || 'US';
-                const savedCurrency = localStorage.getItem('userCurrency') || 'USD';
-                
-                const euroCountries = ['DE','FR','IT','ES','NL','BE','IE','PT','AT'];
-                if (euroCountries.includes(savedCountry)) {
-                    this.currentCurrency = 'EUR';
-                } else if (savedCountry === 'GB') {
-                    this.currentCurrency = 'GBP';
-                } else if (savedCountry === 'ZA') {
-                    this.currentCurrency = 'ZAR';
-                } else {
-                    this.currentCurrency = savedCurrency;
-                }
-            } catch (error) {
-                this.currentCurrency = 'USD';
-            }
-        },
-
-        setupEventListeners() {
-            document.getElementById('bank-invoice-btn').addEventListener('click', () => {
-                const params = new URLSearchParams({ plan: this.currentPlan });
-                window.location.href = `bank-invoice.html?${params.toString()}`;
-            });
-        },
-
-        switchPlan(plan) {
-            this.currentPlan = plan;
-            document.getElementById('annual-option').classList.toggle('active', plan === 'annual');
-            document.getElementById('monthly-option').classList.toggle('active', plan === 'monthly');
-            this.updatePrices();
-            if (this.sdkLoaded && this.currentCurrency !== 'ZAR') {
-                this.renderPayPalButtons();
-            }
-            localStorage.setItem('selectedPlan', plan);
-        },
-
-        updatePrices() {
-            const prices = this.FIXED_PRICES[this.currentCurrency];
-            if (!prices) return;
-
-            document.getElementById('annual-price').textContent = this.formatPrice(prices.annual, this.currentCurrency);
-            document.getElementById('monthly-price').textContent = this.formatPrice(prices.monthly, this.currentCurrency);
-            
-            const isAnnual = this.currentPlan === 'annual';
-            const amount = isAnnual ? prices.annual : prices.monthly;
-            const note = isAnnual ? `${this.formatPrice(prices.annual/12, this.currentCurrency)}${prices.note.annual}` : prices.note.monthly;
-
-            document.getElementById('paypal-price').textContent = this.formatPrice(amount, this.currentCurrency);
-            document.getElementById('paypal-note').textContent = note;
-            document.getElementById('bank-price').textContent = this.formatPrice(amount, this.currentCurrency);
-            document.getElementById('bank-note').textContent = note;
-        },
-
-        formatPrice(amount, currency) {
-            const val = Math.abs(parseFloat(amount) || 0);
-            const sym = this.FIXED_PRICES[currency].symbol;
-            return currency === 'ZAR' ? `${sym}${val.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, " ")}` : `${sym}${val.toFixed(2)}`;
         },
 
         initializePayPal() {
@@ -686,11 +1356,16 @@
         },
 
         async handleSubscriptionCreation(data, actions) {
+            const prices = this.PRICES[this.currentCurrency];
+            const planPrices = prices[this.selectedPlan];
+            const amount = this.currentBilling === 'annual' ? planPrices.annual : planPrices.monthly;
+
             const subscriptionData = {
                 action: 'create_subscription',
-                plan_type: this.currentPlan,
+                plan_type: this.currentBilling,
+                plan_name: this.selectedPlan,
                 currency: this.currentCurrency,
-                amount: this.currentPlan === 'annual' ? this.FIXED_PRICES[this.currentCurrency].annual : this.FIXED_PRICES[this.currentCurrency].monthly,
+                amount: amount,
                 user_country: localStorage.getItem('userCountry') || 'unknown',
                 is_test_mode: this.isTestMode,
                 timestamp: new Date().toISOString()
@@ -728,16 +1403,20 @@
                 payerID = subscriptionDetails.subscriber.payer_id || payerID;
             }
 
+            const prices = this.PRICES[this.currentCurrency];
+            const planPrices = prices[this.selectedPlan];
+            const amount = this.currentBilling === 'annual' ? planPrices.annual : planPrices.monthly;
+
             const approvalData = {
                 action: 'subscription_approved',
                 subscription_id: data.subscriptionID,
                 payer_id: payerID,
                 customer_email: customerEmail,
                 customer_name: customerName,
-                plan_type: this.currentPlan,
-                plan_name: 'Agency Pro',
+                plan_type: this.currentBilling,
+                plan_name: this.selectedPlan,
                 currency: this.currentCurrency,
-                amount: this.currentPlan === 'annual' ? this.FIXED_PRICES[this.currentCurrency].annual : this.FIXED_PRICES[this.currentCurrency].monthly,
+                amount: amount,
                 user_country: localStorage.getItem('userCountry') || 'unknown',
                 status: 'active',
                 is_test_mode: this.isTestMode,
@@ -752,10 +1431,18 @@
                 });
             } catch (e) {}
 
-            localStorage.setItem('userPlan', 'agency-pro');
+            localStorage.setItem('userPlan', this.selectedPlan);
             const now = new Date();
             localStorage.setItem(`submissions-${now.getMonth()}-${now.getFullYear()}`, '∞');
             window.location.href = "/thank-you-paid.html";
+        },
+
+        requestBankInvoice() {
+            const params = new URLSearchParams({ 
+                plan: this.selectedPlan,
+                billing: this.currentBilling
+            });
+            window.location.href = `bank-invoice.html?${params.toString()}`;
         },
 
         showPayPalLoading(show) {
@@ -776,14 +1463,22 @@
         }
     };
 
-    document.addEventListener('DOMContentLoaded', () => AgencyCheckoutManager.init());
+    document.addEventListener('DOMContentLoaded', () => CheckoutManager.init());
 
     window.addEventListener('storage', (e) => {
         if (e.key === 'userCurrency' || e.key === 'userCountry') {
-            AgencyCheckoutManager.loadUserPreferences();
-            AgencyCheckoutManager.updatePrices();
-            AgencyCheckoutManager.handleCurrencyVisibility();
+            CheckoutManager.loadUserPreferences();
+            CheckoutManager.setupUI();
+            CheckoutManager.updatePrices();
         }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') CheckoutManager.closePaymentModal();
+    });
+
+    document.getElementById('payment-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'payment-modal') CheckoutManager.closePaymentModal();
     });
   </script>
 </body>
