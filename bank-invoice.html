@@ -22,11 +22,7 @@
       --error: #ef4444;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Inter', sans-serif;
@@ -38,14 +34,11 @@
       flex-direction: column;
     }
 
-    /* Animated background */
     body::before {
       content: '';
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: 
         radial-gradient(circle at 20% 50%, rgba(146, 205, 236, 0.15) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(0, 105, 217, 0.15) 0%, transparent 50%),
@@ -67,9 +60,7 @@
       align-items: center;
       border-bottom: 1px solid var(--border-color);
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       z-index: 1000;
       backdrop-filter: blur(20px);
     }
@@ -154,6 +145,7 @@
       border: none;
       cursor: pointer;
       margin-top: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
     .btn-submit:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(146, 205, 236, 0.3); }
     .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
@@ -166,7 +158,7 @@
       display: none;
     }
     .status-message.success { display: block; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); color: var(--success); }
-    .status-message.error { display: block; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: var(--error); }
+    .status-message.error   { display: block; background: rgba(239, 68, 68, 0.1);  border: 1px solid rgba(239, 68, 68, 0.2);  color: var(--error); }
 
     .info-box {
       background: rgba(146, 205, 236, 0.06);
@@ -239,7 +231,9 @@
 
   <main>
     <a href="checkout-agency.html" class="back-link">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+        <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
       Back to plans
     </a>
 
@@ -256,7 +250,7 @@
 
     <div class="form-card" id="form-card">
       <div id="status-message" class="status-message"></div>
-      
+
       <h2>Invoice Details</h2>
       <form id="invoice-request-form">
         <div class="form-group">
@@ -305,34 +299,21 @@
     © 3CH0 Compliance. All rights reserved.
     <br>
     <a href="settings.html">Privacy & Terms</a>
-    <a href="mailto:support@3ch0.com">Support</a>
+    <a href="mailto:support@3ch0.co.za">Support</a>
     <a href="https://discord.gg/W5SrbqK7j3" target="_blank">Community</a>
   </footer>
 
+  <!-- No Supabase SDK needed — no keys live in this file -->
   <script>
     // ============================================
-    // MAKE WEBHOOK URL
-    // ============================================
-    const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/1uatntmkvmo8rsn9nj0mq7l7q5ozkcl6';
-    
-    // ============================================
-    // PRICING CONFIG - All plans, all currencies
+    // PRICING CONFIG (client-safe, no secrets here)
     // ============================================
     const PRICE_CONFIG = {
-      USD: {
-        'agency-pro': { monthly: 99.00, annual: 988.00 },
-        symbol: '$'
-      },
-      EUR: {
-        'agency-pro': { monthly: 89.00, annual: 888.00 },
-        symbol: '€'
-      },
-      GBP: {
-        'agency-pro': { monthly: 79.00, annual: 788.00 },
-        symbol: '£'
-      },
+      USD: { 'agency-pro': { monthly: 99.00,   annual: 988.00   }, symbol: '$' },
+      EUR: { 'agency-pro': { monthly: 89.00,   annual: 888.00   }, symbol: '€' },
+      GBP: { 'agency-pro': { monthly: 79.00,   annual: 788.00   }, symbol: '£' },
       ZAR: {
-        'starter': { monthly: 799.00, annual: 7990.00 },
+        'starter':    { monthly: 799.00,  annual: 7990.00  },
         'agency-pro': { monthly: 1899.00, annual: 18990.00 },
         'enterprise': { monthly: 4990.00, annual: 49900.00 },
         symbol: 'R'
@@ -340,34 +321,32 @@
     };
 
     const PLAN_NAMES = {
-      'starter': 'Starter',
+      'starter':    'Starter',
       'agency-pro': 'Agency Pro',
       'enterprise': 'Enterprise'
     };
 
-    let currentPlan = 'agency-pro';
-    let currentBilling = 'monthly';
+    let currentPlan     = 'agency-pro';
+    let currentBilling  = 'monthly';
     let currentCurrency = 'ZAR';
 
     // ============================================
     // INIT
     // ============================================
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       initializePlanInfo();
       document.getElementById('invoice-request-form').addEventListener('submit', handleFormSubmit);
     });
 
     function initializePlanInfo() {
-      // Get plan and billing from URL parameters
       const params = new URLSearchParams(window.location.search);
-      currentPlan = params.get('plan') || 'agency-pro';
+      currentPlan    = params.get('plan')    || 'agency-pro';
       currentBilling = params.get('billing') || 'monthly';
-      
-      // Detect currency from localStorage
-      const savedCountry = localStorage.getItem('userCountry') || 'ZA';
+
+      const savedCountry  = localStorage.getItem('userCountry')  || 'ZA';
       const savedCurrency = localStorage.getItem('userCurrency') || 'ZAR';
-      
       const euroCountries = ['DE','FR','IT','ES','NL','BE','IE','PT','AT'];
+
       if (savedCountry === 'ZA' || savedCurrency === 'ZAR') {
         currentCurrency = 'ZAR';
       } else if (euroCountries.includes(savedCountry) || savedCurrency === 'EUR') {
@@ -378,7 +357,6 @@
         currentCurrency = 'USD';
       }
 
-      console.log('Bank Invoice loaded:', { currentPlan, currentBilling, currentCurrency });
       updatePlanDisplay();
     }
 
@@ -388,45 +366,46 @@
 
     function updatePlanDisplay() {
       const config = PRICE_CONFIG[currentCurrency];
-      if (!config) {
-        console.error('No config for currency:', currentCurrency);
-        return;
-      }
+      if (!config) return;
 
       const planConfig = config[currentPlan];
       if (!planConfig) {
-        console.error('No plan config for:', currentPlan, 'in currency:', currentCurrency);
-        // Fallback to agency-pro
         currentPlan = 'agency-pro';
         return updatePlanDisplay();
       }
 
-      const amount = currentBilling === 'annual' ? planConfig.annual : planConfig.monthly;
-      const planName = PLAN_NAMES[currentPlan] || 'Agency Pro';
+      const amount       = currentBilling === 'annual' ? planConfig.annual : planConfig.monthly;
+      const planName     = PLAN_NAMES[currentPlan] || 'Agency Pro';
       const billingLabel = currentBilling === 'annual' ? 'Annual' : 'Monthly';
-      
-      let formattedPrice;
-      if (currentCurrency === 'ZAR') {
-        formattedPrice = `${config.symbol}${formatZARPrice(amount)}`;
-      } else {
-        formattedPrice = `${config.symbol}${amount.toFixed(2)}`;
-      }
 
-      document.getElementById('plan-type').textContent = `${planName} - ${billingLabel}`;
+      const formattedPrice = currentCurrency === 'ZAR'
+        ? `${config.symbol}${formatZARPrice(amount)}`
+        : `${config.symbol}${amount.toFixed(2)}`;
+
+      document.getElementById('plan-type').textContent  = `${planName} - ${billingLabel}`;
       document.getElementById('plan-price').textContent = formattedPrice;
     }
 
     // ============================================
-    // FORM SUBMIT - SENDS TO MAKE WEBHOOK
+    // FORM SUBMIT
+    //
+    // SECURITY MODEL:
+    //   - No Supabase URL or anon key in this file.
+    //   - The page sends one POST to your Edge Function.
+    //   - The Edge Function (server-side) holds the keys
+    //     as environment secrets and does both the DB
+    //     insert and the email send.
+    //   - An attacker inspecting this file finds nothing.
     // ============================================
     async function handleFormSubmit(e) {
       e.preventDefault();
-      
-      const email = document.getElementById('email').value.trim();
-      const company = document.getElementById('company').value.trim();
+
+      const email     = document.getElementById('email').value.trim();
+      const company   = document.getElementById('company').value.trim();
+      const name      = document.getElementById('name').value.trim();
+      const notes     = document.getElementById('notes').value.trim();
       const submitBtn = document.getElementById('submit-btn');
 
-      // Validate
       if (!email || !company) {
         showStatus('Please fill in all required fields.', 'error');
         return;
@@ -437,105 +416,63 @@
         return;
       }
 
-      // Disable button
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending...';
+      submitBtn.disabled    = true;
+      submitBtn.textContent = 'Processing...';
 
-      // Build invoice data
-      const config = PRICE_CONFIG[currentCurrency];
+      const config     = PRICE_CONFIG[currentCurrency];
       const planConfig = config[currentPlan];
-      const amount = currentBilling === 'annual' ? planConfig.annual : planConfig.monthly;
-      
-      let formattedAmount;
-      if (currentCurrency === 'ZAR') {
-        formattedAmount = `${config.symbol}${formatZARPrice(amount)}`;
-      } else {
-        formattedAmount = `${config.symbol}${amount.toFixed(2)}`;
-      }
+      const amount     = currentBilling === 'annual' ? planConfig.annual : planConfig.monthly;
+      const planName   = PLAN_NAMES[currentPlan] || 'Agency Pro';
 
-      const now = new Date();
-      const invoiceNumber = `INV-${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}-${Math.floor(1000 + Math.random() * 9000)}`;
-      
-      const dueDate = new Date(now);
-      dueDate.setDate(now.getDate() + 14);
+      const formattedAmount = currentCurrency === 'ZAR'
+        ? `${config.symbol}${formatZARPrice(amount)}`
+        : `${config.symbol}${amount.toFixed(2)}`;
 
-      const planName = PLAN_NAMES[currentPlan] || 'Agency Pro';
-      const savingsNote = currentBilling === 'annual' ? ' - Save 17%' : '';
-
-      // THE DATA THAT GOES TO MAKE
-      const invoiceData = {
-        action: 'bank_invoice_request',
-        customer_email: email,
-        customer_company: company,
-        customer_name: document.getElementById('name').value.trim() || '',
-        customer_notes: document.getElementById('notes').value.trim() || '',
-        invoice_number: invoiceNumber,
-        invoice_date: now.toISOString().split('T')[0],
-        due_date: dueDate.toISOString().split('T')[0],
-        plan_name: planName,
-        plan_type: currentBilling,
-        plan_period: currentBilling === 'annual' ? '1 Year' : '1 Month',
-        currency: currentCurrency,
-        amount: amount,
-        formatted_amount: formattedAmount,
-        description: `${planName} Compliance Subscription (${currentBilling === 'annual' ? 'Annual' : 'Monthly'})${savingsNote}`,
-        timestamp: now.toISOString(),
-        source: 'checkout-bank-invoice'
-      };
-
-      console.log('📤 Sending to Make:', invoiceData);
-
-      // SEND TO MAKE WEBHOOK
       try {
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', MAKE_WEBHOOK_URL, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        
-        xhr.onload = function() {
-          console.log('✅ Response:', xhr.status, xhr.responseText);
-          document.getElementById('form-card').style.display = 'none';
-          document.getElementById('success-state').style.display = 'block';
-        };
-        
-        xhr.onerror = function() {
-          console.log('⚠️ XHR error, trying fetch with no-cors...');
-          sendWithNoCors(invoiceData);
-        };
-        
-        xhr.send(JSON.stringify(invoiceData));
-        
-      } catch (error) {
-        console.error('❌ Error:', error);
-        sendWithNoCors(invoiceData);
-      }
-    }
+        // ─────────────────────────────────────────────────────
+        // One call to the Edge Function — that's it.
+        // Your keys live in Supabase Secrets, not here.
+        //
+        // UPDATE THIS URL to match your Supabase project:
+        //   https://<your-project-ref>.supabase.co/functions/v1/send-invoice-email
+        // ─────────────────────────────────────────────────────
+        const EDGE_FUNCTION_URL = 'https://kqdlhvvikscxxseopvdw.supabase.co/functions/v1/send-invoice-email';
 
-    // Fallback function
-    async function sendWithNoCors(data) {
-      try {
-        await fetch(MAKE_WEBHOOK_URL, {
+        const res = await fetch(EDGE_FUNCTION_URL, {
           method: 'POST',
-          mode: 'no-cors',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
+          body: JSON.stringify({
+            email,
+            company,
+            name,
+            notes,
+            plan:     planName,
+            billing:  currentBilling,
+            currency: currentCurrency,
+            amount:   formattedAmount
+          })
         });
-        
-        console.log('✅ Sent via no-cors');
-        document.getElementById('form-card').style.display = 'none';
+
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.message || `Server responded with ${res.status}`);
+        }
+
+        document.getElementById('form-card').style.display     = 'none';
         document.getElementById('success-state').style.display = 'block';
-        
+
       } catch (err) {
-        console.error('❌ All methods failed:', err);
-        showStatus('Connection error. Please try again or contact support.', 'error');
-        document.getElementById('submit-btn').disabled = false;
-        document.getElementById('submit-btn').textContent = 'Request Invoice';
+        console.error('Invoice request failed:', err);
+        showStatus('Something went wrong. Please try again or contact support.', 'error');
+        submitBtn.disabled    = false;
+        submitBtn.textContent = 'Request Invoice';
       }
     }
 
     function showStatus(message, type) {
-      const el = document.getElementById('status-message');
+      const el       = document.getElementById('status-message');
       el.textContent = message;
-      el.className = 'status-message ' + type;
+      el.className   = `status-message ${type}`;
     }
   </script>
 </body>
