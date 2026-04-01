@@ -121,7 +121,13 @@ nav a:hover::after{width:100%}
 .risk-tip.medium{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2)}
 .risk-tip.high{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2)}
 
-/* Activity section removed */
+/* ── ACTIVITY ── */
+.act-item{display:flex;gap:11px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.act-item:last-child{border-bottom:none}
+.act-ico{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.act-ico.g{background:rgba(146,205,236,.1)}.act-ico.a{background:rgba(245,158,11,.1)}.act-ico.s{background:rgba(16,185,129,.1)}.act-ico.e{background:rgba(239,68,68,.1)}
+.act-txt{font-size:12px;line-height:1.5}.act-time{font-size:10px;color:var(--secondary-text);margin-top:1px}
+.act-empty{text-align:center;padding:30px 0;font-size:13px;color:var(--secondary-text);opacity:.6}
 
 /* ── REG FEED ── */
 .reg-item{display:flex;align-items:flex-start;gap:11px;padding:13px;border-radius:11px;background:rgba(255,255,255,.03);border:1px solid var(--border-color);margin-bottom:9px;cursor:pointer;transition:all .2s}
@@ -610,22 +616,22 @@ footer a{color:#aaa;text-decoration:underline;margin:0 8px}
     <div class="adv-summary" id="adv-summary"></div>
   </div>
 
-  <!-- ═══ RISK ═══ -->
-  <div class="slabel">Risk analysis</div>
-  <div class="card">
-    <div class="card-title">
-      Risk analysis
-      <span id="risk-lock-badge" style="background:rgba(255,255,255,.07);color:var(--secondary-text);border:1px solid rgba(255,255,255,.1);font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;">&#x1F512; Unlocks at 10%</span>
-    </div>
-    <div class="risk-locked" id="risk-locked">
-      <div class="risk-locked-icon">&#x1F512;</div>
-      <div class="risk-locked-title">Complete the AI Advisor to unlock</div>
-      <div class="risk-locked-sub">Answer all 16 questions to generate your personalised risk profile and earn 20%.</div>
-      <div id="risk-lock-prog" style="font-size:12px;color:var(--accent);font-weight:600;">0 of 16 questions answered</div>
-      <a href="#advisor" class="btn-o" style="margin-top:4px;">Answer questions &#x2191;</a>
-    </div>
-    <div class="risk-content" id="risk-content">
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;">
+  <!-- ═══ RISK + ACTIVITY ═══ -->
+  <div class="slabel">Risk analysis &amp; workflow activity</div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">
+        Risk analysis
+        <span id="risk-lock-badge" style="background:rgba(255,255,255,.07);color:var(--secondary-text);border:1px solid rgba(255,255,255,.1);font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;">&#x1F512; Unlocks at 10%</span>
+      </div>
+      <div class="risk-locked" id="risk-locked">
+        <div class="risk-locked-icon">&#x1F512;</div>
+        <div class="risk-locked-title">Complete the AI Advisor to unlock</div>
+        <div class="risk-locked-sub">Answer all 16 questions to generate your personalised risk profile and earn 20%.</div>
+        <div id="risk-lock-prog" style="font-size:12px;color:var(--accent);font-weight:600;">0 of 16 questions answered</div>
+        <a href="#advisor" class="btn-o" style="margin-top:4px;">Answer questions &#x2191;</a>
+      </div>
+      <div class="risk-content" id="risk-content">
         <div class="risk-row"><div class="risk-row-top"><span>GDPR compliance gap</span><span class="risk-pill" id="rl-gdpr">—</span></div><div class="pbar-wrap"><div class="pbar" id="rb-gdpr" style="background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div></div></div>
         <div class="risk-row"><div class="risk-row-top"><span>CCPA compliance gap</span><span class="risk-pill" id="rl-ccpa">—</span></div><div class="pbar-wrap"><div class="pbar" id="rb-ccpa" style="background:linear-gradient(90deg,#f472b6,#db2777)"></div></div></div>
         <div class="risk-row"><div class="risk-row-top"><span>HIPAA compliance gap</span><span class="risk-pill" id="rl-hipaa">—</span></div><div class="pbar-wrap"><div class="pbar" id="rb-hipaa" style="background:linear-gradient(90deg,#ef4444,#f87171)"></div></div></div>
@@ -635,8 +641,22 @@ footer a{color:#aaa;text-decoration:underline;margin:0 8px}
         <div class="risk-row"><div class="risk-row-top"><span>Third-party / processor risk</span><span class="risk-pill" id="rl-proc">—</span></div><div class="pbar-wrap"><div class="pbar" id="rb-proc" style="background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div></div></div>
         <div class="risk-row"><div class="risk-row-top"><span>International transfer risk</span><span class="risk-pill" id="rl-xfer">—</span></div><div class="pbar-wrap"><div class="pbar" id="rb-xfer" style="background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div></div></div>
         <div class="risk-row"><div class="risk-row-top"><span>Breach / audit history risk</span><span class="risk-pill" id="rl-breach">—</span></div><div class="pbar-wrap"><div class="pbar" id="rb-breach" style="background:linear-gradient(90deg,#ef4444,#f87171)"></div></div></div>
+        <div class="risk-tip" id="risk-tip-box"></div>
       </div>
-      <div class="risk-tip" id="risk-tip-box" style="margin-top:14px;"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        Workflow activity
+        <span class="ldot" style="font-size:11px;" id="activity-status">No activity yet</span>
+      </div>
+      <div class="webhook-banner" id="webhook-banner">
+        <span>&#x1F4A1;</span>
+        <span><strong>Connect live activity:</strong> Call <code style="background:rgba(255,255,255,.08);padding:2px 5px;border-radius:4px;font-size:11px;">markDocGenerated(key, bizName, framework)</code> from your Make.com webhook to push real-time updates here. <a href="#" onclick="dismissWebhookBanner();return false;" style="color:var(--accent);">Dismiss</a></span>
+      </div>
+      <div id="activity-list">
+        <div class="act-empty" id="act-empty">No workflow activity yet. Activity appears here in real time when your Make.com workflow runs and generates documents.</div>
+      </div>
     </div>
   </div>
 
@@ -1112,7 +1132,8 @@ function renderRegFeed() {
 // ═══════════════════════════════════════════════════
 function getGeneratedDocs(){try{return JSON.parse(localStorage.getItem('3ch0_docs')||'{}');}catch(e){return {};}}
 function saveGeneratedDocs(d){try{localStorage.setItem('3ch0_docs',JSON.stringify(d));}catch(e){}}
-
+function getActivity(){try{return JSON.parse(localStorage.getItem('3ch0_activity')||'[]');}catch(e){return [];}}
+function saveActivity(a){try{localStorage.setItem('3ch0_activity',JSON.stringify(a.slice(0,50)));}catch(e){}}
 
 // ═══════════════════════════════════════════════════
 // AI ADVISOR
@@ -1360,111 +1381,13 @@ function updateAdvisorSummary(){
 }
 
 // ═══════════════════════════════════════════════════
-// TABS + MODAL
-// ═══════════════════════════════════════════════════
-function switchTab(key,btn){
-  var tb=document.querySelectorAll('.tab-btn');var tp=document.querySelectorAll('.tab-pane');
-  for(var i=0;i<tb.length;i++)tb[i].classList.remove('active');
-  for(var i=0;i<tp.length;i++)tp[i].classList.remove('active');
-  btn.classList.add('active');var p=document.getElementById('tab-'+key);if(p)p.classList.add('active');
-}
-
-function openModal(name,body,action){
-  var mt=document.getElementById('mtitle'),mb=document.getElementById('mbody'),mf=document.getElementById('mfoot'),mg=document.getElementById('modal-bg');
-  if(mt)mt.textContent=name;if(mb)mb.textContent=body;
-  var f='';
-  if(action==='generate')f='<button class="btn-o" onclick="closeMod()">Later</button><a href="home.html#form-container" class="btn" style="font-size:12px;">Generate now →</a>';
-  else if(action==='regenerate')f='<button class="btn-o" onclick="closeMod()">Close</button><a href="home.html#form-container" class="btn" style="font-size:12px;">Regenerate</a>';
-  else f='<button class="btn-o" onclick="closeMod()">Close</button>';
-  if(mf)mf.innerHTML=f;if(mg)mg.classList.add('open');
-}
-function closeMod(e){if(e&&e.target&&e.target.id!=='modal-bg')return;var mg=document.getElementById('modal-bg');if(mg)mg.classList.remove('open');}
-
-// ═══════════════════════════════════════════════════
-// FREE PLAN: 1 AI ADVISOR CHECK PER MONTH
-// ═══════════════════════════════════════════════════
-var ADVISOR_USAGE_KEY='3ch0_advisor_used';
-var ADVISOR_ANSWERS_KEY='3ch0_advisor_answers';
-
-function getAdvisorUsage(){try{return JSON.parse(localStorage.getItem(ADVISOR_USAGE_KEY)||'null');}catch(e){return null;}}
-function setAdvisorUsage(){if(CONFIG.TEST_MODE)return;var now=new Date();try{localStorage.setItem(ADVISOR_USAGE_KEY,JSON.stringify({month:now.getMonth(),year:now.getFullYear(),ts:now.toISOString()}));}catch(e){}}
-function advisorUsedThisMonth(){if(CONFIG.TEST_MODE)return false;var u=getAdvisorUsage();if(!u)return false;var now=new Date();return u.month===now.getMonth()&&u.year===now.getFullYear();}
-
-function lockAdvisorUI(){
-  var u=getAdvisorUsage();
-  var now=new Date();
-  var resetDate=u?new Date(u.year,u.month+1,1):new Date(now.getFullYear(),now.getMonth()+1,1);
-  var nextMonth=resetDate.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
-  var card=document.querySelector('.advisor-card');if(!card)return;
-  var sections=card.querySelectorAll('.aq-section');
-  for(var i=0;i<sections.length;i++){sections[i].style.opacity='0.25';sections[i].style.pointerEvents='none';}
-  var progRow=card.querySelector('.adv-prog-row');if(progRow)progRow.style.opacity='0.4';
-  var banner=document.createElement('div');
-  banner.id='advisor-lock-banner';
-  banner.style.cssText='background:rgba(146,205,236,.06);border:1px solid rgba(146,205,236,.25);border-radius:14px;padding:22px 24px;text-align:center;margin-bottom:20px;';
-  banner.innerHTML='<div style="font-size:26px;margin-bottom:10px;">\uD83D\uDD12</div>'
-    +'<div style="font-size:14px;font-weight:700;color:var(--accent);margin-bottom:6px;">AI Advisor used for this month</div>'
-    +'<div style="font-size:12px;color:var(--secondary-text);line-height:1.7;max-width:420px;margin:0 auto;">Your free plan includes <strong style="color:var(--text-color);">1 AI Compliance Advisor check per month</strong>. Your results are shown below. Your advisor resets on <strong style="color:var(--text-color);">'+nextMonth+'</strong>.</div>'
-    +'<div style="margin-top:16px;"><a href="subscription.html" class="btn" style="font-size:12px;">Upgrade for unlimited checks \u2192</a></div>';
-  var firstSection=card.querySelector('.aq-section');
-  if(firstSection)card.insertBefore(banner,firstSection);
-}
-
-// ═══════════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════════
-document.addEventListener('DOMContentLoaded',function(){
-  var alreadyUsed=advisorUsedThisMonth();
-
-  if(alreadyUsed){
-    // Restore saved answers for read-only display, then lock UI
-    try{
-      var saved=JSON.parse(localStorage.getItem(ADVISOR_ANSWERS_KEY)||'{}');
-      var sk=Object.keys(saved);
-      for(var i=0;i<sk.length;i++){
-        var key=sk[i];var val=saved[key];
-        var yB=document.getElementById('btn-'+key+'-yes');var nB=document.getElementById('btn-'+key+'-no');var aq=document.getElementById('aq-'+key);
-        if(yB&&nB){
-          yB.className='tbtn'+(val==='yes'?' ay':'');
-          nB.className='tbtn'+(val==='no'?' an':'');
-          if(aq)aq.classList.add('answered');
-          advAnswers[key]=val;
-          if(FW_TRIGGERS[key]&&val==='yes'){var fws=FW_TRIGGERS[key];for(var j=0;j<fws.length;j++){if(requiredFrameworks.indexOf(fws[j])===-1)requiredFrameworks.push(fws[j]);}}
-        }
-      }
-      var an=Object.keys(advAnswers).length;
-      var pb=document.getElementById('adv-pbar');if(pb)pb.style.width=Math.round(an/TOTAL_Q*100)+'%';
-      var ct=document.getElementById('adv-count');if(ct)ct.textContent=an+' / '+TOTAL_Q;
-      var lp=document.getElementById('risk-lock-prog');if(lp)lp.textContent=an+' of '+TOTAL_Q+' questions answered';
-      updateAdvisorSummary();
-      if(an===TOTAL_Q){var b=document.getElementById('adv-complete-badge');if(b)b.style.display='inline';unlockRisk();}
-    }catch(e){console.warn('Advisor restore:',e);}
-    lockAdvisorUI();
-  }
-  // If not used this month, advisor starts completely fresh on every page load
-
-  try{if(localStorage.getItem('3ch0_wb_dismissed'))dismissWebhookBanner();}catch(e){}
-  renderDocLists();renderAlerts();renderRegFeed();updateXPDisplay();
-  setInterval(function(){},5000);
-});
-
-window.addEventListener('message',function(e){
-  if(!e.data||e.data.source!=='3ch0')return;
-  if(e.data.type==='doc_generated')markDocGenerated(e.data.key,e.data.biz,e.data.fw);
-  
-});
 
 // Dev helpers — expose globals for onclick attributes
 window.ans=ans;
 window.switchTab=switchTab;
 window.openModal=openModal;
 window.closeMod=closeMod;
-window.dismissWebhookBanner=dismissWebhookBanner;
-window.markDocGenerated=markDocGenerated;
-window.addActivity=addActivity;
-window.markAllDocs=function(biz){var all=DOCS.universal.concat(DOCS.gdpr,DOCS.ccpa,DOCS.hipaa,DOCS.popia);for(var i=0;i<all.length;i++)markDocGenerated(all[i].key,biz||'Test Business','');};
 window.clearAll=function(){['3ch0_docs','3ch0_wb_dismissed',ADVISOR_USAGE_KEY,ADVISOR_ANSWERS_KEY].forEach(function(k){localStorage.removeItem(k);});location.reload();};
-window.seedActivity=function(){addActivity('📄','g','GDPR Privacy Policy generated — +9%','Acme Ltd');addActivity('📄','g','CCPA Consumer Request Form generated — +9%','Acme Ltd');addActivity('⚠️','a','EU AI Act alert triggered','');addActivity('✅','s','POPIA Privacy Policy verified current','');};
 
 // ==================================================
 // ONBOARDING TOUR
