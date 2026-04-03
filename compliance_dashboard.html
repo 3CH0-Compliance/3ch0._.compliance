@@ -179,230 +179,6 @@ footer a{color:#aaa;text-decoration:underline;margin:0 8px}
 <!-- TOAST CONTAINER -->
 <div id="toast-container" style="position:fixed;top:90px;right:20px;z-index:3000;display:flex;flex-direction:column;gap:8px;pointer-events:none;max-width:320px;"></div>
 
-<!-- ═══════════════════════════════════════════════════════════ -->
-<!-- ONBOARDING TOUR POPUP -->
-<!-- ═══════════════════════════════════════════════════════════ -->
-<div id="ob-overlay" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,0.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px;">
-  <div id="ob-modal" style="position:relative;background:#0f0f0f;border:1px solid rgba(146,205,236,0.25);border-radius:24px;width:100%;max-width:680px;max-height:90vh;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,0.8),0 0 0 1px rgba(146,205,236,0.06);animation:obIn .45s cubic-bezier(.34,1.3,.64,1);">
-    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#92cdec,#0069d9,#92cdec,transparent);opacity:0.7;"></div>
-    <div id="ob-viewport" style="overflow:hidden;width:100%;"><div id="ob-track" style="display:flex;transition:transform 0.5s cubic-bezier(.77,0,.18,1);will-change:transform;">
-
-      <!-- SLIDE 1: Dashboard -->
-      <div class="ob-slide">
-        <div class="ob-visual" style="background:radial-gradient(ellipse at 30% 40%,rgba(146,205,236,0.18) 0%,transparent 65%),radial-gradient(ellipse at 80% 70%,rgba(0,105,217,0.2) 0%,transparent 60%),#0a0a0a;">
-          <div style="width:100%;max-width:420px;margin:0 auto;">
-            <div style="background:rgba(20,20,20,0.9);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:18px 20px;margin-bottom:12px;">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-                <div style="font-family:'Playfair Display',serif;font-size:15px;background:linear-gradient(135deg,#fff,#92cdec,#0069d9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Compliance Dashboard</div>
-                <div style="display:flex;gap:5px;align-items:center;"><div style="width:7px;height:7px;border-radius:50%;background:#10b981;box-shadow:0 0 6px rgba(16,185,129,0.6);"></div><div style="font-size:9px;color:#10b981;">Live</div></div>
-              </div>
-              <div style="display:flex;gap:16px;align-items:center;">
-                <svg width="64" height="64" viewBox="0 0 64 64">
-                  <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"/>
-                  <circle cx="32" cy="32" r="26" fill="none" stroke="url(#og1)" stroke-width="6" stroke-dasharray="163" stroke-dashoffset="100" stroke-linecap="round" transform="rotate(-90 32 32)"/>
-                  <defs><linearGradient id="og1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#fff"/><stop offset="50%" stop-color="#92cdec"/><stop offset="100%" stop-color="#0069d9"/></linearGradient></defs>
-                  <text x="32" y="36" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" font-family="Inter,sans-serif">38%</text>
-                </svg>
-                <div style="flex:1;">
-                  <div style="font-size:11px;color:#a0a0a0;margin-bottom:6px;">Compliance score</div>
-                  <div style="background:rgba(255,255,255,0.06);border-radius:4px;height:5px;overflow:hidden;margin-bottom:8px;"><div style="width:38%;height:100%;background:linear-gradient(135deg,#fff,#92cdec,#0069d9);border-radius:4px;"></div></div>
-                  <div style="display:flex;gap:8px;flex-wrap:wrap;"><div style="font-size:9px;background:rgba(239,68,68,0.15);color:#fca5a5;padding:2px 8px;border-radius:10px;border:1px solid rgba(239,68,68,0.3);">At Risk</div><div style="font-size:9px;color:#a0a0a0;">4 docs missing</div></div>
-                </div>
-              </div>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:6px;">
-              <div style="background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:9px 12px;display:flex;align-items:center;gap:8px;"><span style="display:flex;align-items:center;color:#ef4444;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span><div style="flex:1;"><div style="font-size:11px;font-weight:600;color:#fff;">GDPR Bundle Required</div><div style="font-size:9px;color:#a0a0a0;">7 documents needed &middot; EU/UK</div></div></div>
-              <div style="background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:9px 12px;display:flex;align-items:center;gap:8px;"><span style="display:flex;align-items:center;color:#ef4444;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span><div style="flex:1;"><div style="font-size:11px;font-weight:600;color:#fff;">CCPA Bundle Required</div><div style="font-size:9px;color:#a0a0a0;">6 documents needed &middot; California</div></div></div>
-            </div>
-          </div>
-        </div>
-        <div class="ob-content" style="display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;box-sizing:border-box;padding:22px 32px 16px;">
-          <div class="ob-step-badge" style="display:block;width:100%;text-align:center;">Step 1 of 5</div>
-          <div class="ob-slide-icon" style="display:block;width:100%;text-align:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#92cdec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
-          <h2 class="ob-title" style="display:block;width:100%;text-align:center;">Your compliance command centre</h2>
-          <p class="ob-desc" style="display:block;width:100%;text-align:center;">The dashboard shows your live compliance score, which regulations apply to your business, and exactly which documents you're missing. The AI Advisor asks 16 targeted questions to build your personal compliance profile.</p>
-        </div>
-      </div>
-
-      <!-- SLIDE 2: Form on Home Page -->
-      <div class="ob-slide">
-        <div class="ob-visual" style="background:radial-gradient(ellipse at 70% 30%,rgba(0,105,217,0.22) 0%,transparent 60%),radial-gradient(ellipse at 20% 70%,rgba(146,205,236,0.15) 0%,transparent 60%),#0a0a0a;">
-          <div style="width:100%;max-width:420px;margin:0 auto;">
-            <div style="background:rgba(20,20,20,0.9);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:18px 20px;">
-              <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#92cdec;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid rgba(146,205,236,0.15);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg> Company Information</div>
-              <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">
-                <div><div style="font-size:9px;color:#92cdec;margin-bottom:3px;font-weight:600;">Company Name</div><div style="background:rgba(21,18,16,0.7);border:1px solid rgba(255,255,255,0.1);border-radius:7px;padding:7px 10px;font-size:10px;color:#fff;">Acme Corp Ltd</div></div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-                  <div><div style="font-size:9px;color:#92cdec;margin-bottom:3px;font-weight:600;">Industry</div><div style="background:rgba(21,18,16,0.7);border:1px solid rgba(255,255,255,0.1);border-radius:7px;padding:7px 10px;font-size:10px;color:#a0a0a0;">SaaS / Technology &#x25BE;</div></div>
-                  <div><div style="font-size:9px;color:#92cdec;margin-bottom:3px;font-weight:600;">Regulation</div><div style="background:rgba(21,18,16,0.7);border:1px solid rgba(92,205,236,0.4);border-radius:7px;padding:7px 10px;font-size:10px;color:#92cdec;">GDPR ▾</div></div>
-                </div>
-                <div><div style="font-size:9px;color:#92cdec;margin-bottom:3px;font-weight:600;">Document Needed</div><div style="background:rgba(21,18,16,0.7);border:1px solid rgba(255,255,255,0.1);border-radius:7px;padding:7px 10px;font-size:10px;color:#a0a0a0;">Privacy Policy &#x25BE;</div></div>
-              </div>
-              <div style="background:linear-gradient(135deg,#fff,#92cdec,#0069d9);border-radius:20px;padding:9px 18px;text-align:center;font-size:10px;font-weight:700;color:#0a0a0a;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14L21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg> Generate My Compliance Document</div>
-            </div>
-          </div>
-        </div>
-        <div class="ob-content" style="display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;box-sizing:border-box;padding:22px 32px 16px;">
-          <div class="ob-step-badge" style="display:block;width:100%;text-align:center;">Step 2 of 5</div>
-          <div class="ob-slide-icon" style="display:block;width:100%;text-align:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#92cdec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
-          <h2 class="ob-title" style="display:block;width:100%;text-align:center;">Tell us about your business</h2>
-          <p class="ob-desc" style="display:block;width:100%;text-align:center;">Head to the home page and fill in the compliance form. Answer questions about your company, the data you handle, and which regulation applies. It takes about 3 minutes and every answer shapes your final document.</p>
-        </div>
-      </div>
-
-      <!-- SLIDE 3: Make.com Processing -->
-      <div class="ob-slide">
-        <div class="ob-visual" style="background:radial-gradient(ellipse at 50% 50%,rgba(0,105,217,0.25) 0%,transparent 70%),#0a0a0a;height:190px;">
-          <div style="width:100%;max-width:420px;margin:0 auto;padding:6px 0;">
-            <div style="display:flex;align-items:center;justify-content:center;gap:0;position:relative;">
-              <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;">
-                <div style="width:34px;height:34px;border-radius:10px;background:rgba(146,205,236,0.15);border:1px solid rgba(146,205,236,0.4);display:flex;align-items:center;justify-content:center;font-size:14px;position:relative;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg><div style="position:absolute;top:-3px;right:-3px;width:8px;height:8px;border-radius:50%;background:#10b981;box-shadow:0 0 5px rgba(16,185,129,0.8);"></div></div>
-                <div style="font-size:8px;color:#a0a0a0;text-align:center;line-height:1.3;">Form<br>submitted</div>
-              </div>
-              <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(146,205,236,0.4),rgba(146,205,236,0.6));position:relative;overflow:hidden;"><div class="ob-pulse-dot" style="width:5px;height:5px;"></div></div>
-              <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;">
-                <div style="width:34px;height:34px;border-radius:10px;background:rgba(146,205,236,0.15);border:1px solid rgba(146,205,236,0.5);display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#92cdec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-                <div style="font-size:8px;color:#a0a0a0;text-align:center;line-height:1.3;">Data stored<br>(Supabase)</div>
-              </div>
-              <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(146,205,236,0.6),rgba(0,105,217,0.6));position:relative;overflow:hidden;"><div class="ob-pulse-dot" style="animation-delay:0.2s;width:5px;height:5px;"></div></div>
-              <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;">
-                <div style="width:34px;height:34px;border-radius:10px;background:rgba(0,105,217,0.2);border:1px solid rgba(0,105,217,0.5);display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#92cdec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
-                <div style="font-size:8px;color:#a0a0a0;text-align:center;line-height:1.3;">Webhook<br>triggered</div>
-              </div>
-              <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(0,105,217,0.6),rgba(146,205,236,0.4));position:relative;overflow:hidden;"><div class="ob-pulse-dot" style="animation-delay:0.4s;width:5px;height:5px;"></div></div>
-              <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;">
-                <div style="width:34px;height:34px;border-radius:10px;background:rgba(146,205,236,0.12);border:1px solid rgba(146,205,236,0.3);display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#92cdec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M12 3v4"/><circle cx="12" cy="7" r="2"/><circle cx="8" cy="16" r="1" fill="#92cdec"/><circle cx="16" cy="16" r="1" fill="#92cdec"/></svg></div>
-                <div style="font-size:8px;color:#a0a0a0;text-align:center;line-height:1.3;">AI builds<br>document</div>
-              </div>
-              <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(146,205,236,0.4),rgba(16,185,129,0.6));position:relative;overflow:hidden;"><div class="ob-pulse-dot" style="animation-delay:0.6s;background:#10b981;box-shadow:0 0 4px #10b981;width:5px;height:5px;"></div></div>
-              <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;">
-                <div style="width:34px;height:34px;border-radius:10px;background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.4);display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#92cdec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-                <div style="font-size:8px;color:#10b981;text-align:center;font-weight:600;line-height:1.3;">Delivered<br>to you</div>
-              </div>
-            </div>
-            <div style="margin-top:10px;text-align:center;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:7px 12px;">
-              <div style="font-size:8px;text-transform:uppercase;letter-spacing:0.1em;color:#a0a0a0;margin-bottom:2px;">Powered by</div>
-              <div style="font-size:11px;font-weight:700;color:#fff;">Make.com Automation</div>
-              <div style="font-size:9px;color:#a0a0a0;margin-top:1px;">Real-time workflow builds and sends your tailored document</div>
-            </div>
-            <div style="margin-top:8px;display:flex;justify-content:center;"><div style="display:inline-flex;align-items:center;gap:5px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-radius:20px;padding:4px 11px;"><div style="width:5px;height:5px;border-radius:50%;background:#10b981;animation:ping 1.5s ease infinite;"></div><span style="font-size:9px;font-weight:600;color:#10b981;">Under 5 minutes end-to-end</span></div></div>
-          </div>
-        </div>
-        <div class="ob-content" style="display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;box-sizing:border-box;padding:22px 32px 16px;">
-          <div class="ob-step-badge" style="display:block;width:100%;text-align:center;">Step 3 of 5</div>
-          <div class="ob-slide-icon" style="display:block;width:100%;text-align:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#92cdec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-          <h2 class="ob-title" style="display:block;width:100%;text-align:center;">Your form triggers the machine</h2>
-          <p class="ob-desc" style="display:block;width:100%;text-align:center;">The moment you submit, a Make.com automation fires. Your answers flow into an AI pipeline that checks them against the actual regulation text, builds a tailored document for your exact situation, and queues it for delivery.</p>
-        </div>
-      </div>
-
-      <!-- SLIDE 4: Document Delivery -->
-      <div class="ob-slide">
-        <div class="ob-visual" style="background:radial-gradient(ellipse at 40% 30%,rgba(16,185,129,0.18) 0%,transparent 60%),radial-gradient(ellipse at 75% 70%,rgba(146,205,236,0.12) 0%,transparent 60%),#0a0a0a;">
-          <div style="width:100%;max-width:380px;margin:0 auto;">
-            <div style="background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.25);border-radius:16px;padding:16px 18px;margin-bottom:10px;">
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><div style="width:30px;height:30px;border-radius:8px;background:rgba(16,185,129,0.15);display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#92cdec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div style="font-size:11px;font-weight:600;color:#fff;">Your compliance documents are ready</div><div style="font-size:9px;color:#a0a0a0;">From: 3CH0 Compliance &middot; Just now</div></div></div>
-              <div style="font-size:10px;color:#a0a0a0;line-height:1.6;margin-bottom:10px;">Hi there, your tailored <strong style="color:#fff;">GDPR Privacy Policy</strong> has been generated and is attached. Review and implement at your convenience.</div>
-              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;"><span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#92cdec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span><div style="flex:1;"><div style="font-size:10px;font-weight:600;color:#fff;">GDPR_Privacy_Policy_AcmeCorp.pdf</div><div style="font-size:9px;color:#a0a0a0;">Tailored &middot; Audit-ready &middot; 2025</div></div><div style="font-size:9px;background:rgba(16,185,129,0.15);color:#10b981;padding:3px 8px;border-radius:8px;border:1px solid rgba(16,185,129,0.3);font-weight:600;"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:2px;"><polyline points="20 6 9 17 4 12"/></svg> Ready</div></div>
-            </div>
-            <div style="background:rgba(146,205,236,0.06);border:1px solid rgba(146,205,236,0.2);border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:10px;"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#92cdec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span><div style="flex:1;"><div style="font-size:10px;font-weight:600;color:#fff;">Dashboard score updated</div><div style="font-size:9px;color:#a0a0a0;">+8% earned &middot; Privacy Policy generated</div></div><div style="background:linear-gradient(135deg,#fff,#92cdec,#0069d9);border-radius:10px;padding:3px 10px;font-size:10px;font-weight:700;color:#0a0a0a;">+8%</div></div>
-          </div>
-        </div>
-        <div class="ob-content" style="display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;box-sizing:border-box;padding:22px 32px 16px;">
-          <div class="ob-step-badge" style="display:block;width:100%;text-align:center;">Step 4 of 5</div>
-          <div class="ob-slide-icon" style="display:block;width:100%;text-align:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#92cdec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-          <h2 class="ob-title" style="display:block;width:100%;text-align:center;">Document delivered, score climbs</h2>
-          <p class="ob-desc" style="display:block;width:100%;text-align:center;">In under 5 minutes, your tailored compliance document lands in your inbox, audit-ready and specific to your business. Your dashboard score updates automatically — each document you generate earns you a slice of your 100% compliance target.</p>
-        </div>
-      </div>
-
-      <!-- SLIDE 5: Subscription -->
-      <div class="ob-slide">
-        <div class="ob-visual" style="background:radial-gradient(ellipse at 50% 40%,rgba(0,105,217,0.2) 0%,transparent 65%),radial-gradient(ellipse at 20% 80%,rgba(146,205,236,0.12) 0%,transparent 55%),#0a0a0a;">
-          <div style="width:100%;max-width:380px;margin:0 auto;display:flex;flex-direction:column;gap:8px;">
-            <div style="background:rgba(20,20,20,0.9);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;"><div><div style="font-size:13px;font-weight:700;color:#fff;">Free</div><div style="font-size:9px;color:#a0a0a0;margin-top:3px;">1 doc/month &middot; Core regulations</div></div><div style="font-size:15px;font-weight:700;color:#fff;">$0</div></div>
-            <div style="background:rgba(146,205,236,0.06);border:1px solid rgba(146,205,236,0.4);border-radius:14px;padding:16px 18px;position:relative;overflow:hidden;"><div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#92cdec,#0069d9,transparent);"></div><div style="display:flex;align-items:flex-start;justify-content:space-between;"><div><div style="display:flex;align-items:center;gap:6px;"><div style="font-size:13px;font-weight:700;color:#fff;">Agency Pro</div><div style="font-size:8px;background:rgba(146,205,236,0.15);color:#92cdec;padding:2px 7px;border-radius:8px;border:1px solid rgba(146,205,236,0.3);font-weight:700;">POPULAR</div></div><div style="font-size:9px;color:#a0a0a0;margin-top:3px;">Unlimited docs &middot; All 4 regulations</div><div style="margin-top:8px;display:flex;flex-direction:column;gap:3px;"><div style="font-size:9px;color:#92cdec;">✓ Auto-update alerts</div><div style="font-size:9px;color:#92cdec;">✓ Risk analysis unlocked</div><div style="font-size:9px;color:#92cdec;">✓ Priority document generation</div></div></div><div style="text-align:right;flex-shrink:0;margin-left:12px;"><div style="font-size:18px;font-weight:700;background:linear-gradient(135deg,#fff,#92cdec);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">$99</div><div style="font-size:8px;color:#a0a0a0;">/month</div></div></div></div>
-          </div>
-        </div>
-        <div class="ob-content" style="display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;box-sizing:border-box;padding:22px 32px 16px;">
-          <div class="ob-step-badge" style="display:block;width:100%;text-align:center;">Step 5 of 5</div>
-          <div class="ob-slide-icon" style="display:block;width:100%;text-align:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#92cdec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2l-.94-.94M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
-          <h2 class="ob-title" style="display:block;width:100%;text-align:center;">Scale your protection</h2>
-          <p class="ob-desc" style="display:block;width:100%;text-align:center;">Start free with one document per month. Upgrade to Pro for unlimited generation across all four regulations, automatic law-change alerts, and full risk analysis. Agency plans cover multi-client and white-label needs.</p>
-        </div>
-      </div>
-
-      <!-- SLIDE 6: Welcome Final -->
-      <div class="ob-slide">
-        <div class="ob-visual ob-welcome-visual" style="background:radial-gradient(ellipse at 50% 50%,rgba(146,205,236,0.22) 0%,rgba(0,105,217,0.18) 40%,transparent 70%),#0a0a0a;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;height:220px;overflow:hidden;position:relative;">
-          <div style="position:relative;display:flex;align-items:center;justify-content:center;width:160px;height:160px;flex-shrink:0;">
-            <div class="ob-shield-ring ob-ring-1"></div>
-            <div class="ob-shield-ring ob-ring-2"></div>
-            <div class="ob-shield-ring ob-ring-3"></div>
-            <div style="width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,rgba(146,205,236,0.2),rgba(0,105,217,0.3));border:1px solid rgba(146,205,236,0.5);display:flex;align-items:center;justify-content:center;position:relative;z-index:2;box-shadow:0 0 36px rgba(146,205,236,0.25);"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#92cdec" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-          </div>
-          <div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center;position:relative;z-index:3;padding:0 12px;">
-            <div style="font-size:9px;font-weight:700;background:rgba(99,102,241,0.15);color:#818cf8;border:1px solid rgba(99,102,241,0.3);padding:2px 8px;border-radius:8px;">EU GDPR</div>
-            <div style="font-size:9px;font-weight:700;background:rgba(59,130,246,0.15);color:#60a5fa;border:1px solid rgba(59,130,246,0.3);padding:2px 8px;border-radius:8px;">US CCPA</div>
-            <div style="font-size:9px;font-weight:700;background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:8px;">HIPAA</div>
-            <div style="font-size:9px;font-weight:700;background:rgba(245,158,11,0.15);color:#fbbf24;border:1px solid rgba(245,158,11,0.3);padding:2px 8px;border-radius:8px;">ZA POPIA</div>
-          </div>
-        </div>
-        <div class="ob-content ob-welcome-content" style="display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;box-sizing:border-box;padding:22px 32px 6px;">
-          <div class="ob-slide-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#92cdec" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-          <h2 class="ob-title" style="font-size:22px;line-height:1.2;">Welcome to<br>3CH0 Compliance</h2>
-          <p class="ob-desc" style="display:block;width:100%;text-align:center;">Stop hoping you're compliant. Know it. Your compliance infrastructure is ready. Start with the AI Advisor, generate your first document, and watch your score climb.</p>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:20px;">
-            <button onclick="closeOnboarding()" style="padding:10px 22px;border-radius:30px;font-size:13px;font-weight:600;color:var(--accent);border:1px solid rgba(146,205,236,0.35);background:transparent;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='rgba(146,205,236,0.1)'" onmouseout="this.style.background='transparent'">Explore Dashboard</button>
-            <a href="home.html" onclick="closeOnboarding()" style="padding:10px 22px;border-radius:30px;font-size:13px;font-weight:600;color:#0a0a0a;background:linear-gradient(135deg,#fff,#92cdec,#0069d9);text-decoration:none;display:inline-flex;align-items:center;gap:6px;box-shadow:0 6px 20px rgba(146,205,236,0.25);transition:all 0.2s;" onmouseover="this.style.boxShadow='0 10px 30px rgba(146,205,236,0.45)'" onmouseout="this.style.boxShadow='0 6px 20px rgba(146,205,236,0.25)'">Generate First Doc &#x2192;</a>
-          </div>
-        </div>
-      </div>
-
-    </div></div><!-- /ob-track -->
-
-    <!-- Bottom controls -->
-    <div id="ob-controls" style="display:flex;align-items:center;justify-content:space-between;padding:16px 28px 22px;gap:12px;">
-      <div style="display:flex;gap:6px;align-items:center;">
-        <div class="ob-dot active" id="od0"></div>
-        <div class="ob-dot" id="od1"></div>
-        <div class="ob-dot" id="od2"></div>
-        <div class="ob-dot" id="od3"></div>
-        <div class="ob-dot" id="od4"></div>
-        <div class="ob-dot" id="od5"></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <button id="ob-skip" onclick="skipToEnd()" style="font-size:11px;color:#555;background:none;border:none;cursor:pointer;padding:4px 8px;transition:color 0.2s;" onmouseover="this.style.color='#888'" onmouseout="this.style.color='#555'">Skip tour</button>
-        <button id="ob-prev" onclick="obPrev()" style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:#a0a0a0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all 0.2s;opacity:0;" disabled>←</button>
-        <button id="ob-next" onclick="obNext()" style="padding:8px 22px;border-radius:30px;border:none;background:linear-gradient(135deg,#fff,#92cdec,#0069d9);color:#0a0a0a;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 14px rgba(146,205,236,0.3);">Next →</button>
-      </div>
-    </div>
-
-  </div><!-- /ob-modal -->
-</div><!-- /ob-overlay -->
-
-<style>
-@keyframes obIn{from{opacity:0;transform:scale(0.92) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
-@keyframes obPulse{0%{transform:translateX(-100%)}100%{transform:translateX(500%)}}
-@keyframes obRingPulse{0%{transform:scale(1);opacity:0.5}100%{transform:scale(1.7);opacity:0}}
-.ob-slide{flex-shrink:0;display:flex;flex-direction:column;overflow:hidden;}
-.ob-visual{width:100%;height:220px;display:flex;align-items:center;justify-content:center;padding:20px;overflow:hidden;position:relative;border-bottom:1px solid rgba(255,255,255,0.06);}
-.ob-welcome-visual{height:200px;}
-.ob-content{padding:22px 28px 16px;display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;box-sizing:border-box;}
-.ob-welcome-content{padding-bottom:6px;}
-.ob-step-badge{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:#555;margin-bottom:8px;font-weight:600;width:100%;text-align:center;}
-.ob-slide-icon{font-size:22px;margin-bottom:8px;}
-.ob-title{font-family:'Playfair Display',serif;font-size:18px;line-height:1.3;background:linear-gradient(135deg,#ffffff,#92cdec,#0069d9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px;width:100%;text-align:center;}
-.ob-desc{font-size:13px;color:#a0a0a0;line-height:1.7;max-width:100%;text-align:center;}
-.ob-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15);transition:all 0.3s ease;cursor:pointer;}
-.ob-dot.active{width:20px;border-radius:3px;background:linear-gradient(90deg,#92cdec,#0069d9);}
-.ob-pulse-dot{position:absolute;width:6px;height:6px;border-radius:50%;background:#92cdec;box-shadow:0 0 6px #92cdec;top:50%;transform:translateY(-50%);animation:obPulse 2s ease infinite;}
-.ob-shield-ring{position:absolute;border-radius:50%;border:1px solid rgba(146,205,236,0.3);animation:obRingPulse 2.5s ease-out infinite;top:50%;left:50%;transform:translate(-50%,-50%);}
-.ob-ring-1{width:88px;height:88px;animation-delay:0s;}
-.ob-ring-2{width:118px;height:118px;animation-delay:0.6s;border-color:rgba(0,105,217,0.25);}
-.ob-ring-3{width:150px;height:150px;animation-delay:1.2s;border-color:rgba(146,205,236,0.15);}
-@media(max-width:600px){.ob-visual{height:180px;padding:14px;}.ob-content{padding:16px 18px 6px;}.ob-title{font-size:16px;}.ob-desc{font-size:12px;}#ob-controls{padding:12px 18px 18px;}}
-</style>
 
 
 <div class="main-content">
@@ -568,7 +344,7 @@ footer a{color:#aaa;text-decoration:underline;margin:0 8px}
   </div>
 
   <!-- ═══ AI ADVISOR ═══ -->
-  <div class="slabel" id="advisor">AI Compliance Advisor &nbsp;<span style="font-size:11px;font-weight:400;color:var(--accent);">Complete all 16 questions to earn 20% and unlock risk analysis</span></div>
+  <div class="slabel" id="advisor">AI Compliance Advisor &nbsp;<span style="font-size:11px;font-weight:400;color:var(--accent);">Complete all 17 questions to earn 20% and unlock risk analysis</span></div>
   <div class="advisor-card">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
       <span style="font-size:13px;color:var(--secondary-text);">Answer every question honestly. Your answers determine which documents you need and how much% each one earns.</span>
@@ -577,7 +353,7 @@ footer a{color:#aaa;text-decoration:underline;margin:0 8px}
     <div class="adv-prog-row">
       <span style="font-size:12px;color:var(--secondary-text);flex-shrink:0;">Progress</span>
       <div class="adv-prog-bar-wrap"><div class="adv-prog-bar" id="adv-pbar"></div></div>
-      <span id="adv-count" style="font-size:12px;color:var(--accent);flex-shrink:0;font-weight:600;">0 / 16</span>
+      <span id="adv-count" style="font-size:12px;color:var(--accent);flex-shrink:0;font-weight:600;">0 / 17</span>
     </div>
 
     <div class="aq-section">
@@ -602,7 +378,7 @@ footer a{color:#aaa;text-decoration:underline;margin:0 8px}
       <div class="aq" id="aq-staff"><span class="aq-text">Do you have employees or contractors who handle personal data?</span><div class="twrap"><button type="button" class="tbtn" id="btn-staff-yes" onclick="ans('staff','yes')">Yes</button><button type="button" class="tbtn" id="btn-staff-no" onclick="ans('staff','no')">No</button></div></div>
       <div class="aq" id="aq-processors"><span class="aq-text">Do you share data with third-party vendors, cloud services, or payment providers?</span><div class="twrap"><button type="button" class="tbtn" id="btn-processors-yes" onclick="ans('processors','yes')">Yes</button><button type="button" class="tbtn" id="btn-processors-no" onclick="ans('processors','no')">No</button></div></div>
       <div class="aq" id="aq-transfers"><span class="aq-text">Do you transfer personal data internationally (outside the EEA, UK, or South Africa)?</span><div class="twrap"><button type="button" class="tbtn" id="btn-transfers-yes" onclick="ans('transfers','yes')">Yes</button><button type="button" class="tbtn" id="btn-transfers-no" onclick="ans('transfers','no')">No</button></div></div>
-      <div class="aq" id="aq-consumers"><span class="aq-text">Do consumers regularly submit requests to access, delete, or opt out of their data?</span><div class="twrap"><button type="button" class="tbtn" id="btn-consumers-yes" onclick="ans('consumers','yes')">Yes</button><button type="button" class="tbtn" id="btn-consumers-no" onclick="ans('consumers','no')">No</button></div></div>
+      <div class="aq" id="aq-consumers"><span class="aq-text">Do consumers submit requests to access, delete, or opt out of their data?</span><div class="twrap"><button type="button" class="tbtn" id="btn-consumers-yes" onclick="ans('consumers','yes')">Yes</button><button type="button" class="tbtn" id="btn-consumers-no" onclick="ans('consumers','no')">No</button></div></div>
     </div>
 
     <div class="aq-section">
@@ -675,7 +451,7 @@ footer a{color:#aaa;text-decoration:underline;margin:0 8px}
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ╔═══════════════════════════════════════════════════════════════╗
 // ║                    🧪 TESTING CONFIG                          ║
 // ║  Set TEST_MODE to true  → unlimited advisor resets, no lock  ║
@@ -731,8 +507,8 @@ var FW_TRIGGERS = {eu:['gdpr'],uk:['gdpr'],us:['ccpa'],sa:['popia'],health:['hip
 //% SYSTEM
 // Advisor = 20% (each question = 20/16 = 1.25%)
 // Documents = 80% split evenly across required docs
-var XP_ADVISOR_TOTAL = 10;
-var XP_DOCS_TOTAL    = 90;
+var XP_ADVISOR_TOTAL = 20;
+var XP_DOCS_TOTAL    = 80;
 
 function getRequiredDocKeys() {
   var keys = [];
@@ -810,7 +586,7 @@ function updateXPDisplay() {
 
   // Ring — circumference = 2π×46 ≈ 289
   var arc = document.getElementById('scoreArc');
-  if (arc) arc.setAttribute('stroke-dashoffset', Math.round(289 - 289 * x.total / 100));
+  if (arc) arc.setAttribute('stroke-dashoffset', Math.round(314 - 314 * x.total / 100));
 
   var sn = document.getElementById('scoreNum');
   if (sn) sn.textContent = x.total;
@@ -856,8 +632,8 @@ function updateXPDisplay() {
   if (!x.advisorDone) {
     if (label) label.textContent = Object.keys(advAnswers).length === 0
       ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Complete the AI Advisor below to unlock your% score'
-      : 'Step 1: Complete the AI Advisor to earn 10% (' + Object.keys(advAnswers).length + '/16 answered)';
-    if (desc)  desc.textContent  = 'Answer all 16 questions to reveal exactly which documents your business needs. Each answered question earns 0.625%.';
+      : 'Step 1: Complete the AI Advisor to earn 20% (' + Object.keys(advAnswers).length + '/16 answered)';
+    if (desc)  desc.textContent  = 'Answer all 16 questions to reveal exactly which documents your business needs. Each answered question earns 1.25%.';
   } else if (x.reqKeys.length === 0) {
     if (label) label.textContent = 'Advisor complete! Now generate your required documents';
     if (desc)  desc.textContent  = 'Your compliance profile is set. Go to the form and generate all required documents to earn the remaining 80%.';
@@ -1385,101 +1161,78 @@ window.openModal=openModal;
 window.closeMod=closeMod;
 window.clearAll=function(){['3ch0_docs','3ch0_wb_dismissed',ADVISOR_USAGE_KEY,ADVISOR_ANSWERS_KEY].forEach(function(k){localStorage.removeItem(k);});location.reload();};
 
-// ==================================================
-// ONBOARDING TOUR
-// ==================================================
-var OB_SEEN_KEY = '3ch0_ob_seen';
-var obCurrent = 0;
-var OB_TOTAL = 6;
 
-function showOnboarding() {
-  var ov = document.getElementById('ob-overlay');
-  if (ov) {
-    ov.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    // Let browser render the flex layout first, then size slides
-    setTimeout(function() {
-      obSizeSlidesNow();
-      obGoTo(0);
-    }, 30);
-  }
+// ─────────────────────────────────────────────
+// ADVISOR USAGE — monthly lock (TEST_MODE bypasses)
+// ─────────────────────────────────────────────
+var ADVISOR_USAGE_KEY   = '3ch0_advisor_usage';
+var ADVISOR_ANSWERS_KEY = '3ch0_advisor_answers';
+
+function getAdvisorUsage() {
+  try { return JSON.parse(localStorage.getItem(ADVISOR_USAGE_KEY) || 'null'); } catch(e) { return null; }
+}
+function setAdvisorUsage() {
+  if (CONFIG.TEST_MODE) return;
+  var now = new Date();
+  try { localStorage.setItem(ADVISOR_USAGE_KEY, JSON.stringify({ month: now.getMonth(), year: now.getFullYear() })); } catch(e) {}
+}
+function advisorUsedThisMonth() {
+  if (CONFIG.TEST_MODE) return false;
+  var u = getAdvisorUsage(); if (!u) return false;
+  var n = new Date();
+  return u.month === n.getMonth() && u.year === n.getFullYear();
+}
+function lockAdvisorUI() {
+  document.querySelectorAll('.tbtn').forEach(function(b) {
+    b.disabled = true; b.style.opacity = '0.45'; b.style.cursor = 'not-allowed';
+  });
 }
 
-function closeOnboarding() {
-  var ov = document.getElementById('ob-overlay');
-  if (ov) {
-    ov.style.display = 'none';
-    document.body.style.overflow = '';
-  }
-  try { localStorage.setItem(OB_SEEN_KEY, '1'); } catch(e) {}
-}
-
-function obGetSlideWidth() {
-  var vp = document.getElementById('ob-viewport');
-  return vp ? vp.offsetWidth : 680;
-}
-
-function obSizeSlidesNow() {
-  var w = obGetSlideWidth();
-  var slides = document.querySelectorAll('.ob-slide');
-  for (var i = 0; i < slides.length; i++) {
-    slides[i].style.width = w + 'px';
-    slides[i].style.minWidth = w + 'px';
-    slides[i].style.maxWidth = w + 'px';
-  }
-  // Reapply current transform in px
-  var track = document.getElementById('ob-track');
-  if (track) track.style.transform = 'translateX(-' + (obCurrent * w) + 'px)';
-}
-
-function obGoTo(n) {
-  obCurrent = Math.max(0, Math.min(OB_TOTAL - 1, n));
-  obSizeSlidesNow();
-
-  for (var i = 0; i < OB_TOTAL; i++) {
-    var d = document.getElementById('od' + i);
-    if (d) d.className = 'ob-dot' + (i === obCurrent ? ' active' : '');
-  }
-
-  var prev = document.getElementById('ob-prev');
-  if (prev) {
-    prev.style.opacity = obCurrent === 0 ? '0' : '1';
-    prev.disabled = obCurrent === 0;
-  }
-
-  var next = document.getElementById('ob-next');
-  var skip = document.getElementById('ob-skip');
-  if (next) next.style.display = obCurrent === OB_TOTAL - 1 ? 'none' : 'inline-flex';
-  if (skip) skip.style.display = obCurrent === OB_TOTAL - 1 ? 'none' : 'inline';
-}
-
-window.addEventListener('resize', function() {
-  obSizeSlidesNow();
-});
-
-function obNext() {
-  if (obCurrent < OB_TOTAL - 1) obGoTo(obCurrent + 1);
-}
-
-function obPrev() {
-  if (obCurrent > 0) obGoTo(obCurrent - 1);
-}
-
-function skipToEnd() {
-  obGoTo(OB_TOTAL - 1);
-}
-
-document.addEventListener('keydown', function(e) {
-  var ov = document.getElementById('ob-overlay');
-  if (!ov || ov.style.display === 'none') return;
-  if (e.key === 'ArrowRight') obNext();
-  if (e.key === 'ArrowLeft') obPrev();
-  if (e.key === 'Escape') closeOnboarding();
-});
-
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
-  // Always show onboarding on every page load
-  setTimeout(showOnboarding, 600);
+  var alreadyUsed = advisorUsedThisMonth();
+
+  if (alreadyUsed) {
+    try {
+      var saved = JSON.parse(localStorage.getItem(ADVISOR_ANSWERS_KEY) || '{}');
+      var keys = Object.keys(saved);
+      for (var i = 0; i < keys.length; i++) {
+        var key = keys[i]; var val = saved[key];
+        var yB = document.getElementById('btn-' + key + '-yes');
+        var nB = document.getElementById('btn-' + key + '-no');
+        var aq = document.getElementById('aq-' + key);
+        if (yB && nB) {
+          yB.className = 'tbtn' + (val === 'yes' ? ' ay' : '');
+          nB.className = 'tbtn' + (val === 'no'  ? ' an' : '');
+          if (aq) aq.classList.add('answered');
+          advAnswers[key] = val;
+          if (FW_TRIGGERS[key] && val === 'yes') {
+            var fws = FW_TRIGGERS[key];
+            for (var j = 0; j < fws.length; j++) {
+              if (requiredFrameworks.indexOf(fws[j]) === -1) requiredFrameworks.push(fws[j]);
+            }
+          }
+        }
+      }
+      var an = Object.keys(advAnswers).length;
+      var pb = document.getElementById('adv-pbar'); if (pb) pb.style.width = Math.round(an / TOTAL_Q * 100) + '%';
+      var ct = document.getElementById('adv-count'); if (ct) ct.textContent = an + ' / ' + TOTAL_Q;
+      var lp = document.getElementById('risk-lock-prog'); if (lp) lp.textContent = an + ' of ' + TOTAL_Q + ' questions answered';
+      updateAdvisorSummary();
+      if (an === TOTAL_Q) {
+        var b = document.getElementById('adv-complete-badge'); if (b) b.style.display = 'inline';
+        unlockRisk();
+      }
+    } catch(e) { console.warn('Advisor restore:', e); }
+    lockAdvisorUI();
+  }
+
+  renderDocLists();
+  renderAlerts();
+  renderRegFeed();
+  updateXPDisplay();
 });
 
 </script>
