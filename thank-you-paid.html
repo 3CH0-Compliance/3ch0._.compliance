@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Documents Processing - 3CH0</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <title>Application Received - 3CH0</title>
+  <meta name="description" content="Thank you for your partnership application">
   <link rel="icon" href="3CH0 logo.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --main-bg: #0a0a0a;
@@ -17,6 +18,7 @@
       --accent: #92cdec;
       --secondary-text: #a0a0a0;
       --glass-panel: rgba(15, 15, 15, 0.8);
+      --success: #10b981;
     }
 
     * {
@@ -25,24 +27,19 @@
       box-sizing: border-box;
     }
 
-    html, body {
-      height: 100%;
-      margin: 0;
-    }
-
     body {
       font-family: 'Inter', sans-serif;
       background-color: var(--main-bg);
       color: var(--text-color);
       line-height: 1.6;
-      overflow-x: hidden;
-      padding-top: 80px;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
 
-    /* Animated background */
     body::before {
       content: '';
       position: fixed;
@@ -63,220 +60,100 @@
       50% { opacity: 0.8; transform: scale(1.1); }
     }
 
-    .glass-panel {
+    .container {
+      max-width: 850px;
+      text-align: center;
+    }
+
+    .success-card {
       background: var(--glass-panel);
       backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
       border: 1px solid var(--border-color);
-      border-radius: 16px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      border-radius: 20px;
+      padding: 60px 50px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     }
 
-    /* Navigation - Fixed */
-    nav {
-      background: rgba(10, 10, 10, 0.98);
-      padding: 18px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border-color);
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-
-    nav a {
-      margin-left: 24px;
-      font-weight: 500;
-      color: var(--accent);
-      text-decoration: none;
-      transition: all 0.3s ease;
-      position: relative;
-    }
-
-    nav a:hover {
-      transform: translateY(-2px);
-      color: #fdfdfe;
-    }
-
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--gradient);
-      transition: width 0.3s ease;
-    }
-
-    nav a:hover::after {
-      width: 100%;
-    }
-
-    .logo-img {
-      height: 60px;
-      filter: brightness(120%);
-    }
-
-    .main-content {
-      flex: 1 0 auto;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px 20px;
-    }
-
-    .checkmark {
-      width: 100px;
-      height: 100px;
-      margin: 0 auto 40px;
-      position: relative;
-    }
-
-    .checkmark circle {
-      stroke: #92cdec;
-      stroke-width: 2;
-      fill: none;
-      stroke-dasharray: 166;
-      stroke-dashoffset: 166;
-      animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
-    }
-
-    .checkmark path {
-      stroke: #92cdec;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-dasharray: 48;
-      stroke-dashoffset: 48;
-      animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
-      fill: none;
-    }
-
-    @keyframes stroke {
-      100% { stroke-dashoffset: 0; }
+    .success-icon {
+      font-size: 80px;
+      margin-bottom: 30px;
     }
 
     h1 {
-      font-size: 3rem;
+      font-size: 2.5rem;
       background: var(--gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 20px;
       font-family: 'Playfair Display', serif;
-      font-weight: 700;
     }
 
-    .subtext {
-      font-size: 1.25rem;
+    p {
       color: var(--secondary-text);
-      max-width: 600px;
-      margin: 0 auto 50px;
+      font-size: 1.1rem;
+      margin-bottom: 25px;
       line-height: 1.6;
     }
 
-    .status-card {
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 40px;
-      max-width: 600px;
-      width: 100%;
-      margin: 0 auto 50px;
+    .submission-id {
+      background: rgba(146, 205, 236, 0.1);
       border: 1px solid var(--border-color);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-      backdrop-filter: blur(10px);
+      border-radius: 10px;
+      padding: 15px;
+      margin: 25px 0;
+      font-family: monospace;
+      font-size: 14px;
     }
 
-    .status-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 0;
-      border-bottom: 1px solid var(--border-color);
+    .next-steps {
+      text-align: left;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 25px;
+      margin: 30px 0;
     }
 
-    .status-item:last-child {
-      border-bottom: none;
+    .next-steps h3 {
+      color: var(--accent);
+      margin-bottom: 15px;
     }
 
-    .status-item span {
+    .next-steps ol {
       color: var(--secondary-text);
+      padding-left: 20px;
     }
 
-    .status-item strong {
-      color: var(--text-color);
-      font-weight: 600;
-    }
-
-    .button-group {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      margin-top: 30px;
-      flex-wrap: wrap;
+    .next-steps li {
+      margin-bottom: 10px;
     }
 
     .btn {
+      display: inline-block;
       padding: 16px 40px;
       font-size: 16px;
       font-weight: 600;
+      color: var(--button-text);
+      border: none;
       border-radius: 30px;
+      background: var(--gradient);
       cursor: pointer;
       text-decoration: none;
-      transition: all 0.3s ease;
-      border: none;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 14px rgba(146, 205, 236, 0.3);
+      margin: 10px;
     }
 
-    .btn-primary {
-      background: var(--gradient);
-      color: var(--button-text);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-3px);
+    .btn:hover {
+      transform: scale(1.04);
       box-shadow: 0 8px 20px rgba(146, 205, 236, 0.4);
     }
 
     .btn-secondary {
       background: transparent;
-      color: var(--accent);
       border: 2px solid var(--accent);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(146, 205, 236, 0.1);
-      transform: translateY(-3px);
-    }
-
-    .progress-text {
       color: var(--accent);
-      font-size: 1rem;
-      margin-top: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
     }
 
-    .progress-text svg {
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { opacity: 0.6; }
-      50% { opacity: 1; }
-      100% { opacity: 0.6; }
-    }
-
-    /* Footer - At Bottom */
     footer {
       margin-top: 40px;
       text-align: center;
@@ -289,148 +166,56 @@
       text-decoration: underline;
       margin: 0 8px;
     }
-
-    .footer-links {
-      margin-bottom: 20px;
-    }
-
-    /* Animation */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .animate {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    
-    .animate.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      nav {
-        padding: 15px 20px;
-      }
-      
-      h1 {
-        font-size: 2.5rem;
-      }
-      
-      .subtext {
-        font-size: 1.1rem;
-      }
-      
-      .status-card {
-        padding: 30px 20px;
-      }
-      
-      .button-group {
-        flex-direction: column;
-        width: 100%;
-        max-width: 300px;
-      }
-      
-      .btn {
-        width: 100%;
-      }
-      
-      body {
-        padding-top: 70px;
-      }
-      
-    footer {
-      margin-top: 40px;
-      text-align: center;
-      font-size: 14px;
-      color: #777;
-    }
-
-    footer a {
-      color: #ccc;
-      text-decoration: underline;
-      margin: 0 8px;
-    }}
   </style>
 </head>
 <body>
-  <!-- Nav - Fixed -->
-  <nav class="glass-panel">
-    <div><img src="3CH0_logo_transparent_fixed.png" alt="3CH0 Logo" class="logo-img"></div>
-    <div>
-      <a href="home.html">Home</a>
-      <a href="subscription.html">Subscription</a>
-      <a href="settings.html">Settings</a>
-    </div>
-  </nav>
+  <div class="container">
+    <div class="success-card">
+      <div class="success-icon">🎉</div>
+      
+      <h1>Application Received!</h1>
+      
+      <p>Thank you for applying to become a 3CH0 Legal Partner. We're excited to review your application and learn more about how we can work together.</p>
 
-</br>
-</br>
-
-  <div class="main-content">
-    <div class="checkmark animate">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-        <circle cx="26" cy="26" r="25"/>
-        <path d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-      </svg>
-    </div>
-
-    <h1 class="animate">Thank You for Subscribing</h1>
-    <p class="subtext animate">Welcome to 3CH0 Compliance. Your Agency Pro plan is now active and your first documents are already on their way to your inbox.</p>
-
-    <div class="status-card glass-panel animate">
-      <div class="status-item">
-        <span>Status</span>
-        <strong>Approved</strong>
+      <div class="submission-id" id="submission-display">
+        Application ID: <span id="submission-id">Loading...</span>
       </div>
-      <div class="status-item">
-        <span>Delivery</span>
-        <strong>Within 5 minutes</strong>
+
+      <div class="next-steps">
+        <h3>What Happens Next?</h3>
+        <ol>
+          <li><strong>Application Review</strong> - We'll review your credentials within 3 business days</li>
+          <li><strong>Email Confirmation</strong> - You'll receive a confirmation email shortly</li>
+          <li><strong>Interview Scheduling</strong> - If selected, we'll schedule a 30-minute video call</li>
+          <li><strong>Partnership Onboarding</strong> - Complete agreement and platform training</li>
+        </ol>
       </div>
-      <div class="status-item">
-        <span>Plan</span>
-        <strong>Agency Pro — Unlimited</strong>
+
+      <p><strong>📧 Check your email</strong> for a confirmation message and next steps.</p>
+
+      <div>
+        <a href="home.html" class="btn">Return to Home</a>
+        <a href="settings.html" class="btn btn-secondary">Back to Settings</a>
       </div>
     </div>
-
-    <!-- Centered single button -->
-    <div class="button-group">
-      <a href="home.html" class="btn btn-primary animate">
-        Go to Dashboard
-      </a>
-    </div>
-
-    <p class="progress-text animate">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="#92cdec" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-      </svg>
-      Your documents are being prepared now
-    </p>
   </div>
 
-</br>
-</br>
-
   <footer>
-    &copy; 2025 3CH0 Compliance. All rights reserved.
+    &copy; 3CH0 Compliance Pty Ltd. All rights reserved.
     <br>
-    <a href="mailto:3CH0.The.Only@gmail.com" style="margin: 0;">Support</a> |
+    <a href="mailto:3CH0.The.Only@gmail.com">Support</a> |
     <a href="https://discord.gg/W5SrbqK7j3" target="_blank">Community</a>
   </footer>
 
-</br>
-
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var els = document.querySelectorAll('.animate');
-      els.forEach(function(el, i) {
-        setTimeout(function() { el.classList.add('visible'); }, i * 120);
-      });
-    });
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const submissionId = urlParams.get('submission');
+    
+    if (submissionId) {
+      document.getElementById('submission-id').textContent = submissionId;
+    } else {
+      document.getElementById('submission-display').style.display = 'none';
+    }
   </script>
 </body>
 </html>
