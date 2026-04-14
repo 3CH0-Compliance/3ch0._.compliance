@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>3CH0 Compliance</title>
+  <title>3CH0 — Find Out Which Compliance Laws Apply to Your Business. Free in 4 Minutes.</title>
   
   <!-- Cache busting - force reload -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -289,22 +289,130 @@
       }
     }
 
+    .trust-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.82rem;
+      color: var(--secondary-text);
+      letter-spacing: 0.01em;
+    }
+
+    .trust-item svg {
+      width: 14px;
+      height: 14px;
+      fill: #10b981;
+      flex-shrink: 0;
+    }
+
+    .eyebrow {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+      opacity: 0.9;
+    }
+
+    .reg-pills {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 28px 0 36px;
+    }
+
+    .reg-pill {
+      background: rgba(146, 205, 236, 0.08);
+      border: 1px solid rgba(146, 205, 236, 0.25);
+      border-radius: 50px;
+      padding: 7px 16px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    .cta-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cta-sub {
+      font-size: 0.78rem;
+      color: var(--secondary-text);
+      opacity: 0.8;
+      letter-spacing: 0.01em;
+    }
+
+    .secondary-link {
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      opacity: 0.8;
+      border-bottom: 1px solid rgba(146, 205, 236, 0.3);
+      padding-bottom: 1px;
+      transition: opacity 0.2s;
+    }
+
+    .secondary-link:hover {
+      opacity: 1;
+    }
+
+    .divider-dot {
+      color: var(--secondary-text);
+      opacity: 0.4;
+      font-size: 0.7rem;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin: 32px 0 0;
+      padding-top: 28px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-val {
+      font-size: 1.4rem;
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-family: 'Playfair Display', serif;
+      display: block;
+      line-height: 1.2;
+    }
+
+    .stat-lbl {
+      font-size: 0.73rem;
+      color: var(--secondary-text);
+      margin-top: 3px;
+      opacity: 0.8;
+    }
+
     @media (max-width: 480px) {
-      .hero-container {
-        padding: 30px 20px;
-      }
-      
-      .title {
-        font-size: 1.8rem;
-      }
-      
-      .subtitle {
-        font-size: 1rem;
-      }
-      
-      .welcome-logo {
-        height: 110px;
-      }
+      .trust-row { gap: 14px; }
+      .stat-row { gap: 20px; }
+      .stat-val { font-size: 1.2rem; }
     }
   </style>
 </head>
@@ -315,11 +423,51 @@
   <!-- Main content with glass panel -->
   <div class="hero-container">
     <div class="hero-content">
-      <img src="3CH0_logo_transparent_fixed.png" alt="3CH0 Logo" class="welcome-logo">
-      <h1 class="title">Compliance. Instantly.</h1></br>
-      <p class="subtitle">Enterprise-grade compliance solutions that save time, reduce risk, and scale with your business. Generate legally-compliant documents in minutes, not days.</p>
-      
-      <a href="loading.html" class="btn pulse" onclick="window.location.href='loading.html';return false;">Get Started</a>
+    <img src="3CH0_logo_transparent_fixed.png" alt="3CH0 Logo" class="welcome-logo">
+
+      <p class="eyebrow">Compliance intelligence for SMEs</p>
+
+      <h1 class="title">Not sure which laws apply to your business?</h1>
+
+      <p class="subtitle">GDPR. POPIA. HIPAA. CCPA. We tell you exactly which ones apply to you, and generate every document you need to fix it. In 5 minutes. Free.</p>
+      <div class="cta-wrapper">
+        <a href="loading.html" class="btn pulse" onclick="window.location.href='loading.html';return false;">
+          Run My Free Compliance Check
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="margin-left:4px"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <p class="cta-sub">No credit card &nbsp;·&nbsp; No legal degree &nbsp;·&nbsp; Results in 5 minutes</p>
+        <a href="home.html" class="secondary-link">See how it works first →</a>
+      </div>
+
+      <div class="trust-row" style="margin-top:28px;margin-bottom:0">
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Free first check. Always!
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Documents tailored to your business
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Built for 10–200 person teams
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-item">
+          <span class="stat-val">5 min</span>
+          <div class="stat-lbl">Average check time</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-val">4 laws</span>
+          <div class="stat-lbl">Covered simultaneously</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-val">$0</span>
+          <div class="stat-lbl">To get started</div>
+        </div>
+      </div>
     </div>
   </div>
 
