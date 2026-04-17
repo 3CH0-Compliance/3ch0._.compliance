@@ -10,7 +10,7 @@
   <meta property="og:type" content="website">
   
   <!-- SECURITY HEADERS -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.paypal.com https://hook.us2.make.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.anthropic.com https://hook.us2.make.com https://api.exchangerate-api.com; frame-src https://www.paypal.com">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.paypal.com https://hook.us2.make.com https://cdn.vercel-insights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.anthropic.com https://hook.us2.make.com https://api.exchangerate-api.com https://vitals.vercel-insights.com; frame-src https://www.paypal.com">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="X-Frame-Options" content="DENY">
   <meta http-equiv="X-XSS-Protection" content="1; mode=block">
@@ -1526,6 +1526,9 @@
       backdrop-filter: blur(10px);
     }
   </style>
+  <!-- Vercel Web Analytics -->
+  <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
+
 </head>
 
 <body>
