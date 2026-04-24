@@ -82,56 +82,17 @@
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     }
 
-    /* Navigation - Fixed */
-    nav {
-      background: rgba(10, 10, 10, 0.98);
-      padding: 18px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border-color);
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
+    
 
-    nav a {
-      margin-left: 24px;
-      font-weight: 500;
-      color: var(--accent);
-      text-decoration: none;
-      transition: all 0.3s ease;
-      position: relative;
-    }
-
-    nav a:hover {
-      transform: translateY(-2px);
-      color: #fdfdfe;
-    }
-
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--gradient);
-      transition: width 0.3s ease;
-    }
-
-    nav a:hover::after {
-      width: 100%;
-    }
-
-    .logo-img {
-      height: 60px;
-      filter: brightness(120%);
-    }
+    .logo-img{height:52px;filter:brightness(115%)}
+nav{background:rgba(10,10,10,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border-color);padding:16px 40px;display:flex;justify-content:space-between;align-items:center;position:fixed;top:0;left:0;right:0;z-index:900}
+nav a{margin-left:22px;font-weight:500;color:var(--accent);text-decoration:none;font-size:14px;transition:color .25s;position:relative}
+nav a:hover{color:#fff}
+nav a.nav-active{color:#fff}
+nav a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gradient);transition:width .3s}
+nav a:hover::after,nav a.nav-active::after{width:100%}
+.nav-cta{background:var(--gradient)!important;color:#0a0a0a!important;padding:8px 20px;border-radius:30px;font-weight:700!important}
+.nav-cta::after{display:none!important}
 
     /* Content Container */
     .container {
@@ -318,15 +279,16 @@
 <body>
   <div class="main-content">
     <!-- Navigation -->
-    <nav class="glass-panel">
-      <div><img src="3CH0_logo_transparent_fixed.png" alt="3CH0 Logo" class="logo-img"></div>
-      <div>
-        <a href="home.html">Home</a>
-        <a href="compliance_dashboard.html">Dashboard</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="settings.html">Settings</a>
-      </div>
-    </nav>
+    <nav>
+  <div><img src="3CH0_logo_transparent_fixed.png" alt="3CH0" class="logo-img"></div>
+  <div style="display:flex;align-items:center;">
+    <a href="home.html">Home</a>
+    <a href="index.html">Dashboard</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="settings.html">Settings</a>
+    <a href="index.html#start" class="nav-cta">Start Free Check</a>
+  </div>
+</nav>
 
     <!-- Terms Content -->
     <div class="container">
