@@ -15,7 +15,15 @@
     nav{background:rgba(15,15,15,.8);padding:16px 40px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-color);position:fixed;top:0;left:0;right:0;z-index:1000;backdrop-filter:blur(10px)}
     nav a{font-weight:500;font-size:14px;color:var(--accent);text-decoration:none;transition:color .3s}
     nav a:hover{color:#fdfdfe}
-    .logo-img{height:55px;filter:brightness(120%)}
+    nav{background:rgba(10,10,10,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border-color, rgba(255,255,255,.1));padding:16px 40px;display:flex;justify-content:space-between;align-items:center;position:fixed;top:0;left:0;right:0;z-index:900}
+nav a{margin-left:22px;font-weight:500;color:var(--accent, #92cdec);text-decoration:none;font-size:14px;transition:color .25s;position:relative}
+nav a:hover{color:#fff}
+nav a.nav-active{color:#fff}
+nav a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gradient, linear-gradient(135deg,#ffffff,#92cdec,#0069d9));transition:width .3s}
+nav a:hover::after,nav a.nav-active::after{width:100%}
+.logo-img{height:52px;filter:brightness(115%)}
+.nav-cta{background:var(--gradient, linear-gradient(135deg,#ffffff,#92cdec,#0069d9))!important;color:#0a0a0a!important;padding:8px 20px;border-radius:30px;font-weight:700!important}
+.nav-cta::after{display:none!important}
     main{flex:1;padding:120px 24px 80px;max-width:600px;margin:0 auto;width:100%}
     .page-header{text-align:center;margin-bottom:40px}
     .page-header .icon{font-size:0;margin-bottom:16px;display:flex;align-items:center;justify-content:center}
@@ -66,12 +74,13 @@
 <body>
 
 <nav>
-  <div><img src="3CH0_logo_transparent_fixed.png" alt="3CH0 Logo" class="logo-img"></div>
-  <div style="display:flex;gap:24px;">
+  <div><img src="3CH0_logo_transparent_fixed.png" alt="3CH0" class="logo-img"></div>
+  <div style="display:flex;align-items:center;">
     <a href="home.html">Home</a>
-    <a href="compliance_dashboard.html">Dashboard</a>
+    <a href="index.html">Dashboard</a>
     <a href="pricing.html">Pricing</a>
     <a href="settings.html">Settings</a>
+    <a href="index.html#start" class="nav-cta">Start Free Check</a>
   </div>
 </nav>
 
@@ -227,8 +236,8 @@
 <script>
   var PRICE_CONFIG = {
     USD: { 'agency-pro': { monthly: 99.00,  annual: 988.00 }, symbol: '$'  },
-    EUR: { 'agency-pro': { monthly: 89.00,  annual: 888.00 }, symbol: '\u20ac'  },
-    GBP: { 'agency-pro': { monthly: 79.00,  annual: 788.00 }, symbol: '\u00a3'  }
+    EUR: { 'agency-pro': { monthly: 89.00,  annual: 888.00 }, symbol: '€'  },
+    GBP: { 'agency-pro': { monthly: 79.00,  annual: 788.00 }, symbol: '£'  }
   };
   var PLAN_NAMES   = { 'agency-pro': 'Agency Pro' };
   var WEBHOOK_URL  = 'https://kqdlhvvikscxxseopvdw.supabase.co/functions/v1/invoice-international';
