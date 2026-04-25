@@ -1,601 +1,1071 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pricing - 3CH0</title>
-  <link rel="icon" href="3CH0 logo.png" type="image/png">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --main-bg: #0a0a0a;
-      --gradient: linear-gradient(135deg, #ffffff, #92cdec, #0069d9);
-      --text-color: #ffffff;
-      --button-text: #0a0a0a;
-      --card-bg: rgba(20, 20, 20, 0.95);
-      --border-color: rgba(255, 255, 255, 0.1);
-      --accent: #92cdec;
-      --secondary-text: #a0a0a0;
-      --glass-panel: rgba(15, 15, 15, 0.8);
-      --success: #10b981;
-      --warning: #f59e0b;
-    }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Compliance Dashboard – 3CH0</title>
+<link rel="icon" href="3CH0 logo.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--main-bg:#0a0a0a;--gradient:linear-gradient(135deg,#ffffff,#92cdec,#0069d9);--text-color:#ffffff;--button-text:#0a0a0a;--card-bg:rgba(20,20,20,.95);--border-color:rgba(255,255,255,.1);--accent:#92cdec;--secondary-text:#a0a0a0;--success:#10b981;--warning:#f59e0b;--danger:#ef4444;}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--main-bg);color:var(--text-color);line-height:1.6;overflow-x:hidden;padding-top:80px;display:flex;flex-direction:column;min-height:100vh}
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 20% 50%,rgba(146,205,236,.12) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(0,105,217,.12) 0%,transparent 50%),radial-gradient(circle at 40% 20%,rgba(146,205,236,.08) 0%,transparent 50%);z-index:-1;animation:bgShift 20s ease infinite}
+@keyframes bgShift{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.8;transform:scale(1.05)}}
+nav{background:rgba(15,15,15,0.8);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--border-color);box-shadow:0 8px 32px rgba(0,0,0,.2);padding:18px 40px;display:flex;justify-content:space-between;align-items:center;position:fixed;top:0;left:0;right:0;z-index:1000;border-radius:0}
+nav a{margin-left:24px;font-weight:500;color:var(--accent);text-decoration:none;transition:all .3s ease;position:relative}
+nav a:hover{transform:translateY(-2px);color:#fdfdfe}
+nav a::after{content:'';position:absolute;bottom:-5px;left:0;width:0;height:2px;background:var(--gradient);transition:width .3s ease}
+nav a:hover::after{width:100%}
+.logo-img{height:60px;filter:brightness(120%)}
+.main-content{flex:1;width:100%;padding:40px 20px 60px;max-width:1280px;margin:0 auto}
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:16px}
+.page-title{font-family:'Playfair Display',serif;font-size:28px;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.page-subtitle{font-size:14px;color:var(--secondary-text);margin-top:4px}
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+/* ──% SCORE CARD ── */
+.score-wrap{background:var(--card-bg);border:1px solid var(--border-color);border-radius:20px;padding:28px 32px;display:flex;align-items:center;gap:32px;backdrop-filter:blur(10px);flex-wrap:wrap;margin-bottom:24px}
+.score-info{flex:1;min-width:220px}
+.score-info h2{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:2px}
 
-    html {
-      scroll-behavior: smooth;
-    }
+/* ──% BAR ── */
+.pct-bar-track{background:rgba(255,255,255,.06);border-radius:8px;height:14px;overflow:hidden;position:relative;margin:10px 0 6px;}
+.pct-bar-fill{height:100%;border-radius:8px;background:var(--gradient);transition:width 1.2s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;}
+.pct-bar-fill::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);animation:xpShimmer 2.5s ease infinite;}
+@keyframes xpShimmer{0%{left:-100%}100%{left:200%}}
+.pct-breakdown{display:flex;gap:20px;flex-wrap:wrap;margin-top:12px;}
+.pct-item{display:flex;align-items:center;gap:6px;font-size:12px;}
+.pct-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 
-    html, body {
-      height: 100%;
-      margin: 0;
-    }
+/* ── TOAST ── */
+@keyframes toastIn{from{opacity:0;transform:translateX(30px) scale(.95)}to{opacity:1;transform:translateX(0) scale(1)}}
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--main-bg);
-      color: var(--text-color);
-      line-height: 1.6;
-      overflow-x: hidden;
-      padding-top: 80px; /* For fixed nav */
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
+/* ── FRAMEWORK BARS ── */
+.slabel{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--secondary-text);margin:28px 0 14px;display:flex;align-items:center;gap:10px}
+.slabel::after{content:'';flex:1;height:1px;background:var(--border-color)}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:1000px){.grid2{grid-template-columns:1fr}}
+@media(max-width:700px){.grid4{grid-template-columns:repeat(2,1fr)}}
+.card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;padding:22px;backdrop-filter:blur(10px);transition:border-color .3s}
+.card-title{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--secondary-text);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.metric-val{font-size:26px;font-weight:700;font-family:'Playfair Display',serif;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.metric-lbl{font-size:12px;color:var(--secondary-text);margin-top:3px}
+.pbar-wrap{background:rgba(255,255,255,.06);border-radius:4px;height:5px;overflow:hidden;margin-top:7px}
+.pbar{height:100%;border-radius:4px;transition:width 1.2s ease;width:0%}
+.metric-trend{font-size:12px;color:var(--secondary-text);margin-top:6px}
 
-    /* Animated background */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 20% 50%, rgba(146, 205, 236, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(0, 105, 217, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 40% 20%, rgba(146, 205, 236, 0.1) 0%, transparent 50%);
-      z-index: -1;
-      animation: backgroundShift 20s ease infinite;
-    }
+/* ── TABS ── */
+.tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap}
+.tab-btn{padding:7px 18px;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border-color);background:transparent;color:var(--secondary-text);transition:all .2s;-webkit-appearance:none;appearance:none}
+.tab-btn.active{background:rgba(146,205,236,.15);color:var(--accent);border-color:rgba(146,205,236,.4)}
+.tab-pane{display:none}.tab-pane.active{display:block}
+.doc-list{display:flex;flex-direction:column;gap:7px}
+.doc-item{display:flex;align-items:center;justify-content:space-between;padding:12px 15px;border-radius:11px;background:rgba(255,255,255,.03);border:1px solid var(--border-color);cursor:pointer;transition:all .2s}
+.doc-item:hover{background:rgba(255,255,255,.06);border-color:rgba(146,205,236,.3)}
+.doc-left{display:flex;align-items:center;gap:11px;flex:1;min-width:0}
+.sdot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.sdot.ok{background:var(--success);box-shadow:0 0 7px rgba(16,185,129,.5)}
+.sdot.miss{background:rgba(255,255,255,.1);border:1px dashed rgba(255,255,255,.3)}
+.sdot.na{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15)}
+.doc-name{font-size:13px;font-weight:500}.doc-cat{font-size:11px;color:var(--secondary-text)}
+.badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;flex-shrink:0;white-space:nowrap;margin-left:8px}
+.badge.ok{background:rgba(16,185,129,.12);color:var(--success);border:1px solid rgba(16,185,129,.3)}
+.badge.gen{background:rgba(146,205,236,.1);color:var(--accent);border:1px solid rgba(146,205,236,.3)}
+.badge.na{background:rgba(255,255,255,.05);color:var(--secondary-text);border:1px solid rgba(255,255,255,.1)}
 
-    @keyframes backgroundShift {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.8; transform: scale(1.1); }
-    }
+/* ── ALERTS ── */
+.adv-gate{display:flex;flex-direction:column;align-items:center;gap:10px;padding:28px 20px;text-align:center;}
+.alert-item{display:flex;align-items:flex-start;gap:12px;padding:13px 15px;border-radius:12px;border:1px solid;cursor:pointer;transition:all .2s;margin-bottom:10px}
+.alert-item.urgent{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.25)}.alert-item.urgent:hover{background:rgba(239,68,68,.12)}
+.alert-item.med{background:rgba(245,158,11,.07);border-color:rgba(245,158,11,.25)}.alert-item.med:hover{background:rgba(245,158,11,.12)}
+.alert-item.info{background:rgba(59,130,246,.07);border-color:rgba(59,130,246,.2)}.alert-item.info:hover{background:rgba(59,130,246,.1)}
+.aico{flex-shrink:0;margin-top:2px;display:flex;align-items:center;}
+.alert-item h4{font-size:13px;font-weight:600;margin-bottom:2px}.alert-item p{font-size:12px;color:var(--secondary-text)}
+.ameta{font-size:11px;color:var(--secondary-text);display:flex;gap:7px;flex-wrap:wrap}
+.ameta span{background:rgba(255,255,255,.05);padding:2px 7px;border-radius:8px}
 
-    .main-content {
-      flex: 1 0 auto;
-      width: 100%;
-    }
+/* ── ADVISOR ── */
+.advisor-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;padding:22px;backdrop-filter:blur(10px)}
+.adv-prog-row{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding:12px 16px;background:rgba(255,255,255,.03);border:1px solid var(--border-color);border-radius:12px}
+.adv-prog-bar-wrap{flex:1;background:rgba(255,255,255,.06);border-radius:4px;height:5px;overflow:hidden}
+.adv-prog-bar{height:100%;border-radius:4px;background:var(--gradient);transition:width .4s ease;width:0%}
+.aq-section{margin-bottom:20px}
+.aq-section-title{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid rgba(146,205,236,.15)}
+.aq{display:flex;align-items:center;justify-content:space-between;padding:12px 15px;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid var(--border-color);margin-bottom:8px;gap:12px;transition:border-color .2s}
+.aq.answered{border-color:rgba(255,255,255,.2)}
+.aq-text{font-size:13px;flex:1}
+.twrap{display:flex;gap:6px;flex-shrink:0}
+.tbtn{padding:5px 16px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--border-color);background:transparent;color:var(--secondary-text);transition:all .2s;-webkit-appearance:none;appearance:none;line-height:1.4;display:inline-flex;align-items:center;}
+.tbtn:hover{background:rgba(255,255,255,.08)}
+.tbtn.ay{background:rgba(16,185,129,.18);color:var(--success);border-color:rgba(16,185,129,.5)!important}
+.tbtn.an{background:rgba(239,68,68,.13);color:#fca5a5;border-color:rgba(239,68,68,.4)!important}
+.adv-summary{margin-top:20px;padding:18px;background:rgba(146,205,236,.06);border:1px solid rgba(146,205,236,.2);border-radius:12px;font-size:13px;line-height:1.8;display:none}
+.adv-summary.show{display:block}
 
-    .glass-panel {
-      background: var(--glass-panel);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    }
+/* ── RISK ── */
+.risk-locked{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:36px 20px;text-align:center;gap:10px}
+.risk-locked-icon{font-size:28px;opacity:.35}
+.risk-locked-title{font-size:14px;font-weight:600;color:var(--secondary-text)}
+.risk-locked-sub{font-size:12px;color:var(--secondary-text);opacity:.7;max-width:260px;line-height:1.6}
+.risk-content{display:none}.risk-content.show{display:block}
+.risk-row{margin-bottom:14px}
+.risk-row-top{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;align-items:center}
+.risk-pill{font-size:10px;font-weight:700;padding:2px 9px;border-radius:10px}
+.risk-pill.low{background:rgba(16,185,129,.15);color:var(--success)}
+.risk-pill.medium{background:rgba(245,158,11,.15);color:var(--warning)}
+.risk-pill.high{background:rgba(239,68,68,.15);color:var(--danger)}
+.risk-pill.na{background:rgba(255,255,255,.06);color:var(--secondary-text)}
+.risk-tip{margin-top:16px;padding:13px;border-radius:11px;font-size:12px;line-height:1.6}
+.risk-tip.low{background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.2)}
+.risk-tip.medium{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2)}
+.risk-tip.high{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2)}
 
-    /* Navigation - Fixed */
-    nav {
-      background: rgba(15, 15, 15, 0.8);
-      padding: 18px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border-color);
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-      border-radius: 0;
-    }
+/* ── ACTIVITY ── */
+.act-item{display:flex;gap:11px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.act-item:last-child{border-bottom:none}
+.act-ico{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.act-ico.g{background:rgba(146,205,236,.1)}.act-ico.a{background:rgba(245,158,11,.1)}.act-ico.s{background:rgba(16,185,129,.1)}.act-ico.e{background:rgba(239,68,68,.1)}
+.act-txt{font-size:12px;line-height:1.5}.act-time{font-size:10px;color:var(--secondary-text);margin-top:1px}
+.act-empty{text-align:center;padding:30px 0;font-size:13px;color:var(--secondary-text);opacity:.6}
 
-    nav a {
-      margin-left: 24px;
-      font-weight: 500;
-      color: var(--accent);
-      text-decoration: none;
-      transition: all 0.3s ease;
-      position: relative;
-    }
+/* ── REG FEED ── */
+.reg-item{display:flex;align-items:flex-start;gap:11px;padding:13px;border-radius:11px;background:rgba(255,255,255,.03);border:1px solid var(--border-color);margin-bottom:9px;cursor:pointer;transition:all .2s}
+.reg-item:hover{background:rgba(255,255,255,.06)}
+.rflag{flex-shrink:0;display:flex;align-items:center;}
+.reg-item h4{font-size:13px;font-weight:600}.reg-item p{font-size:11px;color:var(--secondary-text);margin-top:2px}
+.rpill{font-size:9px;font-weight:700;padding:2px 7px;border-radius:9px;text-transform:uppercase;letter-spacing:.05em;display:inline-block;margin-top:5px}
+.rpill.new{background:rgba(59,130,246,.15);color:#93c5fd}.rpill.upd{background:rgba(245,158,11,.15);color:var(--warning)}.rpill.drft{background:rgba(255,255,255,.07);color:var(--secondary-text)}
 
-    nav a:hover {
-      transform: translateY(-2px);
-      color: #fdfdfe;
-    }
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;font-size:13px;font-weight:600;color:var(--button-text);border:none;border-radius:30px;background:var(--gradient);cursor:pointer;text-decoration:none;transition:all .3s;box-shadow:0 6px 20px rgba(146,205,236,.25)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(146,205,236,.4)}
+.btn-o{display:inline-flex;align-items:center;gap:7px;padding:8px 18px;font-size:12px;font-weight:600;color:var(--accent);border:1px solid rgba(146,205,236,.35);border-radius:30px;background:transparent;cursor:pointer;text-decoration:none;transition:all .3s}
+.btn-o:hover{background:rgba(146,205,236,.1)}
 
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--gradient);
-      transition: width 0.3s ease;
-    }
+/* ── MISC ── */
+@keyframes ping{0%{transform:scale(1);opacity:.8}100%{transform:scale(2.2);opacity:0}}
+.ldot{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--success)}
+.ldot::before{content:'';width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block;animation:ping 1.5s cubic-bezier(0,0,.2,1) infinite}
+.webhook-banner{background:rgba(146,205,236,.06);border:1px solid rgba(146,205,236,.2);border-radius:12px;padding:14px 18px;margin-bottom:20px;font-size:12px;color:var(--secondary-text);display:flex;align-items:flex-start;gap:10px}
+.webhook-banner strong{color:var(--accent)}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:2000;align-items:center;justify-content:center;padding:20px}
+.modal-bg.open{display:flex}
+.modal{background:#141414;border:1px solid rgba(146,205,236,.3);border-radius:20px;padding:34px;max-width:520px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,.6);animation:mIn .3s cubic-bezier(.34,1.56,.64,1)}
+@keyframes mIn{from{opacity:0;transform:scale(.9) translateY(16px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal h3{font-family:'Playfair Display',serif;font-size:20px;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px}
+.modal p{color:var(--secondary-text);font-size:13px;line-height:1.7;margin-bottom:4px}
+.mcl{float:right;background:none;border:none;color:var(--secondary-text);font-size:18px;cursor:pointer}.mcl:hover{color:#fff}
+.mfoot{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+footer{padding:30px 20px;background:rgba(9,6,3,.9);text-align:center;font-size:13px;color:#666;border-top:1px solid var(--border-color)}
+footer a{color:#aaa;text-decoration:underline;margin:0 8px}
+.sec-badge{position:fixed;bottom:10px;right:10px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);border-radius:6px;padding:4px 8px;font-size:10px;color:#10b981;z-index:1000}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--main-bg)}::-webkit-scrollbar-thumb{background:rgba(146,205,236,.3);border-radius:3px}
 
-    nav a:hover::after {
-      width: 100%;
-    }
-
-    .logo-img {
-      height: 60px;
-      filter: brightness(120%);
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 60px auto;
-      padding: 0 20px;
-    }
-
-    .header {
-      text-align: center;
-      margin-bottom: 60px;
-    }
-
-    h1 {
-      font-size: 36px;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 16px;
-      font-family: 'Playfair Display', serif;
-    }
-
-    .subheader {
-      font-size: 18px;
-      color: var(--secondary-text);
-      max-width: 600px;
-      margin: 0 auto 30px;
-    }
-
-    .plans {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-      margin-bottom: 60px;
-    }
-
-    .plan-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 40px 30px;
-      position: relative;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-    }
-
-    .plan-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-      border-color: rgba(146, 205, 236, 0.3);
-    }
-
-    .popular-badge {
-      position: absolute;
-      top: -12px;
-      right: 20px;
-      background: var(--gradient);
-      color: var(--button-text);
-      font-size: 12px;
-      font-weight: 700;
-      padding: 6px 16px;
-      border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-
-    .plan-name {
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .price-container {
-      margin: 20px 0;
-    }
-
-    .price {
-      font-size: 42px;
-      font-weight: 700;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .price-period {
-      font-size: 16px;
-      color: var(--secondary-text);
-    }
-
-    .features {
-      margin: 30px 0;
-    }
-
-    .feature {
-      display: flex;
-      align-items: center;
-      margin-bottom: 15px;
-      font-size: 15px;
-      color: var(--secondary-text);
-    }
-
-    .feature svg {
-      margin-right: 10px;
-      flex-shrink: 0;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 16px 40px;
-      font-size: 16px;
-      font-weight: 600;
-      text-align: center;
-      color: var(--button-text);
-      background: var(--gradient);
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      width: auto;
-      max-width: 200px;
-      margin: 0 auto;
-      text-decoration: none;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
-    }
-
-    .btn:hover {
-      transform: scale(1.04);
-      box-shadow: 0 8px 20px rgba(146, 205, 236, 0.4);
-    }
-
-    .btn-outline {
-      background: transparent;
-      border: 2px solid var(--accent);
-      color: var(--accent);
-    }
-
-    .btn-outline:hover {
-      background: rgba(146, 205, 236, 0.1);
-    }
-
-    .testimonial {
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 40px;
-      margin-top: 60px;
-      text-align: center;
-      border: 1px solid var(--border-color);
-      backdrop-filter: blur(10px);
-    }
-
-    .testimonial-text {
-      font-size: 18px;
-      font-style: italic;
-      margin-bottom: 20px;
-      color: var(--secondary-text);
-    }
-
-    .testimonial-author {
-      font-weight: 600;
-      color: white;
-    }
-
-    .testimonial-role {
-      color: var(--secondary-text);
-      font-size: 14px;
-    }
-
-/* Currency Indicator - Narrower Version */
-.currency-indicator {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-  padding: 8px 16px;
-  background: rgba(146, 205, 236, 0.1);
-  border-radius: 20px;
-  border: 1px solid var(--border-color);
-  backdrop-filter: blur(10px);
-  max-width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.currency-indicator span {
-  color: var(--accent);
-  font-weight: 600;
-  font-size: 14px;
-  white-space: nowrap;
-}
-
-.currency-change-btn {
-  background: transparent;
-  border: 1px solid var(--accent);
-  color: var(--accent);
-  padding: 4px 12px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 12px;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-}
-
-.currency-change-btn:hover {
-  background: rgba(146, 205, 236, 0.2);
-  transform: translateY(-1px);
-}
-
-    /* Footer - At Bottom */
-    footer {
-      padding: 48px 40px 36px;
-      background-color: rgba(9, 6, 3, 0.95);
-      text-align: center;
-      font-size: 14px;
-      color: #777;
-      border-top: 1px solid var(--border-color);
-      backdrop-filter: blur(10px);
-      flex-shrink: 0;
-      width: 100%;
-      margin-top: auto;
-    }
-
-    footer a {
-      color: #888;
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
-    footer a:hover {
-      color: var(--accent);
-    }
-
-    .footer-links {
-      margin-top: 20px;
-    }
-
-    /* Animation */
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.03); }
-      100% { transform: scale(1); }
-    }
-
-    .pulse {
-      animation: pulse 2s infinite;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .plans {
-        grid-template-columns: 1fr;
-      }
-      
-      .plan-card {
-        padding: 30px 20px;
-      }
-      
-      .btn {
-        width: 100%;
-        max-width: none;
-      }
-      
-      body {
-        padding-top: 70px;
-      }
-      
-      .container {
-        margin: 40px auto;
-      }
-    }
-
-        /* Security Badge - Subtle */
-    .security-badge-indicator {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      border-radius: 6px;
-      padding: 4px 8px;
-      font-size: 10px;
-      color: var(--success);
-      z-index: 1000;
-      backdrop-filter: blur(10px);
-    }
-
-  </style>
+/* ── ONBOARDING v3 ── */
+#ob3-overlay{display:none;position:fixed;inset:0;z-index:9500;background:rgba(0,0,0,0.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px;}
+#ob3-overlay.ob3-show{display:flex;}
+.ob3-modal{position:relative;width:100%;max-width:500px;background:#0d0d0d;border:1px solid rgba(146,205,236,0.25);border-radius:16px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,0.9);animation:ob3In .35s cubic-bezier(.34,1.26,.64,1) both;}
+@keyframes ob3In{from{opacity:0;transform:scale(.93) translateY(14px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.ob3-accent{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#92cdec 40%,#0069d9 60%,transparent);}
+.ob3-body{padding:28px 32px 24px;}
+.ob3-toprow{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.ob3-lbl{font-size:11px;color:#666;text-transform:uppercase;letter-spacing:0.1em;}
+.ob3-dots{display:flex;gap:6px;align-items:center;}
+.ob3-dot{height:4px;border-radius:2px;background:rgba(255,255,255,0.15);transition:all 0.3s ease;width:6px;cursor:pointer;}
+.ob3-dot.ob3-on{width:20px;background:#92cdec;}
+.ob3-wrap{overflow:hidden;}
+.ob3-track{display:flex;transition:transform 0.4s cubic-bezier(0.77,0,0.18,1);}
+.ob3-slide{min-width:100%;box-sizing:border-box;}
+.ob3-ico{width:48px;height:48px;border-radius:12px;background:rgba(146,205,236,0.12);border:1px solid rgba(146,205,236,0.3);display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+.ob3-ico.g{background:rgba(16,185,129,0.12);border-color:rgba(16,185,129,0.3);}
+.ob3-ttl{font-size:18px;font-weight:500;color:#fff;margin-bottom:8px;font-family:'Playfair Display',serif;line-height:1.3;}
+.ob3-txt{font-size:13px;color:#a0a0a0;line-height:1.7;}
+.ob3-hint{margin-top:18px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;}
+.ob3-hint.g{background:rgba(16,185,129,0.06);border-color:rgba(16,185,129,0.2);}
+.ob3-hdot{width:6px;height:6px;border-radius:50%;background:#10b981;flex-shrink:0;}
+.ob3-htxt{font-size:12px;color:#a0a0a0;line-height:1.5;}
+.ob3-stats{margin-top:18px;display:flex;gap:8px;}
+.ob3-stat{flex:1;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 12px;text-align:center;}
+.ob3-sv{font-size:18px;font-weight:500;color:#92cdec;}
+.ob3-sl{font-size:11px;color:#a0a0a0;margin-top:2px;}
+.ob3-foot{display:flex;align-items:center;justify-content:space-between;margin-top:24px;}
+.ob3-skip{background:none;border:none;color:#555;font-size:13px;cursor:pointer;padding:8px 0;transition:color .2s;}
+.ob3-skip:hover{color:#a0a0a0;}
+.ob3-nav{display:flex;gap:10px;}
+.ob3-back{padding:9px 20px;border-radius:30px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid rgba(255,255,255,0.15);background:transparent;color:#a0a0a0;display:none;transition:background .2s;}
+.ob3-back:hover{background:rgba(255,255,255,0.06);}
+.ob3-next{padding:9px 26px;border-radius:30px;font-size:13px;font-weight:600;cursor:pointer;border:none;background:linear-gradient(135deg,#fff,#92cdec,#0069d9);color:#0a0a0a;transition:opacity .2s;box-shadow:0 4px 14px rgba(146,205,236,0.25);}
+.ob3-next:hover{opacity:.88;}
+</style>
 </head>
 <body>
-  <div class="main-content">
-    <!-- Nav - Fixed -->
-    <nav class="glass-panel">
-      <div><img src="3CH0_logo_transparent_fixed.png" alt="3CH0 Logo" class="logo-img"></div>
-      <div>
-        <a href="home.html">Home</a>
-        <a href="index.html">Dashboard</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="settings.html">Settings</a>
-      </div>
-    </nav>
 
-    <!-- Main Content -->
-    <div class="container">
-      <div class="header">
-        <h1>Simple, Transparent Pricing</h1>
-        <p class="subheader">Most businesses don't know which laws apply to them. We tell you in minutes and give you exactly what you need to fix it.</p>
+<nav>
+  <div><img src="3CH0_logo_transparent_fixed.png" alt="3CH0" class="logo-img"></div>
+  <div>
+    <a href="home.html">Home</a>
+    <a href="index.html" style="color:#fff;">Dashboard</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="settings.html">Settings</a>
+  </div>
+</nav>
 
-        <!-- Currency Indicator -->
-        <div class="currency-indicator">
-          <span id="current-currency">USD ($)</span>
-          <button class="currency-change-btn" onclick="openSettings()">Change</button>
+<!-- TOAST CONTAINER -->
+<div id="toast-container" style="position:fixed;top:90px;right:20px;z-index:3000;display:flex;flex-direction:column;gap:8px;pointer-events:none;max-width:320px;"></div>
+
+<!-- ── ONBOARDING POPUP v3 ── -->
+<div id="ob3-overlay">
+  <div class="ob3-modal">
+    <div class="ob3-accent"></div>
+    <div class="ob3-body">
+
+      <div class="ob3-toprow">
+        <div class="ob3-lbl">Welcome to 3CH0</div>
+        <div class="ob3-dots">
+          <div class="ob3-dot ob3-on" id="ob3d0" onclick="ob3GoTo(0)"></div>
+          <div class="ob3-dot" id="ob3d1" onclick="ob3GoTo(1)"></div>
+          <div class="ob3-dot" id="ob3d2" onclick="ob3GoTo(2)"></div>
         </div>
       </div>
 
-      <div class="plans">
-        <!-- Free Plan -->
-        <div class="plan-card glass-panel">
-          <div class="plan-name">Free</div>
-          <div class="price-container">
-            <span class="price" id="free-price">$0</span>
-            <span class="price-period" id="free-period">forever</span>
-          </div>
-          <div class="features">
-            <div class="feature">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 6L9 17L4 12" stroke="#92cdec" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-              <span>1 Full compliance document (no watermark)</span>
-            </div>
-                      <div class="feature">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 6L9 17L4 12" stroke="#92cdec" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-              <span>1 Full Compliance Risk Analysis Check a Month</span>
-            </div>
-            <div class="feature">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 6L9 17L4 12" stroke="#92cdec" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-              <span>See which laws apply to your business</span>
-            </div>
-            <div class="feature">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6 18L18 6M6 6l12 12" stroke="#ff6b6b" stroke-width="2"/>
-              </svg>
-              <span style="color: #888;">No real-time updates</span>
-            </div>
-          </div>
-          <a href="checkout-free.html" class="btn btn-outline">Start Free Plan</a>
-        </div>
+      <div class="ob3-wrap">
+        <div class="ob3-track" id="ob3-track">
 
-        <!-- Pro Plan -->
-        <div class="plan-card glass-panel" style="border: 1px solid rgba(146, 205, 236, 0.3);">
-          <div class="popular-badge">MOST POPULAR</div>
-          <div class="plan-name">Agency Pro</div>
-          <div class="price-container">
-            <span class="price" id="pro-price">$99.00</span>
-            <span class="price-period" id="pro-period">per month</span>
-          </div>
-          <div class="features">
-            <div class="feature">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 6L9 17L4 12" stroke="#92cdec" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-              <span>Unlimited compliance documents</span>
+          <!-- Slide 1 -->
+          <div class="ob3-slide">
+            <div class="ob3-ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#92cdec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
             </div>
-            <div class="feature">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 6L9 17L4 12" stroke="#92cdec" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-              <span>Real-time legal updates</span>
-            </div>
-            <div class="feature">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 6L9 17L4 12" stroke="#92cdec" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-              <span>White-label branding</span>
-            </div>
-            <div class="feature">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 6L9 17L4 12" stroke="#92cdec" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-              <span>Priority Slack support</span>
+            <div class="ob3-ttl">Tell us about your business</div>
+            <div class="ob3-txt">Head to the <strong style="color:#92cdec;">Home</strong> page and fill in the compliance form. Tell us your industry, where your customers are, and which regulation you need. Takes about 3 minutes — no legal knowledge required.</div>
+            <div class="ob3-hint">
+              <div class="ob3-hdot"></div>
+              <div class="ob3-htxt">Your first document is <strong style="color:#fff;">completely free</strong> — no credit card needed</div>
             </div>
           </div>
-          <a href="checkout-agency.html" class="btn pulse">Get Started</a>
-          <div style="text-align: center; margin-top: 10px; font-size: 13px; color: var(--secondary-text);">
-            Cancel anytime
+
+          <!-- Slide 2 -->
+          <div class="ob3-slide">
+            <div class="ob3-ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#92cdec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <div class="ob3-ttl">We build your document</div>
+            <div class="ob3-txt">Once you submit, our AI maps your answers against the actual regulation text — GDPR, POPIA, HIPAA, or CCPA — and generates a document tailored to your specific business. Not a generic template. Delivered to your inbox in under 5 minutes.</div>
+            <div class="ob3-stats">
+              <div class="ob3-stat"><div class="ob3-sv">5 min</div><div class="ob3-sl">delivery time</div></div>
+              <div class="ob3-stat"><div class="ob3-sv">4</div><div class="ob3-sl">regulations covered</div></div>
+              <div class="ob3-stat"><div class="ob3-sv">100%</div><div class="ob3-sl">tailored to you</div></div>
+            </div>
           </div>
+
+          <!-- Slide 3 -->
+          <div class="ob3-slide">
+            <div class="ob3-ico g">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            </div>
+            <div class="ob3-ttl">Know exactly where you stand</div>
+            <div class="ob3-txt">Your dashboard tracks your live compliance score, which documents you have, and what's still missing. Complete the AI Advisor and generate documents to build your score toward 100%. Need more than one doc a month? Upgrade anytime on the <strong style="color:#92cdec;">Subscription</strong> page.</div>
+            <div class="ob3-hint g">
+              <div class="ob3-hdot"></div>
+              <div class="ob3-htxt">Regulations change — we <strong style="color:#fff;">alert you automatically</strong> when your documents need updating</div>
+            </div>
+          </div>
+
+        </div>
       </div>
+
+      <div class="ob3-foot">
+        <button class="ob3-skip" id="ob3-skip" onclick="ob3Close()">Skip</button>
+        <div class="ob3-nav">
+          <button class="ob3-back" id="ob3-back" onclick="ob3Prev()">Back</button>
+          <button class="ob3-next" id="ob3-next" onclick="ob3Next()">Next</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var KEY='3ch0_ob_v3', TOTAL=3, idx=0;
+
+  function update(){
+    document.getElementById('ob3-track').style.transform='translateX(-'+(idx*100)+'%)';
+    for(var i=0;i<TOTAL;i++){
+      var d=document.getElementById('ob3d'+i);
+      if(!d)continue;
+      d.style.width=i===idx?'20px':'6px';
+      d.style.background=i===idx?'#92cdec':'rgba(255,255,255,0.15)';
+      d.className='ob3-dot'+(i===idx?' ob3-on':'');
+    }
+    var back=document.getElementById('ob3-back');
+    var skip=document.getElementById('ob3-skip');
+    var next=document.getElementById('ob3-next');
+    if(back)back.style.display=idx>0?'inline-block':'none';
+    if(skip)skip.style.display=idx<TOTAL-1?'inline-block':'none';
+    if(next)next.textContent=idx===TOTAL-1?'Go to dashboard':'Next';
+  }
+
+  window.ob3GoTo=function(n){idx=Math.max(0,Math.min(TOTAL-1,n));update();};
+  window.ob3Next=function(){if(idx<TOTAL-1){idx++;update();}else{ob3Close();}};
+  window.ob3Prev=function(){if(idx>0){idx--;update();}};
+
+  window.ob3Close=function(){
+    var ov=document.getElementById('ob3-overlay');
+    if(!ov)return;
+    ov.style.opacity='0';
+    ov.style.transition='opacity 0.28s ease';
+    setTimeout(function(){
+      ov.style.display='none';
+      ov.style.opacity='';
+      ov.style.transition='';
+    },290);
+    document.body.style.overflow='';
+    try{localStorage.setItem(KEY,'1');}catch(e){}
+  };
+
+  function show(){
+    try{if(localStorage.getItem(KEY))return;}catch(e){}
+    var ov=document.getElementById('ob3-overlay');
+    if(!ov)return;
+    ov.style.display='flex';
+    document.body.style.overflow='hidden';
+    update();
+  }
+
+  document.addEventListener('keydown',function(e){
+    var ov=document.getElementById('ob3-overlay');
+    if(!ov||ov.style.display==='none')return;
+    if(e.key==='ArrowRight')window.ob3Next();
+    if(e.key==='ArrowLeft')window.ob3Prev();
+    if(e.key==='Escape')window.ob3Close();
+  });
+
+  document.addEventListener('click',function(e){
+    if(e.target&&e.target.id==='ob3-overlay')window.ob3Close();
+  });
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',show);
+  } else {
+    show();
+  }
+})();
+</script>
+
+
+
+
+
+
+<div class="main-content">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div>
+      <div class="page-title">Your Compliance Dashboard</div>
+      <div class="page-subtitle" id="dash-subtitle">Answer the AI Advisor and generate your documents to build your compliance score — and know exactly where you stand.</div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+      <span class="ldot">Live monitoring</span>
+      <a href="#advisor" class="btn-o"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="8" rx="2"/><path d="M9 11V7a3 3 0 0 1 6 0v4"/><circle cx="9" cy="15" r="1" fill="currentColor"/><circle cx="15" cy="15" r="1" fill="currentColor"/><path d="M12 3v2"/></svg> AI Advisor</a>
+      <a href="home.html#form-container" class="btn">+ Generate Doc</a>
     </div>
   </div>
 
-    <!-- Security Badge -->
-  <div class="security-badge-indicator"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Secure</div>
+  <!-- ═══% SCORE CARD ═══ -->
+  <div class="score-wrap">
 
-  <!-- Footer - At Bottom -->
-  <footer>
-      &copy; 3CH0 Compliance Pty Ltd. All rights reserved.<br>
-    <div class="footer-links">
-      <a href="settings.html">Privacy & Terms</a> |
-      <a href="mailto:3CH0.The.Only@gmail.com" style="margin: 0;">Support</a>  |
-      <a href="https://discord.gg/W5SrbqK7j3" target="_blank">Join the Community</a>
+    <!-- SVG Ring + Lock -->
+    <div style="position:relative;flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:0;">
+      <!-- Ring wrapper — lock overlay sits over ring only, badge is outside -->
+      <div style="position:relative;width:120px;height:120px;">
+        <!-- Lock overlay — only covers the ring circle -->
+        <div id="score-lock-overlay" style="position:absolute;top:5px;left:5px;width:110px;height:110px;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2;border-radius:50%;background:rgba(10,10,10,.86);backdrop-filter:blur(5px);border:1px solid rgba(255,255,255,.06);">
+          <div style="line-height:1;color:var(--secondary-text);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <div style="font-size:8px;font-weight:600;color:var(--secondary-text);margin-top:4px;text-align:center;line-height:1.4;letter-spacing:.02em;">Complete the advisor<br>to see your score</div>
+        </div>
+        <svg width="120" height="120" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="10"/>
+          <circle id="scoreArc" cx="60" cy="60" r="50" fill="none" stroke="url(#sg)" stroke-width="10"
+            stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314" transform="rotate(-90 60 60)"
+            style="transition:stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1);"/>
+          <defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#ffffff"/><stop offset="50%" stop-color="#92cdec"/><stop offset="100%" stop-color="#0069d9"/>
+          </linearGradient></defs>
+          <text id="scoreNum" x="60" y="55" text-anchor="middle" fill="#fff" font-size="26" font-weight="700" font-family="Playfair Display,serif">0</text>
+          <text x="60" y="70" text-anchor="middle" fill="#a0a0a0" font-size="10">% / 100</text>
+        </svg>
+      </div>
+      <!-- Level badge — sits cleanly below the ring, never overlapped -->
+      <div id="level-badge" style="margin-top:8px;white-space:nowrap;font-size:9px;font-weight:700;padding:3px 12px;border-radius:20px;background:rgba(239,68,68,.2);color:#fca5a5;border:1px solid rgba(239,68,68,.3);letter-spacing:.04em;text-transform:uppercase;">Unprotected</div>
     </div>
-  </footer>
 
-  <!-- Enhanced Currency Conversion Script -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    <div class="score-info">
+      <h2>Compliance%</h2>
 
-      const FIXED_PRICES = {
-        USD: { free: 0, pro: 99,   symbol: '$', displayName: 'USD ($)', period: 'per month' },
-        EUR: { free: 0, pro: 89,   symbol: '€', displayName: 'EUR (€)', period: 'per month' },
-        GBP: { free: 0, pro: 79,   symbol: '£', displayName: 'GBP (£)', period: 'per month' },
-        ZAR: { free: 0, pro: 1499, symbol: 'R',  displayName: 'ZAR (R)',  period: 'per month' }
-      };
+      <!--% progress bar -->
+      <div class="pct-bar-track">
+        <div id="pct-bar" class="pct-bar-fill" style="width:0%"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--secondary-text);">
+        <span id="pct-label">Complete the AI Advisor to start earning%</span>
+        <span id="pct-fraction" style="color:var(--accent);font-weight:700;">0 / 100%</span>
+      </div>
 
-      function getUserCurrency() {
-        const saved = localStorage.getItem('userCurrency');
-        if (saved && FIXED_PRICES[saved]) return saved;
-        const country = localStorage.getItem('userCountry') || 'US';
-        const euro = ['DE','FR','IT','ES','NL','BE','IE','PT','AT'];
-        if (euro.includes(country)) return 'EUR';
-        if (country === 'GB') return 'GBP';
-        if (country === 'ZA') return 'ZAR';
-        return 'USD';
+      <!--% breakdown -->
+      <div class="pct-breakdown">
+        <div class="pct-item">
+          <div class="pct-dot" style="background:var(--accent);"></div>
+          <span style="color:var(--secondary-text);">Advisor</span>
+          <span id="pct-advisor" style="font-weight:700;color:var(--accent);">0 / 10%</span>
+        </div>
+        <div class="pct-item">
+          <div class="pct-dot" style="background:var(--success);"></div>
+          <span style="color:var(--secondary-text);">Documents</span>
+          <span id="pct-docs" style="font-weight:700;color:var(--success);">0 / 80%</span>
+        </div>
+        <div class="pct-item">
+          <div class="pct-dot" style="background:var(--warning);"></div>
+          <span id="cnt-ok" style="font-weight:700;color:var(--warning);">0</span>
+          <span style="color:var(--secondary-text);">/ <span id="cnt-total">?</span> docs generated</span>
+        </div>
+        <div class="pct-item" style="display:none;">
+          <span id="cnt-miss">0</span>
+          <span id="cnt-na">0</span>
+        </div>
+      </div>
+
+      <p id="score-desc" style="font-size:12px;color:var(--secondary-text);margin-top:10px;line-height:1.6;">
+        Step 1&#58; Answer all 16 advisor questions (earns 10% gateway) &#8594;
+        Step 2&#58; Generate all required documents (earns 90% toward 100)
+      </p>
+    </div>
+  </div>
+
+  <!-- ═══ FRAMEWORK BARS ═══ -->
+  <div class="slabel">Framework completion</div>
+  <div class="grid4" style="margin-bottom:24px;">
+    <div class="card">
+      <div class="metric-val">GDPR</div>
+      <div class="metric-lbl">EU &amp; UK · 7 docs</div>
+      <div class="pbar-wrap"><div class="pbar" id="pbar-gdpr" style="background:var(--gradient)"></div></div>
+      <div class="metric-trend" id="txt-gdpr">Answer advisor to see</div>
+    </div>
+    <div class="card">
+      <div class="metric-val">CCPA</div>
+      <div class="metric-lbl">California · 10 docs</div>
+      <div class="pbar-wrap"><div class="pbar" id="pbar-ccpa" style="background:linear-gradient(90deg,#f472b6,#db2777)"></div></div>
+      <div class="metric-trend" id="txt-ccpa">Answer advisor to see</div>
+    </div>
+    <div class="card">
+      <div class="metric-val">HIPAA</div>
+      <div class="metric-lbl">US Healthcare · 9 docs</div>
+      <div class="pbar-wrap"><div class="pbar" id="pbar-hipaa" style="background:linear-gradient(90deg,#a78bfa,#7c3aed)"></div></div>
+      <div class="metric-trend" id="txt-hipaa">Answer advisor to see</div>
+    </div>
+    <div class="card">
+      <div class="metric-val">POPIA</div>
+      <div class="metric-lbl">South Africa · 8 docs</div>
+      <div class="pbar-wrap"><div class="pbar" id="pbar-popia" style="background:linear-gradient(90deg,#34d399,#059669)"></div></div>
+      <div class="metric-trend" id="txt-popia">Answer advisor to see</div>
+    </div>
+  </div>
+
+  <!-- ═══ COMPLIANCE STATUS + ALERTS + FEED ═══ -->
+  <div class="slabel">Compliance status</div>
+  <div class="grid2">
+
+    <!-- DOC LISTS -->
+    <div class="card">
+      <div class="tabs">
+        <button type="button" class="tab-btn active" onclick="switchTab('universal',this)">Universal</button>
+        <button type="button" class="tab-btn" onclick="switchTab('gdpr',this)">GDPR</button>
+        <button type="button" class="tab-btn" onclick="switchTab('ccpa',this)">CCPA</button>
+        <button type="button" class="tab-btn" onclick="switchTab('hipaa',this)">HIPAA</button>
+        <button type="button" class="tab-btn" onclick="switchTab('popia',this)">POPIA</button>
+      </div>
+      <div class="tab-pane active" id="tab-universal"><div class="doc-list" id="list-universal"></div></div>
+      <div class="tab-pane" id="tab-gdpr"><div class="doc-list" id="list-gdpr"></div></div>
+      <div class="tab-pane" id="tab-ccpa"><div class="doc-list" id="list-ccpa"></div></div>
+      <div class="tab-pane" id="tab-hipaa"><div class="doc-list" id="list-hipaa"></div></div>
+      <div class="tab-pane" id="tab-popia"><div class="doc-list" id="list-popia"></div></div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:20px;">
+
+      <!-- DYNAMIC ALERTS -->
+      <div class="card">
+        <div class="card-title">
+          Regulatory alerts
+          <span id="alert-count" style="display:none;background:rgba(239,68,68,.15);color:var(--danger);border:1px solid rgba(239,68,68,.3);font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;"></span>
+        </div>
+        <div id="alerts-container">
+          <div class="adv-gate">
+            <div style="opacity:.5;color:var(--secondary-text);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="8" rx="2"/><path d="M9 11V7a3 3 0 0 1 6 0v4"/><circle cx="9" cy="15" r="1" fill="currentColor"/><circle cx="15" cy="15" r="1" fill="currentColor"/><path d="M12 3v2"/></svg></div>
+            <div style="font-size:13px;color:var(--secondary-text);">Complete the AI Advisor below to see your personalised regulatory alerts and exactly which documents your business needs to earn%.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LIVE REGULATORY FEED -->
+      <div class="card">
+        <div class="card-title">
+          Regulatory monitoring feed
+          <span id="reg-feed-updated" style="font-size:10px;color:var(--secondary-text);font-weight:400;"></span>
+        </div>
+        <div id="reg-feed-container"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ AI ADVISOR ═══ -->
+  <div class="slabel" id="advisor">AI Compliance Advisor &nbsp;<span style="font-size:11px;font-weight:400;color:var(--accent);">Complete all 17 questions to earn 20% and unlock risk analysis</span></div>
+  <div class="advisor-card">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+      <span style="font-size:13px;color:var(--secondary-text);">Answer every question honestly. Your answers determine which documents you need and how much% each one earns.</span>
+      <span id="adv-complete-badge" style="display:none;background:rgba(16,185,129,.15);color:var(--success);border:1px solid rgba(16,185,129,.3);font-size:10px;font-weight:700;padding:3px 12px;border-radius:20px;display:inline-flex;align-items:center;gap:5px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Complete — 10% earned! Now generate your docs.</span>
+    </div>
+    <div class="adv-prog-row">
+      <span style="font-size:12px;color:var(--secondary-text);flex-shrink:0;">Progress</span>
+      <div class="adv-prog-bar-wrap"><div class="adv-prog-bar" id="adv-pbar"></div></div>
+      <span id="adv-count" style="font-size:12px;color:var(--accent);flex-shrink:0;font-weight:600;">0 / 17</span>
+    </div>
+
+    <div class="aq-section">
+      <div class="aq-section-title"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:5px;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Jurisdiction &amp; customers</div>
+      <div class="aq" id="aq-eu"><span class="aq-text">Do you operate in the EU or serve EU customers?</span><div class="twrap"><button type="button" class="tbtn" id="btn-eu-yes" onclick="ans('eu','yes')">Yes</button><button type="button" class="tbtn" id="btn-eu-no" onclick="ans('eu','no')">No</button></div></div>
+      <div class="aq" id="aq-us"><span class="aq-text">Do you operate in the US or serve US / California customers?</span><div class="twrap"><button type="button" class="tbtn" id="btn-us-yes" onclick="ans('us','yes')">Yes</button><button type="button" class="tbtn" id="btn-us-no" onclick="ans('us','no')">No</button></div></div>
+      <div class="aq" id="aq-sa"><span class="aq-text">Do you operate in South Africa or handle South African personal data?</span><div class="twrap"><button type="button" class="tbtn" id="btn-sa-yes" onclick="ans('sa','yes')">Yes</button><button type="button" class="tbtn" id="btn-sa-no" onclick="ans('sa','no')">No</button></div></div>
+      <div class="aq" id="aq-uk"><span class="aq-text">Do you operate in the UK or serve UK customers?</span><div class="twrap"><button type="button" class="tbtn" id="btn-uk-yes" onclick="ans('uk','yes')">Yes</button><button type="button" class="tbtn" id="btn-uk-no" onclick="ans('uk','no')">No</button></div></div>
+    </div>
+
+    <div class="aq-section">
+      <div class="aq-section-title"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:5px;"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg> Data &amp; users</div>
+      <div class="aq" id="aq-personal"><span class="aq-text">Do you collect or store personal data (names, emails, IDs, addresses)?</span><div class="twrap"><button type="button" class="tbtn" id="btn-personal-yes" onclick="ans('personal','yes')">Yes</button><button type="button" class="tbtn" id="btn-personal-no" onclick="ans('personal','no')">No</button></div></div>
+      <div class="aq" id="aq-sensitive"><span class="aq-text">Do you process sensitive data (health, biometric, financial, or children&#39;s data)?</span><div class="twrap"><button type="button" class="tbtn" id="btn-sensitive-yes" onclick="ans('sensitive','yes')">Yes</button><button type="button" class="tbtn" id="btn-sensitive-no" onclick="ans('sensitive','no')">No</button></div></div>
+      <div class="aq" id="aq-health"><span class="aq-text">Do you handle Protected Health Information (PHI) — medical records, diagnoses, treatment data?</span><div class="twrap"><button type="button" class="tbtn" id="btn-health-yes" onclick="ans('health','yes')">Yes</button><button type="button" class="tbtn" id="btn-health-no" onclick="ans('health','no')">No</button></div></div>
+      <div class="aq" id="aq-analytics"><span class="aq-text">Do you use third-party tracking or analytics tools (Google Analytics, Meta Pixel, Hotjar, etc.)?</span><div class="twrap"><button type="button" class="tbtn" id="btn-analytics-yes" onclick="ans('analytics','yes')">Yes</button><button type="button" class="tbtn" id="btn-analytics-no" onclick="ans('analytics','no')">No</button></div></div>
+      <div class="aq" id="aq-sell"><span class="aq-text">Do you sell or share personal data with third parties for commercial purposes?</span><div class="twrap"><button type="button" class="tbtn" id="btn-sell-yes" onclick="ans('sell','yes')">Yes</button><button type="button" class="tbtn" id="btn-sell-no" onclick="ans('sell','no')">No</button></div></div>
+    </div>
+
+    <div class="aq-section">
+      <div class="aq-section-title"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:5px;"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> Operations &amp; third parties</div>
+      <div class="aq" id="aq-staff"><span class="aq-text">Do you have employees or contractors who handle personal data?</span><div class="twrap"><button type="button" class="tbtn" id="btn-staff-yes" onclick="ans('staff','yes')">Yes</button><button type="button" class="tbtn" id="btn-staff-no" onclick="ans('staff','no')">No</button></div></div>
+      <div class="aq" id="aq-processors"><span class="aq-text">Do you share data with third-party vendors, cloud services, or payment providers?</span><div class="twrap"><button type="button" class="tbtn" id="btn-processors-yes" onclick="ans('processors','yes')">Yes</button><button type="button" class="tbtn" id="btn-processors-no" onclick="ans('processors','no')">No</button></div></div>
+      <div class="aq" id="aq-transfers"><span class="aq-text">Do you transfer personal data internationally (outside the EEA, UK, or South Africa)?</span><div class="twrap"><button type="button" class="tbtn" id="btn-transfers-yes" onclick="ans('transfers','yes')">Yes</button><button type="button" class="tbtn" id="btn-transfers-no" onclick="ans('transfers','no')">No</button></div></div>
+      <div class="aq" id="aq-consumers"><span class="aq-text">Do consumers submit requests to access, delete, or opt out of their data?</span><div class="twrap"><button type="button" class="tbtn" id="btn-consumers-yes" onclick="ans('consumers','yes')">Yes</button><button type="button" class="tbtn" id="btn-consumers-no" onclick="ans('consumers','no')">No</button></div></div>
+    </div>
+
+    <div class="aq-section">
+      <div class="aq-section-title"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:5px;"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Technology &amp; risk history</div>
+      <div class="aq" id="aq-ai"><span class="aq-text">Do you use AI or automated decision-making in any customer-facing or internal feature?</span><div class="twrap"><button type="button" class="tbtn" id="btn-ai-yes" onclick="ans('ai','yes')">Yes</button><button type="button" class="tbtn" id="btn-ai-no" onclick="ans('ai','no')">No</button></div></div>
+      <div class="aq" id="aq-breach"><span class="aq-text">Have you ever experienced a data breach or security incident?</span><div class="twrap"><button type="button" class="tbtn" id="btn-breach-yes" onclick="ans('breach','yes')">Yes</button><button type="button" class="tbtn" id="btn-breach-no" onclick="ans('breach','no')">No</button></div></div>
+      <div class="aq" id="aq-audit"><span class="aq-text">Have you ever been subject to a regulatory audit or compliance investigation?</span><div class="twrap"><button type="button" class="tbtn" id="btn-audit-yes" onclick="ans('audit','yes')">Yes</button><button type="button" class="tbtn" id="btn-audit-no" onclick="ans('audit','no')">No</button></div></div>
+      <div class="aq" id="aq-highvol"><span class="aq-text">Do you process personal data of more than 5,000 individuals per year?</span><div class="twrap"><button type="button" class="tbtn" id="btn-highvol-yes" onclick="ans('highvol','yes')">Yes</button><button type="button" class="tbtn" id="btn-highvol-no" onclick="ans('highvol','no')">No</button></div></div>
+    </div>
+
+    <div class="adv-summary" id="adv-summary"></div>
+  </div>
+
+  <!-- ═══ RISK ANALYSIS ═══ -->
+  <div class="slabel">Risk analysis</div>
+  <div class="card">
+    <div class="card-title">
+      Risk analysis
+      <span id="risk-lock-badge" style="background:rgba(255,255,255,.07);color:var(--secondary-text);border:1px solid rgba(255,255,255,.1);font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:3px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Unlocks at 10%
+      </span>
+    </div>
+    <div class="risk-locked" id="risk-locked">
+      <div class="risk-locked-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:.35;color:var(--secondary-text)"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <div class="risk-locked-title">Complete the AI Advisor to see your risk profile</div>
+      <div class="risk-locked-sub">Answer all 16 questions to generate your personalised risk breakdown across GDPR, POPIA, HIPAA and CCPA — and earn 20% toward your compliance score.</div>
+      <div id="risk-lock-prog" style="font-size:12px;color:var(--accent);font-weight:600;">0 of 16 questions answered</div>
+      <a href="#advisor" class="btn-o" style="margin-top:4px;">Answer questions
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+      </a>
+    </div>
+    <div class="risk-content" id="risk-content">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 32px;">
+        <div>
+          <div class="risk-row"><div class="risk-row-top"><span>GDPR compliance gap</span><span class="risk-pill" id="rl-gdpr">—</span></div><div class="pbar-wrap"><div class="pbar" id="rb-gdpr" style="background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div></div></div>
+          <div class="risk-row"><div class="risk-row-top"><span>CCPA compliance gap</span><span class="risk-pill" id="rl-ccpa">—</span></div><div class="pbar-wrap"><div class="pbar" id="rb-ccpa" style="background:linear-gradient(90deg,#f472b6,#db2777)"></div></div></div>
+          <div class="risk-row"><div class="risk-row-top"><span>HIPAA compliance gap</span><span class="risk-pill" id="rl-hipaa">—</span></div><div class="pbar-wrap"><div class="pbar" id="rb-hipaa" style="background:linear-gradient(90deg,#ef4444,#f87171)"></div></div></div>
+          <div class="risk-row"><div class="risk-row-top"><span>POPIA compliance gap</span><span class="risk-pill" id="rl-popia">—</span></div><div class="pbar-wrap"><div class="pbar" id="rb-popia" style="background:linear-gradient(90deg,#34d399,#059669)"></div></div></div>
+        </div>
+        <div>
+          <div class="risk-row"><div class="risk-row-top"><span>Data exposure risk</span><span class="risk-pill" id="rl-data">—</span></div><div class="pbar-wrap"><div class="pbar" id="rb-data" style="background:linear-gradient(90deg,#3b82f6,#93c5fd)"></div></div></div>
+          <div class="risk-row"><div class="risk-row-top"><span>AI regulatory exposure</span><span class="risk-pill" id="rl-ai">—</span></div><div class="pbar-wrap"><div class="pbar" id="rb-ai" style="background:linear-gradient(90deg,#ef4444,#f87171)"></div></div></div>
+          <div class="risk-row"><div class="risk-row-top"><span>Third-party / processor risk</span><span class="risk-pill" id="rl-proc">—</span></div><div class="pbar-wrap"><div class="pbar" id="rb-proc" style="background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div></div></div>
+          <div class="risk-row"><div class="risk-row-top"><span>International transfer risk</span><span class="risk-pill" id="rl-xfer">—</span></div><div class="pbar-wrap"><div class="pbar" id="rb-xfer" style="background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div></div></div>
+          <div class="risk-row"><div class="risk-row-top"><span>Breach / audit history risk</span><span class="risk-pill" id="rl-breach">—</span></div><div class="pbar-wrap"><div class="pbar" id="rb-breach" style="background:linear-gradient(90deg,#ef4444,#f87171)"></div></div></div>
+        </div>
+      </div>
+      <div class="risk-tip" id="risk-tip-box"></div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  &copy; 3CH0 Compliance Pty Ltd. All rights reserved.<br>
+  <a href="settings.html">Privacy &amp; Terms</a> |
+  <a href="mailto:3CH0.The.Only@gmail.com" style="margin: 0;">Support</a> |
+  <a href="https://discord.gg/W5SrbqK7j3" target="_blank">Join the Community</a>
+</footer>
+<div class="sec-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:3px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Secure</div>
+
+<div class="modal-bg" id="modal-bg" onclick="closeMod(event)">
+  <div class="modal">
+    <button class="mcl" onclick="closeMod()">✕</button>
+    <h3 id="mtitle"></h3>
+    <p id="mbody"></p>
+    <div class="mfoot" id="mfoot"></div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ╔═══════════════════════════════════════════════════════════════╗
+// ║  Set TEST_MODE to true  → unlimited advisor resets, no lock  ║
+// ║  Set TEST_MODE to false → production mode, 1 check/month     ║
+// ╚═══════════════════════════════════════════════════════════════╝
+var CONFIG = { TEST_MODE: false };
+
+var DOCS = {
+  universal:[
+    {name:'Privacy Policy',            desc:'All regulations · Core document',   key:'privacy_policy'},
+    {name:'Data Processing Agreement', desc:'All regulations except HIPAA',       key:'dpa', notHipaa:true},
+    {name:'Employee Training Script',  desc:'All regulations · Staff compliance', key:'training'},
+    {name:'Audit-Ready Documentation', desc:'All regulations · Regulatory audits',key:'audit'},
+  ],
+  gdpr:[
+    {name:'DPIA (Data Protection Impact Assessment)',desc:'GDPR · Art. 35', key:'dpia'},
+    {name:'DSAR Procedure',                          desc:'GDPR · Art. 15', key:'dsar'},
+    {name:'Records of Processing Activities',        desc:'GDPR · Art. 30', key:'ropa'},
+  ],
+  ccpa:[
+    {name:'Consumer Request Form',      desc:'CCPA · Request intake',       key:'ccpa_request_form'},
+    {name:'Consumer Request Log',       desc:'CCPA · Audit trail',          key:'ccpa_request_log'},
+    {name:'Vendor Assessment Checklist',desc:'CCPA · Vendor due diligence', key:'ccpa_vendor_checklist'},
+    {name:'Data Breach Response Plan',  desc:'CCPA · Incident response',    key:'ccpa_breach_plan'},
+    {name:'Quick Reference Guide',      desc:'CCPA · Staff reference',      key:'ccpa_quick_ref'},
+    {name:'Service Provider Agreement', desc:'CCPA · SP contracts',         key:'ccpa_spa'},
+  ],
+  hipaa:[
+    {name:'Business Associate Agreement',desc:'HIPAA · BA contracts',      key:'baa'},
+    {name:'Patient Authorization Form',  desc:'HIPAA · PHI consent',       key:'paf'},
+    {name:'Breach Notification Policy',  desc:'HIPAA · 60-day HHS notice', key:'breach_hipaa'},
+    {name:'Sanction Policy',             desc:'HIPAA · Workforce sanctions',key:'sanction'},
+    {name:'Risk Assessment Template',    desc:'HIPAA · §164.308',           key:'risk_assess'},
+  ],
+  popia:[
+    {name:'PAIA Manual',                 desc:'POPIA · Public access manual',key:'paia'},
+    {name:'Data Retention Schedule',     desc:'POPIA · Retention schedule',  key:'retention'},
+    {name:'Incident Response Procedure', desc:'POPIA · Security compromise', key:'incident'},
+    {name:'Prior Authorisation Register',desc:'POPIA · Special-category reg',key:'prior_auth'},
+  ],
+};
+
+var TOTAL_Q = 16;
+var advAnswers = {};
+var requiredFrameworks = [];
+var FW_TRIGGERS = {eu:['gdpr'],uk:['gdpr'],us:['ccpa'],sa:['popia'],health:['hipaa']};
+var XP_ADVISOR_TOTAL = 20;
+var XP_DOCS_TOTAL    = 80;
+
+function getRequiredDocKeys() {
+  var keys = [];
+  for (var i=0;i<DOCS.universal.length;i++) {
+    var d=DOCS.universal[i];
+    if (d.notHipaa && requiredFrameworks.length>0) {
+      var onlyHipaa = requiredFrameworks.length===1 && requiredFrameworks[0]==='hipaa';
+      if (onlyHipaa) continue;
+    }
+    keys.push(d.key);
+  }
+  var fws=['gdpr','ccpa','hipaa','popia'];
+  for (var f=0;f<fws.length;f++) {
+    if (requiredFrameworks.indexOf(fws[f])!==-1) {
+      var sp=DOCS[fws[f]];
+      for (var i=0;i<sp.length;i++) keys.push(sp[i].key);
+    }
+  }
+  return keys;
+}
+
+function calcXP() {
+  var answeredCount = Object.keys(advAnswers).length;
+  var advisorXP = Math.round((answeredCount / TOTAL_Q) * XP_ADVISOR_TOTAL);
+  var gen = getGeneratedDocs();
+  var reqKeys = getRequiredDocKeys();
+  var docsXP = 0;
+  if (reqKeys.length > 0) {
+    var xpPerDoc = XP_DOCS_TOTAL / reqKeys.length;
+    var generated = 0;
+    for (var i=0;i<reqKeys.length;i++) { if (gen[reqKeys[i]]) generated++; }
+    docsXP = Math.round(generated * xpPerDoc);
+  }
+  return {
+    total: advisorXP + docsXP,
+    advisorXP: advisorXP,
+    docsXP: docsXP,
+    reqKeys: reqKeys,
+    genCount: reqKeys.filter(function(k){return !!gen[k];}).length,
+    advisorDone: answeredCount === TOTAL_Q
+  };
+}
+
+var LEVELS = [
+  {min:0,  max:0,  label:'Unprotected',    bg:'rgba(239,68,68,.2)',    color:'#fca5a5',border:'rgba(239,68,68,.3)'},
+  {min:1,  max:24, label:'At Risk',        bg:'rgba(239,68,68,.2)',    color:'#fca5a5',border:'rgba(239,68,68,.3)'},
+  {min:25, max:49, label:'Progressing',    bg:'rgba(245,158,11,.2)',   color:'#fcd34d',border:'rgba(245,158,11,.35)'},
+  {min:50, max:74, label:'Compliant',      bg:'rgba(146,205,236,.15)', color:'#92cdec',border:'rgba(146,205,236,.35)'},
+  {min:75, max:99, label:'Compliant',      bg:'rgba(16,185,129,.15)',  color:'#34d399',border:'rgba(16,185,129,.3)'},
+  {min:100,max:100,label:'Fully Protected',bg:'rgba(16,185,129,.25)',  color:'#10b981',border:'rgba(16,185,129,.5)'},
+];
+
+function getLevel(xp) {
+  for (var i=LEVELS.length-1;i>=0;i--) { if (xp>=LEVELS[i].min) return LEVELS[i]; }
+  return LEVELS[0];
+}
+
+var _lastXP=-1, _lastLevel='';
+
+function updateXPDisplay() {
+  var x=calcXP(); var lvl=getLevel(x.total);
+  var arc=document.getElementById('scoreArc');
+  if (arc) arc.setAttribute('stroke-dashoffset',Math.round(314-314*x.total/100));
+  var sn=document.getElementById('scoreNum'); if (sn) sn.textContent=x.total;
+  var bar=document.getElementById('pct-bar'); if (bar) bar.style.width=x.total+'%';
+  var frac=document.getElementById('pct-fraction'); if (frac) frac.textContent=x.total+' / 100%';
+  var av=document.getElementById('pct-advisor'); if (av) av.textContent=x.advisorXP+' / '+XP_ADVISOR_TOTAL+'%';
+  var dv=document.getElementById('pct-docs'); if (dv) dv.textContent=x.docsXP+' / '+XP_DOCS_TOTAL+'%';
+  var ok=document.getElementById('cnt-ok'); if (ok) ok.textContent=x.genCount;
+  var tot=document.getElementById('cnt-total'); if (tot) tot.textContent=x.reqKeys.length>0?x.reqKeys.length:'?';
+  var badge=document.getElementById('level-badge');
+  if (badge) { badge.textContent=lvl.label; badge.style.background=lvl.bg; badge.style.color=lvl.color; badge.style.border='1px solid '+lvl.border; }
+  var lockOverlay=document.getElementById('score-lock-overlay');
+  if (lockOverlay) lockOverlay.style.display=Object.keys(advAnswers).length===0?'flex':'none';
+  var label=document.getElementById('pct-label'); var desc=document.getElementById('score-desc');
+  if (!x.advisorDone) {
+    if (label) label.textContent=Object.keys(advAnswers).length===0?'Complete the AI Advisor below to unlock your score':'Step 1: Complete the AI Advisor to earn 20% ('+Object.keys(advAnswers).length+'/16 answered)';
+    if (desc) desc.textContent='Answer all 16 questions to reveal exactly which documents your business needs.';
+  } else if (x.reqKeys.length===0) {
+    if (label) label.textContent='Advisor complete! Now generate your required documents';
+    if (desc) desc.textContent='Your compliance profile is set. Generate all required documents to earn the remaining 80%.';
+  } else {
+    var remaining=x.reqKeys.length-x.genCount;
+    if (remaining===0) {
+      if (label) label.textContent='100% — Fully protected! All required documents generated.';
+      if (desc) desc.textContent='You have generated every document required for your compliance profile.';
+    } else {
+      var xpPerDoc=Math.round(XP_DOCS_TOTAL/x.reqKeys.length);
+      if (label) label.textContent=remaining+' document'+(remaining!==1?'s':'')+' remaining — each worth ~'+xpPerDoc+'%';
+      if (desc) desc.textContent='Go to the form, generate each required document, and watch your score climb.';
+    }
+  }
+  var ss=document.getElementById('dash-subtitle');
+  if (ss) ss.textContent=lvl.label+' · '+x.total+' / 100% · '+x.genCount+' docs generated';
+  var milestones=[25,50,75,100];
+  for (var i=0;i<milestones.length;i++) { var m=milestones[i]; if (_lastXP<m&&x.total>=m) showToast(m); }
+  if (_lastLevel!==''&&_lastLevel!==lvl.label) showLevelToast(lvl);
+  _lastXP=x.total; _lastLevel=lvl.label;
+}
+
+function showToast(xp) {
+  var msgs={
+    25:{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',title:'25% — Progressing!',body:"You've earned your first quarter. Keep generating required documents."},
+    50:{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A4.5 4.5 0 0 0 12 19a4.5 4.5 0 0 0 3.5-4.5c0-3-2-4-3.5-7C10.5 10.5 8.5 11.5 8.5 14.5z"/></svg>',title:'50% — Halfway there!',body:'Your business is becoming compliant. Keep going.'},
+    75:{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',title:'75% — Almost there!',body:'Nearly fully compliant. Just a few more documents needed.'},
+    100:{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',title:'100% — Fully Protected!',body:'All required documents generated. Fully compliant!'},
+  };
+  var m=msgs[xp]; if (!m) return;
+  _spawnToast(m.icon,m.title,m.body,xp===100?'success':'milestone');
+}
+
+function showLevelToast(lvl) {
+  _spawnToast('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>','Level Up: '+lvl.label,'Your compliance level has increased!','level');
+}
+
+function _spawnToast(icon,title,body,type) {
+  var c=document.getElementById('toast-container'); if (!c) return;
+  var t=document.createElement('div');
+  var colors={success:{bg:'rgba(16,185,129,.15)',border:'rgba(16,185,129,.4)',color:'#34d399'},milestone:{bg:'rgba(146,205,236,.12)',border:'rgba(146,205,236,.4)',color:'var(--accent)'},level:{bg:'rgba(245,158,11,.12)',border:'rgba(245,158,11,.4)',color:'var(--warning)'}};
+  var col=colors[type]||colors.milestone;
+  t.style.cssText='background:'+col.bg+';border:1px solid '+col.border+';border-radius:14px;padding:14px 18px;min-width:260px;max-width:320px;box-shadow:0 8px 32px rgba(0,0,0,.5);pointer-events:auto;display:flex;gap:12px;align-items:flex-start;animation:toastIn .4s cubic-bezier(.34,1.56,.64,1);';
+  t.innerHTML='<div style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;flex-shrink:0;">'+icon+'</div><div><div style="font-size:13px;font-weight:700;color:'+col.color+';margin-bottom:2px;">'+title+'</div><div style="font-size:12px;color:var(--secondary-text);">'+body+'</div></div>';
+  c.appendChild(t);
+  setTimeout(function(){t.style.transition='opacity .5s,transform .5s';t.style.opacity='0';t.style.transform='translateX(20px)';setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},500);},4000);
+}
+
+var ALERT_DEFS=[
+  {id:'gdpr_docs',level:'urgent',icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',title:'GDPR Bundle Required',body:'Your business must comply with GDPR. Required: Privacy Policy, DPA, Employee Training, Audit Docs, DPIA (Art. 35), DSAR Procedure, and Records of Processing Activities (Art. 30).',meta:['EU/UK','GDPR','High Priority'],docs:['privacy_policy','dpa','training','audit','dpia','dsar','ropa'],condition:function(a){return a.eu==='yes'||a.uk==='yes';}},
+  {id:'ccpa_docs',level:'urgent',icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',title:'CCPA 2026 Bundle Required',body:'CCPA 2026 requires mandatory cybersecurity assessments, strict cookie rules, and opt-out confirmation. Required: Privacy Policy, Consumer Request Form & Log, Vendor Assessment, Breach Response Plan, Quick Reference, and Service Provider Agreement.',meta:['California','CCPA 2026','High Priority'],docs:['privacy_policy','dpa','ccpa_request_form','ccpa_request_log','ccpa_vendor_checklist','ccpa_breach_plan','ccpa_quick_ref','ccpa_spa'],condition:function(a){return a.us==='yes';}},
+  {id:'hipaa_docs',level:'urgent',icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',title:'HIPAA Bundle Required',body:'You handle PHI. Required: Business Associate Agreement, Patient Authorization Form, Breach Notification Policy (60-day HHS), Sanction Policy, and Risk Assessment Template (Security Rule §164.308).',meta:['US Healthcare','HIPAA','High Priority'],docs:['baa','paf','breach_hipaa','sanction','risk_assess'],condition:function(a){return a.health==='yes';}},
+  {id:'popia_docs',level:'urgent',icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',title:'POPIA Bundle Required',body:'POPIA compliance required. Needed: Privacy Policy, DPA, Training Script, Audit Docs, PAIA Manual (publicly available), Data Retention Schedule, Incident Response Procedure, Prior Authorisation Register.',meta:['South Africa','POPIA','High Priority'],docs:['privacy_policy','dpa','training','audit','paia','retention','incident','prior_auth'],condition:function(a){return a.sa==='yes';}},
+  {id:'ai_act',level:'urgent',icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4M8 15h.01M16 15h.01"/><path d="M3 11V9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2"/></svg>',title:'EU AI Act — Disclosure Required',body:'EU AI Act Article 52 requires clear disclosure when users interact with AI. Full enforcement August 2026. Add AI transparency clause to your Privacy Policy.',meta:['EU AI Act Aug 2026','AI Disclosure','Urgent'],docs:['privacy_policy','dpia'],condition:function(a){return a.ai==='yes';}},
+  {id:'sensitive_dpia',level:'urgent',icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l4 4-3.5 3.5-4-4"/><path d="M13 10l4.5 4.5a2.12 2.12 0 0 1 0 3l-.5.5"/><line x1="5" y1="21" x2="19" y2="21"/><line x1="12" y1="21" x2="12" y2="15"/><path d="M5.5 14.5L9 18"/></svg>',title:'DPIA Required — Sensitive Data',body:'GDPR Article 35 mandates a DPIA before processing sensitive data. CCPA 2026 also requires DPIAs for sensitive data processing and automated decisions.',meta:['GDPR Art. 35','CCPA 2026','Required'],docs:['dpia'],condition:function(a){return a.sensitive==='yes';}},
+  {id:'transfers',level:'med',icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',title:'International Transfer Clauses Required',body:'GDPR requires Standard Contractual Clauses for transfers outside the EEA. Ensure your DPA includes updated SCCs and transfer impact assessments.',meta:['GDPR Art. 46','SCCs','Medium'],docs:['dpa','ropa'],condition:function(a){return a.transfers==='yes';}},
+  {id:'sell_data',level:'med',icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',title:'CCPA Opt-Out Rights Required',body:'You sell or share personal data. CCPA requires a "Do Not Sell" link, mandatory opt-out confirmation from 2026, and an updated Privacy Policy.',meta:['CCPA 2026','Opt-Out','Medium'],docs:['privacy_policy','ccpa_request_form'],condition:function(a){return a.sell==='yes';}},
+  {id:'processors',level:'med',icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg>',title:'Vendor Agreements Required',body:'GDPR Art. 28, CCPA, and POPIA require written contracts with each processor. HIPAA requires Business Associate Agreements for all PHI-accessing vendors.',meta:['GDPR Art. 28','Vendor Contracts','Medium'],docs:['dpa','ccpa_spa','ccpa_vendor_checklist'],condition:function(a){return a.processors==='yes';}},
+  {id:'breach_hist',level:'med',icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',title:'Prior Breach — Urgent Documentation',body:'Prior breaches increase regulatory scrutiny. You urgently need an Incident Response Procedure, Breach Notification Policy, and Risk Assessment.',meta:['Prior Breach','Elevated Risk','Medium'],docs:['incident','breach_hipaa','risk_assess','audit'],condition:function(a){return a.breach==='yes';}},
+  {id:'analytics',level:'info',icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/></svg>',title:'Cookie Consent Required',body:'EU ePrivacy Directive requires prior consent for non-essential cookies. CCPA 2026 introduced strict cookie rules and consent UX requirements.',meta:['ePrivacy','CCPA Cookies','Info'],docs:['privacy_policy'],condition:function(a){return a.analytics==='yes';}},
+  {id:'highvol',level:'info',icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>',title:'ROPA Required — High Volume Processing',body:'GDPR Article 30 requires a Record of Processing Activities for organisations processing 5,000+ individuals annually.',meta:['GDPR Art. 30','ROPA','Info'],docs:['ropa'],condition:function(a){return a.highvol==='yes';}},
+];
+
+var REG_FEED_CACHE_KEY='3ch0_reg_feed';
+var REG_FEED_TTL=7*24*60*60*1000;
+
+var REG_FEED_FALLBACK=[
+  {flag:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="10" rx="1"/><line x1="2" y1="11" x2="22" y2="11"/><line x1="7" y1="7" x2="7" y2="17"/></svg>',pill:'In Force',pillClass:'new',date:'Jan 2026',title:'CCPA 2026 — Risk Assessment & Cookie Rules Active',body:'New mandatory cybersecurity risk assessments, strict cookie/pixel rules, and mandatory opt-out confirmation now in force. Update your Consumer Request Form and Privacy Policy immediately.'},
+  {flag:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v2M12 16v2M6 12h2M16 12h2M7.76 7.76l1.41 1.41M14.83 14.83l1.41 1.41M7.76 16.24l1.41-1.41M14.83 9.17l1.41-1.41"/></svg>',pill:'Upcoming',pillClass:'upd',date:'Aug 2026',title:'EU AI Act — Full Enforcement August 2026',body:'Full enforcement for most EU AI Act provisions begins August 2 2026. Article 52 AI transparency obligations already in force.'},
+  {flag:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg>',pill:'In Force',pillClass:'new',date:'Dec 2025',title:'UK Data Use & Access Act — Adequacy Renewed to 2031',body:'UK GDPR fines increase to £17.5M or 4% of global turnover. EU-UK adequacy decision renewed until 2031.'},
+  {flag:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',pill:'Enforcement',pillClass:'upd',date:'2026',title:'POPIA — Information Regulator Escalating Enforcement',body:"South Africa's Information Regulator escalated POPIA enforcement. PAIA Manuals must be publicly available. Fines up to R10 million for material breaches."},
+  {flag:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="10" rx="1"/><line x1="2" y1="11" x2="22" y2="11"/><line x1="7" y1="7" x2="7" y2="17"/></svg>',pill:'Updated',pillClass:'upd',date:'Late 2025',title:'HIPAA — HHS Updated Breach Notification Safe Harbour',body:'HHS updated HIPAA breach notification safe harbour guidance. The 60-day notification timeline remains. Review your Breach Notification Policy.'},
+];
+
+function getFeedCache(){try{var r=localStorage.getItem(REG_FEED_CACHE_KEY);if(!r)return null;var c=JSON.parse(r);if(!c.ts||!c.items)return null;if(Date.now()-c.ts>REG_FEED_TTL)return null;return c;}catch(e){return null;}}
+function saveFeedCache(items){try{localStorage.setItem(REG_FEED_CACHE_KEY,JSON.stringify({ts:Date.now(),items:items}));}catch(e){}}
+function parseFeedFromAI(text){try{var m=text.match(/\[[\s\S]*\]/);if(!m)return null;var items=JSON.parse(m[0]);if(!Array.isArray(items)||items.length<3)return null;for(var i=0;i<items.length;i++){if(!items[i].title||!items[i].body||!items[i].flag)return null;}return items;}catch(e){return null;}}
+
+async function fetchLiveRegFeed(){
+  var cached=getFeedCache();
+  if(cached){renderRegFeedItems(cached.items,new Date(cached.ts),false);return;}
+  var c=document.getElementById('reg-feed-container');
+  if(c)c.innerHTML='<div style="text-align:center;padding:28px 0;font-size:12px;color:var(--secondary-text);">Fetching latest regulatory updates…</div>';
+  var today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+  var prompt='You are a regulatory compliance expert. Return ONLY a valid JSON array of exactly 8 current data privacy and AI regulation updates as of '+today+'. Each item must have: flag (country flag SVG inline), title (max 12 words), body (2-3 sentences), pill (status text), pillClass ("new"/"upd"/"drft"), date. Cover GDPR, CCPA, HIPAA, POPIA, EU AI Act, UK GDPR. Be specific with dates and article references. Return ONLY the JSON array.';
+  try{
+    var response=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    var data=await response.json();
+    var text=(data.content&&data.content[0]&&data.content[0].text)?data.content[0].text:'';
+    var items=parseFeedFromAI(text);
+    if(items){saveFeedCache(items);renderRegFeedItems(items,new Date(),true);return;}
+  }catch(e){console.warn('Reg feed fetch failed:',e);}
+  renderRegFeedItems(REG_FEED_FALLBACK,null,false);
+}
+
+function renderRegFeedItems(items,fetchedAt,isLive){
+  var c=document.getElementById('reg-feed-container');
+  var upd=document.getElementById('reg-feed-updated');
+  if(!c)return;
+  if(upd){
+    if(isLive&&fetchedAt)upd.innerHTML='<span style="color:var(--success);">&#x25CF;</span> Live · '+fetchedAt.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+    else if(fetchedAt)upd.innerHTML='Cached · '+fetchedAt.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+    else upd.textContent='Offline — showing recent data';
+  }
+  c.innerHTML='';
+  for(var i=0;i<items.length;i++){
+    var item=items[i];var div=document.createElement('div');div.className='reg-item';
+    div.innerHTML='<div class="rflag">'+(item.flag||'')+'</div><div><h4>'+item.title+'</h4><p>'+item.body.substring(0,92)+'…</p><span class="rpill '+(item.pillClass||'upd')+'">'+item.pill+'</span><span style="font-size:10px;color:var(--secondary-text);margin-left:8px;">'+item.date+'</span></div>';
+    (function(t,b){div.addEventListener('click',function(){openModal(t,b,null);});})(item.title,item.body);
+    c.appendChild(div);
+  }
+}
+
+function renderRegFeed(){fetchLiveRegFeed();}
+
+function getGeneratedDocs(){try{return JSON.parse(localStorage.getItem('3ch0_docs')||'{}');}catch(e){return {};}}
+function saveGeneratedDocs(d){try{localStorage.setItem('3ch0_docs',JSON.stringify(d));}catch(e){}}
+
+function ans(key,val){
+  var yBtn=document.getElementById('btn-'+key+'-yes');
+  var nBtn=document.getElementById('btn-'+key+'-no');
+  if(!yBtn||!nBtn)return;
+  yBtn.className='tbtn'+(val==='yes'?' ay':'');
+  nBtn.className='tbtn'+(val==='no'?' an':'');
+  var aqEl=document.getElementById('aq-'+key);if(aqEl)aqEl.classList.add('answered');
+  advAnswers[key]=val;
+  requiredFrameworks=[];
+  var ak=Object.keys(advAnswers);
+  for(var i=0;i<ak.length;i++){if(advAnswers[ak[i]]==='yes'&&FW_TRIGGERS[ak[i]]){var fw=FW_TRIGGERS[ak[i]];for(var j=0;j<fw.length;j++){if(requiredFrameworks.indexOf(fw[j])===-1)requiredFrameworks.push(fw[j]);}}}
+  try{localStorage.setItem(ADVISOR_ANSWERS_KEY,JSON.stringify(advAnswers));}catch(e){}
+  if(!advisorUsedThisMonth())setAdvisorUsage();
+  var done=Object.keys(advAnswers).length;
+  var pb=document.getElementById('adv-pbar');if(pb)pb.style.width=Math.round(done/TOTAL_Q*100)+'%';
+  var ct=document.getElementById('adv-count');if(ct)ct.textContent=done+' / '+TOTAL_Q;
+  var lp=document.getElementById('risk-lock-prog');if(lp)lp.textContent=done+' of '+TOTAL_Q+' questions answered';
+  if(done===TOTAL_Q){var b=document.getElementById('adv-complete-badge');if(b)b.style.display='inline-flex';unlockRisk();}
+  renderDocLists();renderAlerts();updateAdvisorSummary();updateXPDisplay();
+}
+
+function renderDocLists(){
+  var gen=getGeneratedDocs();var answered=Object.keys(advAnswers).length>0;var reqKeys=getRequiredDocKeys();
+  var uList=document.getElementById('list-universal');
+  if(uList){
+    uList.innerHTML='';var uOk=0;
+    for(var i=0;i<DOCS.universal.length;i++){
+      var doc=DOCS.universal[i];var isReq=reqKeys.indexOf(doc.key)!==-1;var isGen=!!gen[doc.key];
+      var state=isGen?'ok':(isReq?'miss':'na');if(isGen&&isReq)uOk++;
+      var naReason=(!isReq&&answered)?'Not required for your compliance profile':null;
+      if(doc.notHipaa&&requiredFrameworks.indexOf('hipaa')!==-1&&requiredFrameworks.length===1)naReason='Replaced by Business Associate Agreement for HIPAA-only profiles';
+      uList.appendChild(makeDocItem(doc,state,isGen,gen[doc.key],naReason));
+    }
+    var uReq=reqKeys.filter(function(k){return DOCS.universal.some(function(d){return d.key===k;});}).length;
+    updateFwBar('universal',uOk,uReq,true);
+  }
+  var fws=['gdpr','ccpa','hipaa','popia'];
+  for(var f=0;f<fws.length;f++){
+    var fw=fws[f];var list=document.getElementById('list-'+fw);if(!list)continue;
+    list.innerHTML='';var isApplicable=requiredFrameworks.indexOf(fw)!==-1;var fwOk=0,fwReq=0;
+    for(var i=0;i<DOCS.universal.length;i++){
+      var doc=DOCS.universal[i];
+      if(fw==='hipaa'&&doc.notHipaa){list.appendChild(makeDocItem(doc,'na',false,null,'Replaced by Business Associate Agreement'));continue;}
+      if(!isApplicable&&answered){list.appendChild(makeDocItem(doc,'na',false,null,'Framework not required'));continue;}
+      var isGen=!!gen[doc.key];var isReq=reqKeys.indexOf(doc.key)!==-1;var state=isGen?'ok':(isReq?'miss':'na');
+      if(isGen&&isReq)fwOk++;if(isReq)fwReq++;
+      list.appendChild(makeDocItem(doc,state,isGen,gen[doc.key],null));
+    }
+    var sp=DOCS[fw];
+    for(var i=0;i<sp.length;i++){
+      var doc=sp[i];
+      if(!isApplicable&&answered){list.appendChild(makeDocItem(doc,'na',false,null,'Framework not required'));continue;}
+      var isGen=!!gen[doc.key];var isReq=reqKeys.indexOf(doc.key)!==-1;var state=isGen?'ok':(isReq?'miss':'na');
+      if(isGen&&isReq)fwOk++;if(isReq)fwReq++;
+      list.appendChild(makeDocItem(doc,state,isGen,gen[doc.key],null));
+    }
+    updateFwBar(fw,fwOk,fwReq,isApplicable||!answered);
+  }
+  updateXPDisplay();
+}
+
+function makeDocItem(doc,state,isGen,genData,naReason){
+  var div=document.createElement('div');div.className='doc-item';
+  var xp=getRequiredDocKeys().length>0?Math.round(XP_DOCS_TOTAL/getRequiredDocKeys().length):0;
+  var bT=state==='ok'?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Generated':(state==='miss'?'Generate → (+'+xp+'%)':'N/A');
+  var bC=state==='ok'?'ok':(state==='miss'?'gen':'na');
+  div.innerHTML='<div class="doc-left"><div class="sdot '+state+'"></div><div><div class="doc-name">'+doc.name+'</div><div class="doc-cat">'+doc.desc+'</div></div></div><span class="badge '+bC+'">'+bT+'</span>';
+  (function(d,s,gd,nr){div.addEventListener('click',function(){if(s==='ok'&&gd){var dt=new Date(gd.ts).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});openModal(d.name,'Generated on '+dt+'.',null);}else if(s==='miss'){openModal(d.name,'"'+d.name+'" is required and has not been generated yet. Generate it now to earn%.','generate');}else{openModal(d.name,nr||'Not applicable based on your compliance profile.',null);}});})(doc,state,genData,naReason);
+  return div;
+}
+
+function updateFwBar(fw,ok,total,applicable){
+  var bar=document.getElementById('pbar-'+fw);var txt=document.getElementById('txt-'+fw);if(!bar||!txt)return;
+  if(!applicable){bar.style.width='0%';txt.textContent='Not required';return;}
+  var pct=total>0?Math.round(ok/total*100):0;
+  bar.style.width=pct+'%';
+  txt.textContent=total>0?(ok+' / '+total+' generated'):'Answer advisor to see your required docs';
+}
+
+function renderAlerts(){
+  var c=document.getElementById('alerts-container');var cnt=document.getElementById('alert-count');if(!c)return;
+  var answered=Object.keys(advAnswers).length;
+  if(answered===0){c.innerHTML='<div class="adv-gate"><div style="opacity:.5;color:var(--secondary-text);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="8" rx="2"/><path d="M9 11V7a3 3 0 0 1 6 0v4"/><circle cx="9" cy="15" r="1" fill="currentColor"/><circle cx="15" cy="15" r="1" fill="currentColor"/><path d="M12 3v2"/></svg></div><div style="font-size:13px;color:var(--secondary-text);">Complete the AI Advisor below to see your personalised regulatory alerts.</div></div>';if(cnt)cnt.style.display='none';return;}
+  var gen=getGeneratedDocs();var active=[];var allDocs=DOCS.universal.concat(DOCS.gdpr,DOCS.ccpa,DOCS.hipaa,DOCS.popia);
+  for(var i=0;i<ALERT_DEFS.length;i++){var def=ALERT_DEFS[i];if(!def.condition(advAnswers))continue;var missing=[];for(var j=0;j<def.docs.length;j++){if(!gen[def.docs[j]])missing.push(def.docs[j]);}if(missing.length>0)active.push({def:def,missing:missing});}
+  if(!active.length){c.innerHTML='<div style="text-align:center;padding:20px;"><div style="font-size:13px;color:var(--success);font-weight:600;">All regulatory requirements met!</div></div>';if(cnt)cnt.style.display='none';return;}
+  var urgCount=active.filter(function(a){return a.def.level==='urgent';}).length;
+  if(cnt){cnt.textContent=urgCount+' urgent';cnt.style.display=urgCount?'inline':'none';}
+  c.innerHTML='';
+  for(var i=0;i<active.length;i++){
+    var item=active[i];var def=item.def;
+    var mNames=[];for(var j=0;j<item.missing.length;j++){for(var k=0;k<allDocs.length;k++){if(allDocs[k].key===item.missing[j]){mNames.push(allDocs[k].name);break;}}}
+    var metaHtml='';for(var j=0;j<def.meta.length;j++)metaHtml+='<span>'+def.meta[j]+'</span>';
+    var xpEach=getRequiredDocKeys().length>0?Math.round(XP_DOCS_TOTAL/getRequiredDocKeys().length):0;
+    var missHtml=mNames.length>0?'<div style="margin-top:7px;font-size:11px;color:#fca5a5;line-height:1.7;"><strong>Docs needed:</strong> '+mNames.slice(0,4).join(' · ')+(mNames.length>4?' +'+(mNames.length-4)+' more':'')+'</div><div style="margin-top:4px;font-size:11px;color:var(--accent);">Each doc earns ~'+xpEach+'%</div>':'';
+    var div=document.createElement('div');div.className='alert-item '+def.level;
+    div.innerHTML='<div class="aico">'+def.icon+'</div><div style="flex:1;"><h4>'+def.title+'</h4><p>'+def.body.substring(0,100)+'…</p>'+missHtml+'<div class="ameta" style="margin-top:7px;">'+metaHtml+'</div></div>';
+    (function(t,b){div.addEventListener('click',function(){openModal(t,b,'generate');});})(def.title,def.body);
+    c.appendChild(div);
+  }
+}
+
+var RISK_YES={personal:{data:20},sensitive:{data:40,gdpr:15,popia:15},health:{hipaa:60,data:25},analytics:{data:15,gdpr:10},sell:{ccpa:40,data:20},eu:{gdpr:20},uk:{gdpr:10},us:{ccpa:20},sa:{popia:20},staff:{gdpr:5,hipaa:5,popia:5},processors:{proc:40,gdpr:10,ccpa:10,popia:10},transfers:{xfer:50,gdpr:20},consumers:{ccpa:20,gdpr:10},ai:{ai:60,gdpr:15},breach:{data:35,bh:60},audit:{bh:30},highvol:{data:20,gdpr:10,ccpa:10,popia:10}};
+
+function unlockRisk(){
+  var locked=document.getElementById('risk-locked');var content=document.getElementById('risk-content');var lb=document.getElementById('risk-lock-badge');
+  if(locked)locked.style.display='none';if(content)content.classList.add('show');if(lb)lb.style.display='none';
+  var scores={gdpr:0,ccpa:0,hipaa:0,popia:0,data:0,ai:0,proc:0,xfer:0,bh:0};
+  var ak=Object.keys(advAnswers);
+  for(var i=0;i<ak.length;i++){var key=ak[i];if(advAnswers[key]==='yes'&&RISK_YES[key]){var rk=Object.keys(RISK_YES[key]);for(var j=0;j<rk.length;j++){var r=rk[j];scores[r]=Math.min(100,(scores[r]||0)+RISK_YES[key][r]);}}}
+  var gen=getGeneratedDocs();var fw2=['gdpr','ccpa','hipaa','popia'];
+  for(var f=0;f<fw2.length;f++){var fw=fw2[f];if(requiredFrameworks.indexOf(fw)===-1){scores[fw]=0;continue;}var fd=[];for(var i=0;i<DOCS.universal.length;i++){if(!(fw==='hipaa'&&DOCS.universal[i].notHipaa))fd.push(DOCS.universal[i]);}var sp=DOCS[fw];for(var i=0;i<sp.length;i++)fd.push(sp[i]);var miss=0;for(var i=0;i<fd.length;i++){if(!gen[fd[i].key])miss++;}scores[fw]=Math.min(100,(scores[fw]||0)+Math.round((miss/fd.length)*55));}
+  var bars=[{id:'gdpr',score:scores.gdpr,applicable:requiredFrameworks.indexOf('gdpr')!==-1},{id:'ccpa',score:scores.ccpa,applicable:requiredFrameworks.indexOf('ccpa')!==-1},{id:'hipaa',score:scores.hipaa,applicable:requiredFrameworks.indexOf('hipaa')!==-1},{id:'popia',score:scores.popia,applicable:requiredFrameworks.indexOf('popia')!==-1},{id:'data',score:scores.data,applicable:true},{id:'ai',score:scores.ai,applicable:true},{id:'proc',score:scores.proc,applicable:true},{id:'xfer',score:scores.xfer,applicable:true},{id:'breach',score:scores.bh,applicable:true}];
+  for(var i=0;i<bars.length;i++){var b=bars[i];var pb=document.getElementById('rb-'+b.id);var pill=document.getElementById('rl-'+b.id);if(!pb||!pill)continue;if(!b.applicable){pb.style.width='3%';pill.textContent='N/A';pill.className='risk-pill na';continue;}(function(el,s){setTimeout(function(){el.style.width=s+'%';},150);})(pb,b.score);var lvl=riskLevel(b.score);pill.textContent=lvl.lbl;pill.className='risk-pill '+lvl.cls;}
+  var app=[];for(var i=0;i<bars.length;i++){if(bars[i].applicable)app.push(bars[i]);}var avg=0;for(var i=0;i<app.length;i++)avg+=app[i].score;avg=avg/app.length;var lvl=riskLevel(avg);
+  var reqK=getRequiredDocKeys();var gen2=getGeneratedDocs();var mn=reqK.filter(function(k){return !gen2[k];});var allDocs2=DOCS.universal.concat(DOCS.gdpr,DOCS.ccpa,DOCS.hipaa,DOCS.popia);var mnNames=mn.map(function(k){for(var i=0;i<allDocs2.length;i++){if(allDocs2[i].key===k)return allDocs2[i].name;}return k;});
+  var tip=document.getElementById('risk-tip-box');
+  if(tip){tip.className='risk-tip '+lvl.cls;if(lvl.cls==='low'){tip.innerHTML='<strong>Overall: '+lvl.lbl+' risk</strong><br>Your compliance posture is strong.';}else{var t3=mnNames.slice(0,3).join(', ')+(mnNames.length>3?' and '+(mnNames.length-3)+' more':'');tip.innerHTML='<strong>Overall: '+lvl.lbl+' risk</strong><br>'+(mnNames.length>0?'Generate missing documents to reduce exposure: <em>'+t3+'</em>.':'Review flagged risk categories.')+'<div style="margin-top:10px;"><a href="home.html#form-container" class="btn" style="font-size:12px;">Generate missing docs →</a></div>';}}
+}
+function riskLevel(s){if(s<30)return{lbl:'Low',cls:'low'};if(s<65)return{lbl:'Medium',cls:'medium'};return{lbl:'High',cls:'high'};}
+
+var ADV_MAP={eu:'GDPR bundle required (7 docs)',uk:'UK GDPR applies — GDPR bundle required',us:'CCPA 2026 bundle required (10 docs)',sa:'POPIA bundle required (8 docs)',health:'HIPAA bundle required (9 docs)',personal:'Privacy Policy and DPA required',sensitive:'DPIA required (GDPR Art. 35 + CCPA 2026)',analytics:'Cookie consent mechanism required',sell:'CCPA opt-out rights — "Do Not Sell" disclosure required',staff:'Employee Training Scripts required',processors:'Data Processing Agreements required for each vendor',transfers:'International transfer clauses required in DPA',consumers:'Consumer Request Form & Log required',ai:'AI transparency disclosure required (EU AI Act Art. 52)',breach:'Incident Response + Breach Notification Policy required',audit:'Audit-Ready Documentation required',highvol:'Records of Processing Activities (ROPA) required'};
+
+function updateAdvisorSummary(){
+  var s=document.getElementById('adv-summary');if(!s)return;
+  var lines=[];var ak=Object.keys(advAnswers);
+  for(var i=0;i<ak.length;i++){var k=ak[i];if(advAnswers[k]==='yes'&&ADV_MAP[k])lines.push('<li style="margin-bottom:6px;display:flex;gap:8px;align-items:baseline;"><span style="color:var(--accent);font-weight:700;">→</span><span><strong>'+ADV_MAP[k]+'</strong></span></li>');}
+  if(!lines.length){s.classList.remove('show');return;}
+  var rem=TOTAL_Q-Object.keys(advAnswers).length;var reqK=getRequiredDocKeys();var xpEach=reqK.length>0?Math.round(XP_DOCS_TOTAL/reqK.length):0;
+  s.innerHTML='<h4 style="color:var(--accent);margin-bottom:10px;font-size:14px;">Your compliance requirements'+(rem>0?' ('+rem+' question'+(rem!==1?'s':'')+' remaining)':' — profile complete')+':</h4><ul style="padding-left:0;list-style:none;margin-bottom:12px;">'+lines.join('')+'</ul>'+(reqK.length>0?'<div style="background:rgba(146,205,236,.07);border:1px solid rgba(146,205,236,.2);border-radius:10px;padding:12px;font-size:12px;"><strong style="color:var(--accent);">'+reqK.length+' documents required</strong> · Each worth ~'+xpEach+'%<br><a href="home.html#form-container" class="btn" style="font-size:12px;margin-top:10px;display:inline-flex;">Generate documents now →</a></div>':'');
+  s.classList.add('show');
+}
+
+function switchTab(tab,btn){
+  document.querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  var pane=document.getElementById('tab-'+tab);if(pane)pane.classList.add('active');
+  if(btn)btn.classList.add('active');
+}
+
+function openModal(title,body,action){
+  var mb=document.getElementById('modal-bg');var mt=document.getElementById('mtitle');var mbody=document.getElementById('mbody');var mfoot=document.getElementById('mfoot');
+  if(!mb||!mt||!mbody||!mfoot)return;
+  mt.textContent=title;mbody.textContent=body;mfoot.innerHTML='';
+  if(action==='generate'){var a=document.createElement('a');a.href='home.html#form-container';a.className='btn';a.textContent='Generate This Document';mfoot.appendChild(a);}
+  if(action==='regenerate'){var a=document.createElement('a');a.href='home.html#form-container';a.className='btn';a.textContent='Regenerate Document';mfoot.appendChild(a);}
+  var cl=document.createElement('button');cl.className='btn-o';cl.textContent='Close';cl.onclick=function(){closeMod();};mfoot.appendChild(cl);
+  mb.classList.add('open');
+}
+
+function closeMod(e){
+  if(e&&e.target!==document.getElementById('modal-bg'))return;
+  var mb=document.getElementById('modal-bg');if(mb)mb.classList.remove('open');
+}
+
+window.ans=ans;window.switchTab=switchTab;window.openModal=openModal;window.closeMod=closeMod;
+window.clearAll=function(){['3ch0_docs','3ch0_wb_dismissed','3ch0_reg_feed',ADVISOR_USAGE_KEY,ADVISOR_ANSWERS_KEY].forEach(function(k){localStorage.removeItem(k);});location.reload();};
+
+var ADVISOR_USAGE_KEY='3ch0_advisor_usage';
+var ADVISOR_ANSWERS_KEY='3ch0_advisor_answers';
+
+function getAdvisorUsage(){try{return JSON.parse(localStorage.getItem(ADVISOR_USAGE_KEY)||'null');}catch(e){return null;}}
+function setAdvisorUsage(){if(CONFIG.TEST_MODE)return;var now=new Date();try{localStorage.setItem(ADVISOR_USAGE_KEY,JSON.stringify({month:now.getMonth(),year:now.getFullYear()}));}catch(e){}}
+function advisorUsedThisMonth(){if(CONFIG.TEST_MODE)return false;var u=getAdvisorUsage();if(!u)return false;var n=new Date();return u.month===n.getMonth()&&u.year===n.getFullYear();}
+function lockAdvisorUI(){document.querySelectorAll('.tbtn').forEach(function(b){b.disabled=true;b.style.opacity='0.45';b.style.cursor='not-allowed';});}
+
+document.addEventListener('DOMContentLoaded',function(){
+  var alreadyUsed=advisorUsedThisMonth();
+  if(alreadyUsed){
+    try{
+      var saved=JSON.parse(localStorage.getItem(ADVISOR_ANSWERS_KEY)||'{}');
+      var keys=Object.keys(saved);
+      for(var i=0;i<keys.length;i++){
+        var key=keys[i];var val=saved[key];
+        var yB=document.getElementById('btn-'+key+'-yes');var nB=document.getElementById('btn-'+key+'-no');var aq=document.getElementById('aq-'+key);
+        if(yB&&nB){yB.className='tbtn'+(val==='yes'?' ay':'');nB.className='tbtn'+(val==='no'?' an':'');if(aq)aq.classList.add('answered');advAnswers[key]=val;
+          if(FW_TRIGGERS[key]&&val==='yes'){var fws=FW_TRIGGERS[key];for(var j=0;j<fws.length;j++){if(requiredFrameworks.indexOf(fws[j])===-1)requiredFrameworks.push(fws[j]);}}}
       }
+      var an=Object.keys(advAnswers).length;
+      var pb=document.getElementById('adv-pbar');if(pb)pb.style.width=Math.round(an/TOTAL_Q*100)+'%';
+      var ct=document.getElementById('adv-count');if(ct)ct.textContent=an+' / '+TOTAL_Q;
+      var lp=document.getElementById('risk-lock-prog');if(lp)lp.textContent=an+' of '+TOTAL_Q+' questions answered';
+      updateAdvisorSummary();
+      if(an===TOTAL_Q){var b=document.getElementById('adv-complete-badge');if(b)b.style.display='inline-flex';unlockRisk();}
+    }catch(e){console.warn('Advisor restore:',e);}
+    lockAdvisorUI();
+  }
+  renderDocLists();renderAlerts();renderRegFeed();updateXPDisplay();
+});
 
-      function formatPrice(amount, currency) {
-        if (currency === 'ZAR') return amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-        return amount % 1 === 0 ? amount.toFixed(0) : amount.toFixed(2);
-      }
+</script>
 
-      function updatePrices() {
-        const currency = getUserCurrency();
-        const p = FIXED_PRICES[currency];
-        if (!p) return;
-
-        document.getElementById('free-price').textContent  = p.symbol + formatPrice(p.free, currency);
-        document.getElementById('free-period').textContent  = 'forever';
-        document.getElementById('pro-price').textContent   = p.symbol + formatPrice(p.pro, currency);
-        document.getElementById('pro-period').textContent  = p.period;
-        document.getElementById('current-currency').textContent = p.displayName;
-      }
-
-      window.openSettings = function() { window.location.href = 'settings.html'; };
-
-      // Storage changes (cross-tab)
-      window.addEventListener('storage', function(e) {
-        if (['userCurrency','userCountry','currencySymbol'].includes(e.key)) updatePrices();
-      });
-
-      // Same-tab navigation back from settings
-      window.addEventListener('focus',    updatePrices);
-      window.addEventListener('pageshow', updatePrices);
-      document.addEventListener('visibilitychange', function() {
-        if (!document.hidden) updatePrices();
-      });
-
-      updatePrices();
-    });
-  </script>
 </body>
 </html>
