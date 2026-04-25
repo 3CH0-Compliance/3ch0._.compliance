@@ -68,15 +68,7 @@
     nav .nav-links { display: flex; gap: 32px; }
     nav a { font-weight: 500; font-size: 14px; color: var(--secondary-text); text-decoration: none; }
     nav a:hover { color: var(--text-color); }
-    nav{background:rgba(10,10,10,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border-color, rgba(255,255,255,.1));padding:16px 40px;display:flex;justify-content:space-between;align-items:center;position:fixed;top:0;left:0;right:0;z-index:900}
-nav a{margin-left:22px;font-weight:500;color:var(--accent, #92cdec);text-decoration:none;font-size:14px;transition:color .25s;position:relative}
-nav a:hover{color:#fff}
-nav a.nav-active{color:#fff}
-nav a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gradient, linear-gradient(135deg,#ffffff,#92cdec,#0069d9));transition:width .3s}
-nav a:hover::after,nav a.nav-active::after{width:100%}
-.logo-img{height:52px;filter:brightness(115%)}
-.nav-cta{background:var(--gradient, linear-gradient(135deg,#ffffff,#92cdec,#0069d9))!important;color:#0a0a0a!important;padding:8px 20px;border-radius:30px;font-weight:700!important}
-.nav-cta::after{display:none!important}
+    .logo-img { height: 48px; }
 
     main {
       flex: 1;
@@ -228,15 +220,14 @@ nav a:hover::after,nav a.nav-active::after{width:100%}
 </head>
 <body>
   <nav>
-  <div><img src="3CH0_logo_transparent_fixed.png" alt="3CH0" class="logo-img"></div>
-  <div style="display:flex;align-items:center;">
-    <a href="home.html">Home</a>
-    <a href="index.html">Dashboard</a>
-    <a href="pricing.html">Pricing</a>
-    <a href="settings.html">Settings</a>
-    <a href="index.html#start" class="nav-cta">Start Free Check</a>
-  </div>
-</nav>
+    <div><img src="3CH0_logo_transparent_fixed.png" alt="3CH0 Logo" class="logo-img"></div>
+    <div class="nav-links">
+      <a href="home.html">Home</a>
+      <a href="index.html">Dashboard</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="settings.html">Settings</a>
+    </div>
+  </nav>
 
   <main>
     <a href="checkout-agency.html" class="back-link">
