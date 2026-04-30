@@ -127,11 +127,16 @@
     nav a:hover::after {
       width: 100%;
     }
+.nav-pill{
+  background:linear-gradient(135deg,#ffffff,#92cdec,#0069d9)!important;
+  color:#0a0a0a!important;
+  -webkit-text-fill-color:#0a0a0a!important;
+  padding:8px 20px;border-radius:30px;
+  font-weight:700!important;font-size:13px!important;
+}
+.nav-pill::after{display:none!important}
 
-    .logo-img {
-      height: 60px;
-      filter: brightness(120%);
-    }
+    .logo-img{height:52px;filter:brightness(115%)}
 
     /* Content Container */
     .container {
@@ -241,24 +246,8 @@
     }
 
     /* Footer */
-    footer {
-      padding: 40px 20px;
-      background-color: rgba(9, 6, 3, 0.9);
-      text-align: center;
-      font-size: 14px;
-      color: #777;
-      border-top: 1px solid var(--border-color);
-      backdrop-filter: blur(10px);
-      flex-shrink: 0;
-      width: 100%;
-      margin-top: 60px;
-    }
-
-    footer a {
-      color: #ccc;
-      text-decoration: underline;
-      margin: 0 8px;
-    }
+    footer{padding:28px 20px;text-align:center;font-size:13px;color:#555;border-top:1px solid rgba(255,255,255,.06)}
+footer a{color:#888;text-decoration:underline;margin:0 8px}
 
     .footer-links {
       margin-bottom: 20px;
@@ -318,15 +307,16 @@
 <body>
   <div class="main-content">
     <!-- Navigation -->
-    <nav class="glass-panel">
-      <div><img src="3CH0_logo_transparent_fixed.png" alt="3CH0 Logo" class="logo-img"></div>
-      <div>
-        <a href="home.html">Home</a>
-        <a href="index.html">Dashboard</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="settings.html">Settings</a>
-      </div>
-    </nav>
+    <nav>
+  <div><img src="3CH0_logo_transparent_fixed.png" alt="3CH0" class="logo-img"></div>
+  <div style="display:flex;align-items:center">
+    <a href="home.html">Home</a>
+    <a href="index.html">Dashboard</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="settings.html">Settings</a>
+    <a href="index.html#start" class="nav-pill">Start Free Check</a>
+  </div>
+</nav>
 
     <!-- Terms Content -->
     <div class="container">
@@ -378,14 +368,11 @@
 
   <!-- Footer -->
   <footer>
-    &copy; 3CH0 Compliance Pty Ltd. All rights reserved.<br>
-    <div class="footer-links">
-      <a href="privacy-policy.html">Privacy Policy</a> |
-      <a href="terms-of-service.html">Terms of Service</a> |
-      <a href="mailto:3CH0.The.Only@gmail.com">Support</a> |
-      <a href="https://discord.gg/W5SrbqK7j3" target="_blank">Join the Community</a>
-    </div>
-  </footer>
+  &copy; 3CH0 Compliance Pty Ltd. All rights reserved. &nbsp;|&nbsp;
+  <a href="settings.html">Privacy &amp; Terms</a> &nbsp;|&nbsp;
+  <a href="mailto:3CH0.The.Only@gmail.com">Support</a> &nbsp;|&nbsp;
+  <a href="https://discord.gg/W5SrbqK7j3" target="_blank">Community</a>
+</footer>
 
   <script>
     // Add animation on scroll
