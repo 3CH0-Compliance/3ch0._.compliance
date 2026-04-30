@@ -106,7 +106,28 @@
     }
     nav a:hover::after { width: 100%; }
 
-    .logo-img { height: 60px; filter: brightness(120%); }
+    .logo-img{height:52px;filter:brightness(115%)}
+nav a{
+  margin-left:22px;font-size:14px;font-weight:500;
+  color:#92cdec;text-decoration:none;
+  transition:color .25s;position:relative;
+}
+nav a:hover{color:#fff}
+nav a::after{
+  content:'';position:absolute;bottom:-4px;left:0;
+  width:0;height:1px;background:linear-gradient(135deg,#ffffff,#92cdec,#0069d9);transition:width .3s;
+}
+nav a:hover::after{width:100%}
+nav a.active{color:#fff}
+nav a.active::after{width:100%}
+.nav-pill{
+  background:linear-gradient(135deg,#ffffff,#92cdec,#0069d9)!important;
+  color:#0a0a0a!important;
+  -webkit-text-fill-color:#0a0a0a!important;
+  padding:8px 20px;border-radius:30px;
+  font-weight:700!important;font-size:13px!important;
+}
+.nav-pill::after{display:none!important}
     .container { max-width: 600px; margin: 60px auto; padding: 0 20px; text-align: center; }
 
     h1 {
@@ -179,19 +200,8 @@
     .disclaimer a { color: var(--accent); text-decoration: none; }
     .disclaimer a:hover { text-decoration: underline; }
 
-    footer {
-      padding: 40px 20px;
-      background-color: rgba(9, 6, 3, 0.9);
-      text-align: center;
-      font-size: 14px;
-      color: #777;
-      border-top: 1px solid var(--border-color);
-      backdrop-filter: blur(10px);
-      flex-shrink: 0;
-      width: 100%;
-    }
-
-    footer a { color: #ccc; text-decoration: underline; margin: 0 8px; }
+    footer{padding:28px 20px;text-align:center;font-size:13px;color:#555;border-top:1px solid rgba(255,255,255,.06)}
+footer a{color:#888;text-decoration:underline;margin:0 8px}
 
     @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
     .pulse { animation: pulse 2s infinite; }
@@ -211,15 +221,16 @@
 </head>
 <body>
   <div class="main-content">
-    <nav class="glass-panel">
-      <div><img src="3CH0_logo_transparent_fixed.png" alt="3CH0 Logo" class="logo-img"></div>
-      <div>
-        <a href="home.html">Home</a>
-        <a href="index.html">Dashboard</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="settings.html">Settings</a>
-      </div>
-    </nav>
+    <nav>
+  <div><img src="3CH0_logo_transparent_fixed.png" alt="3CH0" class="logo-img"></div>
+  <div style="display:flex;align-items:center">
+    <a href="home.html">Home</a>
+    <a href="index.html">Dashboard</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="settings.html">Settings</a>
+    <a href="index.html#start" class="nav-pill">Start Free Check</a>
+  </div>
+</nav>
 
     <div class="container">
       <div class="card glass-panel">
@@ -263,12 +274,11 @@
   </div>
 
   <footer>
-    &copy; 3CH0 Compliance Pty Ltd. All rights reserved.
-    <br>
-    <a href="settings.html">Privacy & Terms</a> |
-    <a href="mailto:3CH0.The.Only@gmail.com" style="margin: 0;">Support</a>|
-    <a href="https://discord.gg/W5SrbqK7j3" target="_blank">Join the Community</a>
-  </footer>
+  &copy; 3CH0 Compliance Pty Ltd. All rights reserved. &nbsp;|&nbsp;
+  <a href="settings.html">Privacy &amp; Terms</a> &nbsp;|&nbsp;
+  <a href="mailto:3CH0.The.Only@gmail.com">Support</a> &nbsp;|&nbsp;
+  <a href="https://discord.gg/W5SrbqK7j3" target="_blank">Community</a>
+</footer>
 
   <div class="security-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Secure</div>
 
