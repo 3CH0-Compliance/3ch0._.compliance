@@ -15,7 +15,28 @@
     nav{background:rgba(15,15,15,.8);padding:16px 40px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-color);position:fixed;top:0;left:0;right:0;z-index:1000;backdrop-filter:blur(10px)}
     nav a{font-weight:500;font-size:14px;color:var(--accent);text-decoration:none;transition:color .3s}
     nav a:hover{color:#fdfdfe}
-    .logo-img{height:55px;filter:brightness(120%)}
+    .logo-img{height:52px;filter:brightness(115%)}
+nav a{
+  margin-left:22px;font-size:14px;font-weight:500;
+  color:#92cdec;text-decoration:none;
+  transition:color .25s;position:relative;
+}
+nav a:hover{color:#fff}
+nav a::after{
+  content:'';position:absolute;bottom:-4px;left:0;
+  width:0;height:1px;background:linear-gradient(135deg,#ffffff,#92cdec,#0069d9);transition:width .3s;
+}
+nav a:hover::after{width:100%}
+nav a.active{color:#fff}
+nav a.active::after{width:100%}
+.nav-pill{
+  background:linear-gradient(135deg,#ffffff,#92cdec,#0069d9)!important;
+  color:#0a0a0a!important;
+  -webkit-text-fill-color:#0a0a0a!important;
+  padding:8px 20px;border-radius:30px;
+  font-weight:700!important;font-size:13px!important;
+}
+.nav-pill::after{display:none!important}
     main{flex:1;padding:120px 24px 80px;max-width:600px;margin:0 auto;width:100%}
     .page-header{text-align:center;margin-bottom:40px}
     .page-header .icon{font-size:0;margin-bottom:16px;display:flex;align-items:center;justify-content:center}
@@ -57,8 +78,8 @@
     .btn-secondary:hover{background:var(--accent-dim)}
     .back-link{display:inline-flex;align-items:center;gap:8px;color:var(--secondary-text);text-decoration:none;font-size:14px;margin-bottom:24px;transition:color .2s}
     .back-link:hover{color:var(--accent)}
-    footer{padding:32px 24px;background:rgba(5,5,5,.9);text-align:center;font-size:13px;color:#666;border-top:1px solid var(--border-color)}
-    footer a{color:#888;text-decoration:none;margin:0 12px}
+    footer{padding:28px 20px;text-align:center;font-size:13px;color:#555;border-top:1px solid rgba(255,255,255,.06)}
+footer a{color:#888;text-decoration:underline;margin:0 8px}
     footer a:hover{color:var(--accent)}
     @media(max-width:600px){nav{padding:14px 20px}main{padding:100px 16px 60px}.form-card{padding:28px 20px}.page-header h1{font-size:24px}}
   </style>
@@ -66,12 +87,13 @@
 <body>
 
 <nav>
-  <div><img src="3CH0_logo_transparent_fixed.png" alt="3CH0 Logo" class="logo-img"></div>
-  <div style="display:flex;gap:24px;">
+  <div><img src="3CH0_logo_transparent_fixed.png" alt="3CH0" class="logo-img"></div>
+  <div style="display:flex;align-items:center">
     <a href="home.html">Home</a>
     <a href="index.html">Dashboard</a>
     <a href="pricing.html">Pricing</a>
     <a href="settings.html">Settings</a>
+    <a href="index.html#start" class="nav-pill">Start Free Check</a>
   </div>
 </nav>
 
@@ -218,17 +240,17 @@
 </main>
 
 <footer>
-  &copy; 3CH0 Compliance Pty Ltd. All rights reserved.<br>
-  <a href="settings.html">Privacy &amp; Terms</a>
-  <a href="mailto:3CH0.The.Only@gmail.com">Support</a>
+  &copy; 3CH0 Compliance Pty Ltd. All rights reserved. &nbsp;|&nbsp;
+  <a href="settings.html">Privacy &amp; Terms</a> &nbsp;|&nbsp;
+  <a href="mailto:3CH0.The.Only@gmail.com">Support</a> &nbsp;|&nbsp;
   <a href="https://discord.gg/W5SrbqK7j3" target="_blank">Community</a>
 </footer>
 
 <script>
   var PRICE_CONFIG = {
     USD: { 'agency-pro': { monthly: 99.00,  annual: 988.00 }, symbol: '$'  },
-    EUR: { 'agency-pro': { monthly: 89.00,  annual: 888.00 }, symbol: '\u20ac'  },
-    GBP: { 'agency-pro': { monthly: 79.00,  annual: 788.00 }, symbol: '\u00a3'  }
+    EUR: { 'agency-pro': { monthly: 89.00,  annual: 888.00 }, symbol: '€'  },
+    GBP: { 'agency-pro': { monthly: 79.00,  annual: 788.00 }, symbol: '£'  }
   };
   var PLAN_NAMES   = { 'agency-pro': 'Agency Pro' };
   var WEBHOOK_URL  = 'https://kqdlhvvikscxxseopvdw.supabase.co/functions/v1/invoice-international';
