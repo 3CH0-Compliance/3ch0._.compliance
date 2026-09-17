@@ -859,6 +859,73 @@ footer a{color:#556070;text-decoration:underline;margin:0 8px}
   background:rgba(239,68,68,.1);color:#f87171;}
 
 .astrip.ok{background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.2);color:var(--muted)}
+
+/* ==== UIV-SELECT: replaces native <select> chrome across the form ====
+   Adapted from a Uiverse.io component. The real <select> stays in the DOM
+   (visually hidden, not display:none) so every bit of existing JS that reads
+   or sets .value, listens for 'change', or checks [required] keeps working
+   unmodified — this is a skin on top of the real form control, not a
+   replacement for it. Options are generated from the real <select>'s own
+   <option> list at runtime, so it works for any select regardless of how
+   many choices it has (not hardcoded to a fixed set like the original). */
+.uiv-select{
+  position:relative;
+  width:100%;
+  cursor:pointer;
+  color:var(--txt);
+  font-family:'Inter',sans-serif;
+  z-index:1;
+}
+.uiv-select.uiv-open{z-index:50}
+.uiv-select select{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
+.uiv-selected{
+  width:100%;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--r-sm);
+  padding:11px 14px;
+  font-size:13px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  transition:border-color .2s,box-shadow .2s;
+  user-select:none;
+}
+.uiv-select.uiv-open .uiv-selected,
+.uiv-selected:focus{
+  border-color:rgba(91,156,246,.55);
+  box-shadow:0 0 0 3px rgba(91,156,246,.08);
+  outline:none;
+}
+.uiv-selected-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.uiv-arrow{
+  height:9px;width:20px;flex-shrink:0;
+  fill:var(--accent);
+  transform:rotate(0deg);
+  transition:transform .25s;
+}
+.uiv-select.uiv-open .uiv-arrow{transform:rotate(180deg)}
+.uiv-options{
+  position:absolute;top:calc(100% + 6px);left:0;right:0;
+  background:#101820;
+  border:1px solid rgba(146,205,236,.25);
+  border-radius:var(--r-sm);
+  padding:5px;
+  max-height:240px;overflow-y:auto;
+  box-shadow:0 12px 28px rgba(0,0,0,.45);
+  opacity:0;transform:translateY(-6px);
+  pointer-events:none;
+  transition:opacity .18s,transform .18s;
+  z-index:60;
+}
+.uiv-select.uiv-open .uiv-options{opacity:1;transform:translateY(0);pointer-events:auto}
+.uiv-option-row{
+  border-radius:6px;padding:8px 10px;font-size:13px;color:var(--muted);
+  transition:background .15s,color .15s;
+}
+.uiv-option-row:hover{background:rgba(146,205,236,.1);color:var(--txt)}
+.uiv-option-row.uiv-active{background:rgba(146,205,236,.14);color:var(--accent);font-weight:600}
 </style>
 </head>
 <body>
@@ -2618,6 +2685,93 @@ function renderDocPicker(){
 }
 
 renderQuestionnaire();
+
+/* ════ UIV-SELECT ENHANCEMENT ════
+   Wraps every real <select> (except the hidden, programmatically-driven
+   #docs-needed) with the Uiverse-style custom dropdown UI. The original
+   <select> is kept in the DOM, visually hidden, and remains the single
+   source of truth for .value — clicking a custom option just sets
+   select.value and dispatches a real 'change'/'input' event, so every
+   existing handler (automated_decisions_popia's change listener, the
+   [required] check in performSecurityChecks, buildBasePayload's form scan,
+   buildReview's field lookups) keeps working exactly as before. Runs once,
+   synchronously, since this script sits after all the form HTML it targets. */
+(function enhanceAllSelects(){
+  function buildOne(sel){
+    if(sel.id === 'docs-needed') return;
+    if(sel.getAttribute('data-uiv-done')) return;
+    sel.setAttribute('data-uiv-done', '1');
+
+    var wrap = document.createElement('div');
+    wrap.className = 'uiv-select';
+
+    var selectedDiv = document.createElement('div');
+    selectedDiv.className = 'uiv-selected';
+    selectedDiv.tabIndex = 0;
+    selectedDiv.setAttribute('role', 'button');
+
+    var textSpan = document.createElement('span');
+    textSpan.className = 'uiv-selected-text';
+    selectedDiv.appendChild(textSpan);
+    selectedDiv.insertAdjacentHTML('beforeend',
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="uiv-arrow">'
+      + '<path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 '
+      + '86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg>');
+
+    var optionsDiv = document.createElement('div');
+    optionsDiv.className = 'uiv-options';
+
+    function refreshSelectedText(){
+      var opt = sel.options[sel.selectedIndex];
+      textSpan.textContent = opt ? opt.text : '';
+      Array.prototype.forEach.call(optionsDiv.children, function(row){
+        row.classList.toggle('uiv-active', row.getAttribute('data-value') === sel.value);
+      });
+    }
+
+    Array.prototype.forEach.call(sel.options, function(opt){
+      var row = document.createElement('div');
+      row.className = 'uiv-option-row';
+      row.textContent = opt.text;
+      row.setAttribute('data-value', opt.value);
+      row.addEventListener('click', function(e){
+        e.stopPropagation();
+        if(sel.value !== opt.value){
+          sel.value = opt.value;
+          sel.dispatchEvent(new Event('input', {bubbles:true}));
+          sel.dispatchEvent(new Event('change', {bubbles:true}));
+        }
+        refreshSelectedText();
+        wrap.classList.remove('uiv-open');
+      });
+      optionsDiv.appendChild(row);
+    });
+
+    selectedDiv.addEventListener('click', function(e){
+      e.stopPropagation();
+      document.querySelectorAll('.uiv-select.uiv-open').forEach(function(w){
+        if(w !== wrap) w.classList.remove('uiv-open');
+      });
+      wrap.classList.toggle('uiv-open');
+    });
+    selectedDiv.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); selectedDiv.click(); }
+      if(e.key === 'Escape'){ wrap.classList.remove('uiv-open'); }
+    });
+
+    sel.parentNode.insertBefore(wrap, sel);
+    wrap.appendChild(sel);
+    wrap.appendChild(selectedDiv);
+    wrap.appendChild(optionsDiv);
+    refreshSelectedText();
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('select'), buildOne);
+
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.uiv-select.uiv-open').forEach(function(w){ w.classList.remove('uiv-open'); });
+  });
+})();
 
 /* ════ SAFETY NET: block native form submission ════
    #ComplianceFormWebhook has action/method attributes (kept as a graceful-degradation
