@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Documents Processing - 3CH0</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self'">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <link rel="icon" href="3CH0 logo.png" type="image/png">
   <style>
@@ -376,13 +380,13 @@ footer a{color:#888;text-decoration:underline;margin:0 8px}
       </svg>
     </div>
 
-    <h1 class="animate">Thank You for Subscribing</h1>
-    <p class="subtext animate">Welcome to 3CH0 Compliance. Your Agency Pro plan is now active and your first documents are already on their way to your inbox.</p>
+    <h1 class="animate" id="thank-you-heading">Thank You for Subscribing</h1>
+    <p class="subtext animate" id="thank-you-subtext">Welcome to 3CH0 Compliance. Your Agency Pro plan is now active and your first documents are already on their way to your inbox.</p>
 
     <div class="status-card glass-panel animate">
       <div class="status-item">
         <span>Status</span>
-        <strong>Approved</strong>
+        <strong id="status-value">Approved</strong>
       </div>
       <div class="status-item">
         <span>Delivery</span>
@@ -422,11 +426,62 @@ footer a{color:#888;text-decoration:underline;margin:0 8px}
 </br>
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    const PAYSTACK_EDGE_URL = 'https://kqdlhvvikscxxseopvdw.supabase.co/functions/v1/paystack-initialize';
+    const PAYSTACK_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtxZGxodnZpa3NjeHhzZW9wdmR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkwMTc3OTMsImV4cCI6MjA2NDU5Mzc5M30.Ny1Me9jRt5S2ex11RC27bm9ZsxOlckW_QzTjPsaupYc';
+
+    function verifyPaystackReference() {
+      var params = new URLSearchParams(window.location.search);
+      var reference = params.get('reference') || params.get('trxref');
+      if (!reference) return; // not a Paystack redirect (e.g. PayPal / bank invoice) — leave default copy
+
+      var statusEl = document.getElementById('status-value');
+      var headingEl = document.getElementById('thank-you-heading');
+      var subtextEl = document.getElementById('thank-you-subtext');
+      if (statusEl) statusEl.textContent = 'Verifying...';
+
+      fetch(PAYSTACK_EDGE_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + PAYSTACK_ANON_KEY
+        },
+        body: JSON.stringify({ action: 'verify', reference: reference })
+      })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.status === 'success') {
+            if (statusEl) statusEl.textContent = 'Approved';
+            if (headingEl) headingEl.textContent = 'Thank You for Subscribing';
+            if (subtextEl) subtextEl.textContent = 'Welcome to 3CH0 Compliance. Your Agency Pro plan is now active and your first documents are already on their way to your inbox.';
+            // Mirror what the PayPal flow sets on approval, so the dashboard's
+            // plan/usage display treats Paystack subscribers the same way.
+            try {
+              localStorage.setItem('userPlan', data.plan_name || 'agency-pro');
+              var now = new Date();
+              localStorage.setItem('submissions-' + now.getMonth() + '-' + now.getFullYear(), '\u221e');
+            } catch (e) { /* localStorage unavailable — non-fatal */ }
+          } else if (data.status === 'failed' || data.status === 'abandoned') {
+            if (statusEl) statusEl.textContent = 'Payment Failed';
+            if (headingEl) headingEl.textContent = 'Payment Not Completed';
+            if (subtextEl) subtextEl.textContent = 'Your payment could not be completed. No charge was made — please try again from the pricing page, or contact support if you were charged.';
+          } else {
+            if (statusEl) statusEl.textContent = 'Pending';
+            if (headingEl) headingEl.textContent = 'Payment Pending';
+            if (subtextEl) subtextEl.textContent = 'We\'re still confirming your payment with Paystack. This page will not auto-refresh — check your email shortly, or contact support if this persists.';
+          }
+        })
+        .catch(function(err) {
+          console.error('Paystack verify failed:', err);
+          if (statusEl) statusEl.textContent = 'Pending';
+        });
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
       var els = document.querySelectorAll('.animate');
       els.forEach(function(el, i) {
         setTimeout(function() { el.classList.add('visible'); }, i * 120);
       });
+      verifyPaystackReference();
     });
   </script>
 </body>
