@@ -7,7 +7,7 @@
   <meta name="description" content="Find out which laws apply to your business. Get exactly what you need to fix it.">
   
   <!-- SECURITY HEADERS -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.paypal.com https://www.sandbox.paypal.com https://www.paypalobjects.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.paypal.com https://www.sandbox.paypal.com https://hook.us2.make.com; frame-src https://www.paypal.com https://www.sandbox.paypal.com">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.paypal.com https://www.sandbox.paypal.com https://www.paypalobjects.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.paypal.com https://www.sandbox.paypal.com https://hook.us2.make.com https://kqdlhvvikscxxseopvdw.supabase.co; frame-src https://www.paypal.com https://www.sandbox.paypal.com">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="X-Frame-Options" content="DENY">
   <meta http-equiv="X-XSS-Protection" content="1; mode=block">
@@ -708,15 +708,9 @@ footer a{color:#888;text-decoration:underline;margin:0 8px}
       <h1>Choose Your Plan</h1>
       <p class="subheader">We tell you which laws apply to your business and give you exactly what you need to fix it.</p>
 
-      <!-- Currency Indicator -->
-      <div class="currency-indicator">
-        <span id="current-currency">USD ($)</span>
-        <button class="currency-change-btn" onclick="window.location.href='settings.html'">Change</button>
-      </div>
-
       <!-- ZAR Notice -->
       <div class="zar-notice" id="zar-notice">
-        <strong><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> South African Customers:</strong> Bank invoice is currently the only payment option for paid plans. PayFast coming soon!
+        <strong><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> South African Customers:</strong> Pay instantly by card via Paystack, or request a bank invoice if you’d rather pay by EFT.
       </div>
 
       <!-- Billing Toggle -->
@@ -764,7 +758,7 @@ footer a{color:#888;text-decoration:underline;margin:0 8px}
           <div class="popular-indicator">
             <span>Popular</span>
           </div>
-          <div class="plan-name">Agency Pro</div>
+          <div class="plan-name">Compliance Pro</div>
           <div class="plan-subtitle">SMEs, agencies, growing teams</div>
           <div class="plan-price" id="agency-price">$99</div>
           <div class="plan-price-note" id="agency-price-note">per month</div>
@@ -840,7 +834,7 @@ footer a{color:#888;text-decoration:underline;margin:0 8px}
         <div class="plan-card highlighted" id="plan-agency-zar">
           <div class="side-accent"></div>
           <div class="popular-indicator"><span>Most popular</span></div>
-          <div class="plan-name">Agency Pro</div>
+          <div class="plan-name">Compliance Pro</div>
           <div class="plan-subtitle">SMEs, agencies, growing teams</div>
           <div class="plan-price" id="agency-price-zar">R1 499</div>
           <div class="plan-price-note" id="agency-note-zar">/mo</div>
@@ -870,7 +864,7 @@ footer a{color:#888;text-decoration:underline;margin:0 8px}
               <span>Quarterly doc refresh</span>
             </div>
           </div>
-          <button class="plan-btn primary" onclick="CheckoutManager.openPaymentModal('agency-pro')">Get Agency Pro</button>
+          <button class="plan-btn primary" onclick="CheckoutManager.openPaymentModal('agency-pro')">Get Compliance Pro</button>
         </div>
 
       </div>
@@ -937,10 +931,20 @@ footer a{color:#888;text-decoration:underline;margin:0 8px}
   <div class="payment-modal" id="payment-modal">
     <div class="payment-modal-content">
       <button class="modal-close" onclick="CheckoutManager.closePaymentModal()">×</button>
-      <h2 class="modal-title" id="modal-plan-name">Agency Pro</h2>
+      <h2 class="modal-title" id="modal-plan-name">Compliance Pro</h2>
       <p class="modal-subtitle" id="modal-plan-details">$99/month billed monthly</p>
 
       <div class="payment-options-grid">
+        <div class="payment-option" id="paystack-option">
+          <div class="payment-option-header">
+            <span style="font-size: 26px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>
+            <span>Pay with Card (Paystack)</span>
+          </div>
+          <input type="email" id="paystack-email" placeholder="you@company.com" style="width:100%;padding:10px 12px;margin:10px 0;border-radius:8px;border:1px solid var(--border);background:var(--input-bg,#fff);font-size:14px;box-sizing:border-box;">
+          <button class="plan-btn primary" style="width:100%;" id="paystack-submit-btn" onclick="CheckoutManager.payWithPaystack()">Continue to Paystack</button>
+          <div class="error-message" id="paystack-error" style="display: none;"></div>
+        </div>
+
         <div class="payment-option" id="paypal-option">
           <div class="payment-option-header">
             <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal">
@@ -951,12 +955,8 @@ footer a{color:#888;text-decoration:underline;margin:0 8px}
           <div class="error-message" id="paypal-error" style="display: none;"></div>
         </div>
 
-        <div class="payment-option" onclick="CheckoutManager.requestBankInvoice()">
-          <div class="payment-option-header">
-            <span style="font-size: 26px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 10v11M12 10v11M16 10v11"/></svg></span>
-            <span>Bank Invoice / EFT</span>
-          </div>
-          <p style="font-size: 13px; color: var(--secondary-text); margin: 0;">Traditional bank transfer</p>
+        <div class="payment-option" onclick="CheckoutManager.requestBankInvoice()" style="text-align:center;">
+          <p style="margin:0;">Prefer a bank transfer? <span style="text-decoration:underline;">Request an EFT invoice</span></p>
         </div>
       </div>
     </div>
@@ -980,6 +980,7 @@ footer a{color:#888;text-decoration:underline;margin:0 8px}
     const SHOW_DISCOUNTS = false;
 
     const EDGE_URL = 'https://kqdlhvvikscxxseopvdw.supabase.co/functions/v1/bright-api';
+    const PAYSTACK_EDGE_URL = 'https://kqdlhvvikscxxseopvdw.supabase.co/functions/v1/paystack-initialize';
     const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtxZGxodnZpa3NjeHhzZW9wdmR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkwMTc3OTMsImV4cCI6MjA2NDU5Mzc5M30.Ny1Me9jRt5S2ex11RC27bm9ZsxOlckW_QzTjPsaupYc';
 
     const CheckoutManager = {
@@ -1009,7 +1010,7 @@ footer a{color:#888;text-decoration:underline;margin:0 8px}
             ZAR: { free:0, 'agency-pro':{ monthly:1499.00, annual:14990.00 }, symbol:'R', displayName:'ZAR (R)' }
         },
 
-        currentCurrency: 'USD',
+        currentCurrency: 'ZAR',
         currentBilling:  'monthly',
         selectedPlan:    null,
         makeWebhookUrl:  'https://hook.us2.make.com/1uatntmkvmo8rsn9nj0mq7l7q5ozkcl6',
@@ -1036,27 +1037,16 @@ footer a{color:#888;text-decoration:underline;margin:0 8px}
         init() {
             this.loadUserPreferences();
             this.setupUI();
-            this.updatePrices();
+            this.switchBilling(this.currentBilling);
             this.showTestingModeIndicator();
             this.showDiscountsSection();
             console.log('Checkout | mode:', this.isTestMode ? 'SANDBOX 🧪' : 'LIVE <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>', '| currency:', this.currentCurrency);
         },
 
         loadUserPreferences() {
-            try {
-                const urlParams   = new URLSearchParams(window.location.search);
-                const urlCurrency = urlParams.get('currency');
-                if (urlCurrency && ['USD','EUR','GBP','ZAR'].includes(urlCurrency.toUpperCase())) {
-                    this.currentCurrency = urlCurrency.toUpperCase(); return;
-                }
-                const savedCountry  = localStorage.getItem('userCountry')  || 'US';
-                const savedCurrency = localStorage.getItem('userCurrency') || 'USD';
-                const euroCountries = ['DE','FR','IT','ES','NL','BE','IE','PT','AT'];
-                if      (savedCountry==='ZA'||savedCurrency==='ZAR')                  this.currentCurrency='ZAR';
-                else if (euroCountries.includes(savedCountry)||savedCurrency==='EUR') this.currentCurrency='EUR';
-                else if (savedCountry==='GB'||savedCurrency==='GBP')                  this.currentCurrency='GBP';
-                else                                                                   this.currentCurrency='USD';
-            } catch(e) { this.currentCurrency='USD'; }
+            const urlParams = new URLSearchParams(window.location.search);
+            this.currentCurrency = 'ZAR';
+            this.currentBilling = urlParams.get('billing') === 'annual' ? 'annual' : 'monthly';
         },
 
         setupUI() {
@@ -1124,7 +1114,7 @@ footer a{color:#888;text-decoration:underline;margin:0 8px}
             if (!planPrices) { alert('This plan is not available. Please contact sales.'); return; }
 
             const amount = this.currentBilling==='annual' ? planPrices.annual : planPrices.monthly;
-            document.getElementById('modal-plan-name').textContent    = { 'agency-pro':'Agency Pro' }[plan] || plan;
+            document.getElementById('modal-plan-name').textContent    = { 'agency-pro':'Compliance Pro' }[plan] || plan;
             document.getElementById('modal-plan-details').textContent =
                 prices.symbol+this.fmt(amount)+' '+(this.currentBilling==='annual' ? 'billed annually' : 'billed monthly');
 
@@ -1132,9 +1122,15 @@ footer a{color:#888;text-decoration:underline;margin:0 8px}
 
             if (this.currentCurrency !== 'ZAR') {
                 document.getElementById('paypal-option').style.display = 'block';
+                document.getElementById('paystack-option').style.display = 'none';
                 this.loadPayPalSDK();
             } else {
                 document.getElementById('paypal-option').style.display = 'none';
+                document.getElementById('paystack-option').style.display = 'block';
+                const emailEl = document.getElementById('paystack-email');
+                if (emailEl && !emailEl.value) {
+                    emailEl.value = localStorage.getItem('userEmail') || '';
+                }
             }
         },
 
@@ -1270,6 +1266,51 @@ footer a{color:#888;text-decoration:underline;margin:0 8px}
             const now = new Date();
             localStorage.setItem('submissions-'+now.getMonth()+'-'+now.getFullYear(), '∞');
             window.location.href = '/thank-you-paid.html';
+        },
+
+        async payWithPaystack() {
+            const emailEl = document.getElementById('paystack-email');
+            const email = emailEl ? emailEl.value.trim() : '';
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                this.showPaystackError('Please enter a valid email address.');
+                return;
+            }
+            const btn = document.getElementById('paystack-submit-btn');
+            if (btn) { btn.disabled = true; btn.textContent = 'Redirecting...'; }
+            try {
+                const res = await fetch(PAYSTACK_EDGE_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + ANON_KEY
+                    },
+                    body: JSON.stringify({
+                        action: 'initialize',
+                        plan_name: this.selectedPlan,
+                        billing: this.currentBilling,
+                        email: email,
+                        name: localStorage.getItem('userName') || ''
+                    })
+                });
+                const data = await res.json();
+                if (!res.ok || data.error || !data.authorization_url) {
+                    this.showPaystackError(data.error || 'Could not start payment. Please try again.');
+                    if (btn) { btn.disabled = false; btn.textContent = 'Continue to Paystack'; }
+                    return;
+                }
+                window.location.href = data.authorization_url;
+            } catch (e) {
+                console.error('Paystack init failed:', e);
+                this.showPaystackError('Something went wrong. Please try again.');
+                if (btn) { btn.disabled = false; btn.textContent = 'Continue to Paystack'; }
+            }
+        },
+
+        showPaystackError(message) {
+            const el = document.getElementById('paystack-error');
+            if (!el) return;
+            el.textContent = message;
+            el.style.display = 'block';
         },
 
         requestBankInvoice() {
