@@ -4,6 +4,10 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Compliance Dashboard – 3CH0</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://hook.us2.make.com; object-src 'none'; base-uri 'self'">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
 <link rel="icon" href="3CH0 logo.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -341,6 +345,100 @@ nav a.active::after{width:100%}
 .reg-badge.yes{background:rgba(52,211,153,.12);color:#34d399;border:1px solid rgba(52,211,153,.3)}
 .reg-badge.maybe{background:rgba(251,191,36,.1);color:var(--warn);border:1px solid rgba(251,191,36,.25)}
 
+/* ── COMPLIANCE QUESTIONNAIRE ── */
+.qsection{margin:28px 0 14px}
+.qsection:first-of-type{margin-top:8px}
+.qsection-head{
+  display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+  margin-bottom:4px;
+}
+.qsection-name{font-size:14px;font-weight:700;color:var(--txt)}
+.qsection-cite{font-size:11px;color:var(--muted);font-weight:500}
+.qrow{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:10px;padding:14px 16px;margin-top:10px;
+  transition:border-color .2s;
+}
+.qrow.conditional{margin-left:20px;border-left:2px solid rgba(146,205,236,.3)}
+.qrow-text{font-size:13.5px;color:var(--txt);line-height:1.5;margin-bottom:11px}
+.ynp{display:flex;gap:8px;flex-wrap:wrap}
+.ynp-btn{
+  flex:1;min-width:84px;text-align:center;
+  padding:9px 12px;border-radius:8px;font-size:12.5px;font-weight:600;
+  border:1.5px solid rgba(255,255,255,.12);background:rgba(255,255,255,.02);
+  color:var(--muted);cursor:pointer;transition:all .18s;user-select:none;
+}
+.ynp-btn:hover{border-color:rgba(255,255,255,.25)}
+.ynp-btn.sel-yes{background:rgba(52,211,153,.14);border-color:#34d399;color:#34d399}
+.ynp-btn.sel-partial{background:rgba(251,191,36,.12);border-color:#f5c542;color:#f5c542}
+.ynp-btn.sel-no{background:rgba(248,113,113,.12);border-color:#f87171;color:#f87171}
+.qprogress-wrap{
+  position:sticky;top:70px;z-index:5;background:rgba(10,10,10,.9);
+  backdrop-filter:blur(8px);padding:10px 0;margin-bottom:6px;
+}
+.qprogress-track{height:6px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden}
+.qprogress-fill{height:100%;background:var(--grad);border-radius:4px;transition:width .3s}
+.qprogress-label{font-size:11px;color:var(--muted);margin-top:6px}
+
+/* ── GAP REPORT (Step 2) ── */
+.score-card{
+  display:flex;align-items:center;gap:20px;
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;padding:22px;margin-bottom:22px;flex-wrap:wrap;
+}
+.score-ring-wrap{position:relative;width:88px;height:88px;flex-shrink:0}
+.score-ring-wrap svg{transform:rotate(-90deg)}
+.score-pct{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:700;color:var(--txt);
+}
+.score-info h3{font-family:'Playfair Display',serif;font-size:18px;margin-bottom:4px;color:var(--txt);background:none;-webkit-text-fill-color:var(--txt)}
+.score-info p{font-size:13px;color:var(--muted);margin:0}
+.gap-group{margin-bottom:20px}
+.gap-group-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:8px}
+.gap-item{
+  display:flex;gap:12px;align-items:flex-start;
+  padding:12px 14px;border-radius:10px;margin-bottom:8px;
+  border:1px solid rgba(255,255,255,.06);
+}
+.gap-item.ok{background:rgba(52,211,153,.05)}
+.gap-item.bad{background:rgba(248,113,113,.06);border-color:rgba(248,113,113,.18)}
+.gap-item.warn{background:rgba(251,191,36,.06);border-color:rgba(251,191,36,.18)}
+.gap-icon{flex-shrink:0;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.gap-icon.ok{background:rgba(52,211,153,.18);color:#34d399}
+.gap-icon.bad{background:rgba(248,113,113,.18);color:#f87171}
+.gap-icon.warn{background:rgba(251,191,36,.18);color:#f5c542}
+.gap-body{flex:1}
+.gap-title{font-size:13px;font-weight:600;color:var(--txt);margin-bottom:3px}
+.gap-cite{font-size:11px;color:var(--muted);margin-bottom:4px}
+.gap-desc{font-size:12.5px;color:var(--muted);line-height:1.5}
+.gap-fix{display:inline-block;margin-top:6px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:8px;background:rgba(91,156,246,.12);color:var(--accent);border:1px solid rgba(91,156,246,.25)}
+
+/* ── DOCUMENT PICKER (Step 3) ── */
+.doc-pick-grid{display:flex;flex-direction:column;gap:10px}
+.doc-pick-card{
+  display:flex;align-items:flex-start;gap:14px;
+  background:rgba(255,255,255,.03);border:1.5px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:16px;cursor:pointer;transition:all .2s;
+}
+.doc-pick-card:hover{border-color:rgba(146,205,236,.35)}
+.doc-pick-card.checked{border-color:var(--accent);background:rgba(91,156,246,.07)}
+.doc-pick-card input[type=checkbox]{position:absolute;opacity:0;width:0;height:0}
+.doc-pick-box{
+  width:20px;height:20px;min-width:20px;margin-top:2px;border-radius:6px;
+  border:1.5px solid rgba(91,156,246,.4);background:#0d1520;
+  display:flex;align-items:center;justify-content:center;transition:all .2s;
+}
+.doc-pick-box svg{opacity:0;transition:opacity .15s}
+.doc-pick-card.checked .doc-pick-box{background:#0069d9;border-color:#92cdec}
+.doc-pick-card.checked .doc-pick-box svg{opacity:1}
+.doc-pick-name{font-size:14px;font-weight:600;color:var(--txt);margin-bottom:2px}
+.doc-pick-desc{font-size:12px;color:var(--muted);line-height:1.5}
+.doc-pick-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px;margin-left:8px;vertical-align:middle}
+.doc-pick-tag.gap{background:rgba(248,113,113,.15);color:#f87171}
+.doc-pick-tag.extra{background:rgba(146,205,236,.12);color:var(--accent)}
+
 /* ── ALERT STRIP ── */
 .astrip{
   display:flex;align-items:flex-start;gap:10px;
@@ -622,10 +720,7 @@ nav a.active::after{width:100%}
   background:none;-webkit-background-clip:unset;
 }
 
-/* Regulation-specific sections - hidden by default, shown by JS */
-#ComplianceFormWebhook .ccpa-specific,
-#ComplianceFormWebhook .gdpr-specific,
-#ComplianceFormWebhook .hipaa-specific,
+/* POPIA-specific section - hidden by default, shown by JS */
 #ComplianceFormWebhook .popia-specific{display:none}
 
 /* Hide submit button — we use Step 4 confirm button */
@@ -783,10 +878,10 @@ footer a{color:#556070;text-decoration:underline;margin:0 8px}
 <div class="hero" id="top">
   <div class="hero-eyebrow">
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-    Compliance Intelligence for International SMEs
+    Compliance Intelligence for South African SMEs
   </div>
-  <h1>Regulations shouldn't stop<br><em>your business from growing.</em></h1>
-  <p>7 quick questions. We detect which laws apply. You fill in the full compliance form. Your custom document lands in your inbox in under 10 minutes, for free.</p>
+  <h1>POPIA shouldn't stop<br><em>your business from growing.</em></h1>
+  <p>A full POPIA compliance check for your business. We show you exactly what's missing, then generate the documents that fix it — emailed to you in under 10 minutes, for free.</p>
   <a class="btn" href="#start" id="hscb" style="font-size:1rem;padding:14px 38px;">
     Start My Free Compliance Check
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -795,7 +890,7 @@ footer a{color:#556070;text-decoration:underline;margin:0 8px}
     <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Free first doc</span>
     <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>No credit card</span>
     <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Emailed in 30 sec</span>
-    <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>POPIA · GDPR · CCPA · HIPAA</span>
+    <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Built for POPIA · Made for SA SMEs</span>
   </div>
 </div>
 
@@ -814,72 +909,37 @@ footer a{color:#556070;text-decoration:underline;margin:0 8px}
 
   <!-- Step bar -->
   <div class="step-bar">
-    <div class="sn"><div class="sc active" id="sc1">1</div><div class="sl active" id="sl1">Risk Check</div></div>
+    <div class="sn"><div class="sc active" id="sc1">1</div><div class="sl active" id="sl1">Compliance Check</div></div>
     <div class="sline" id="ln1"></div>
-    <div class="sn"><div class="sc" id="sc2">2</div><div class="sl" id="sl2">Your Laws</div></div>
+    <div class="sn"><div class="sc" id="sc2">2</div><div class="sl" id="sl2">Your Gaps</div></div>
     <div class="sline" id="ln2"></div>
-    <div class="sn"><div class="sc" id="sc3">3</div><div class="sl" id="sl3">Details</div></div>
+    <div class="sn"><div class="sc" id="sc3">3</div><div class="sl" id="sl3">Documents</div></div>
     <div class="sline" id="ln3"></div>
-    <div class="sn"><div class="sc" id="sc4">4</div><div class="sl" id="sl4">Review</div></div>
-    <div class="sline" id="ln4"></div>
-    <div class="sn"><div class="sc" id="sc5">5</div><div class="sl" id="sl5">Generate</div></div>
+    <div class="sn"><div class="sc" id="sc4">4</div><div class="sl" id="sl4">Generate</div></div>
   </div>
 
   <!-- ════ STEP 1: RISK CHECK ════ -->
   <div class="panel active" id="panel1">
-    <div class="ptitle">Quick Risk Check</div>
-    <div class="psub">Answer 7 quick questions. We'll tell you which laws apply, which documents you need, <em>and where your data is exposed right now</em> — before you even open the form.</div>
+    <div class="ptitle">POPIA Compliance Check</div>
+    <div class="psub">Answer honestly — this isn't a test to pass, it's a scan to find out exactly what's missing. Takes about 5 minutes.</div>
 
-    <!-- Section A: Business basics -->
+    <!-- Business basics -->
     <div class="risk-section-label">About Your Business</div>
     <div class="fgrid">
-      <div class="fg">
-        <label>Where is your business based?</label>
-        <select id="r-country">
-          <option value="">Select country…</option>
-          <option value="ZA">South Africa</option>
-          <option value="EU">European Union</option>
-          <option value="UK">United Kingdom</option>
-          <option value="US">United States</option>
-          <option value="OTHER">Other / Multiple</option>
-        </select>
-      </div>
       <div class="fg">
         <label>What type of business do you run?</label>
         <select id="r-type">
           <option value="">Select type…</option>
           <option value="ecommerce">E-commerce / Online retail</option>
           <option value="saas">SaaS / Tech / App</option>
-          <option value="healthcare">Healthcare / Medical</option>
+          <option value="healthcare">Healthcare / Medical practitioner</option>
           <option value="professional">Professional services</option>
-          <option value="finance">Finance / Fintech</option>
+          <option value="finance">Finance / Fintech / Lending</option>
+          <option value="recruitment">Recruitment / HR / Payroll</option>
+          <option value="marketing">Marketing agency (direct marketing)</option>
           <option value="education">Education</option>
           <option value="ngo">NGO / Non-profit</option>
           <option value="other">Other</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="fg">
-      <label>Where are your customers located? <span style="font-weight:400;color:var(--muted);font-size:12px;">(select all that apply)</span></label>
-      <div class="cb-grid">
-        <label class="cb-item"><input type="checkbox" id="c-za"><div class="cb-box"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div><span>South Africa</span></label>
-        <label class="cb-item"><input type="checkbox" id="c-eu"><div class="cb-box"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div><span>European Union / UK</span></label>
-        <label class="cb-item"><input type="checkbox" id="c-us"><div class="cb-box"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div><span>United States / California</span></label>
-        <label class="cb-item"><input type="checkbox" id="c-other"><div class="cb-box"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div><span>Other international</span></label>
-      </div>
-    </div>
-
-    <!-- Section B: Data you collect -->
-    <div class="risk-section-label" style="margin-top:8px">Your Data</div>
-    <div class="fgrid">
-      <div class="fg">  
-        <label>Do you collect personal data?</label>
-        <select id="r-data">
-          <option value="">Select…</option>
-          <option value="yes">Yes — names, emails, IDs</option>
-          <option value="sensitive">Yes — including health / financial</option>
-          <option value="no">No personal data collected</option>
         </select>
       </div>
       <div class="fg">
@@ -894,87 +954,90 @@ footer a{color:#556070;text-decoration:underline;margin:0 8px}
         </select>
       </div>
     </div>
-
     <div class="fg">
-      <label>Where do you <strong>store</strong> customer / employee data? <span style="font-weight:400;color:var(--muted);font-size:12px;">(select all that apply)</span></label>
-      <div class="cb-grid" id="storage-grid">
-        <label class="cb-item"><input type="checkbox" id="ds-gdrive"><div class="cb-box"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div><span>Google Drive / Docs</span></label>
-        <label class="cb-item"><input type="checkbox" id="ds-onedrive"><div class="cb-box"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div><span>OneDrive / SharePoint</span></label>
-        <label class="cb-item"><input type="checkbox" id="ds-crm"><div class="cb-box"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div><span>CRM (HubSpot, Salesforce…)</span></label>
-        <label class="cb-item"><input type="checkbox" id="ds-email"><div class="cb-box"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div><span>Email (Gmail, Outlook)</span></label>
-        <label class="cb-item"><input type="checkbox" id="ds-sheets"><div class="cb-box"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div><span>Spreadsheets (Excel, Sheets)</span></label>
-        <label class="cb-item"><input type="checkbox" id="ds-pos"><div class="cb-box"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div><span>POS / Payment system</span></label>
-        <label class="cb-item"><input type="checkbox" id="ds-cloud"><div class="cb-box"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div><span>Cloud database (AWS, Azure…)</span></label>
-        <label class="cb-item"><input type="checkbox" id="ds-local"><div class="cb-box"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div><span>Local devices / hard drives</span></label>
-      </div>
+      <label>Do you collect personal data?</label>
+      <select id="r-data">
+        <option value="">Select…</option>
+        <option value="yes">Yes — names, emails, IDs</option>
+        <option value="sensitive">Yes — including health / financial</option>
+        <option value="no">No personal data collected</option>
+      </select>
     </div>
 
-    <div class="fg">
-      <label>Who can access your customer data? <span style="font-weight:400;color:var(--muted);font-size:12px;">(select all that apply)</span></label>
-      <div class="cb-grid">
-        <label class="cb-item"><input type="checkbox" id="ac-all"><div class="cb-box"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div><span>Everyone on the team</span></label>
-        <label class="cb-item"><input type="checkbox" id="ac-roles"><div class="cb-box"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div><span>Specific roles only</span></label>
-        <label class="cb-item"><input type="checkbox" id="ac-3p"><div class="cb-box"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div><span>Third-party vendors / contractors</span></label>
-        <label class="cb-item"><input type="checkbox" id="ac-unsure"><div class="cb-box"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg></div><span>Not sure / uncontrolled</span></label>
-      </div>
+    <!-- Sticky progress -->
+    <div class="qprogress-wrap">
+      <div class="qprogress-track"><div class="qprogress-fill" id="qprogress-fill" style="width:0%"></div></div>
+      <div class="qprogress-label" id="qprogress-label">0 of 0 questions answered</div>
     </div>
+
+    <!-- Questions render here, grouped by POPIA condition -->
+    <div id="qcontainer"></div>
 
     <div class="step-nav">
-      <span style="font-size:13px;color:var(--muted)">Step 1 of 5 · Under 3 minutes</span>
+      <span style="font-size:13px;color:var(--muted)">Step 1 of 4 · Under 5 minutes</span>
       <button class="btn" type="button" id="btn-s1">
-        See My Risk Profile
+        See My Compliance Gaps
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </button>
     </div>
   </div>
 
-  <!-- ════ STEP 2: REGULATIONS ════ -->
+  <!-- ════ STEP 2: GAP REPORT ════ -->
   <div class="panel" id="panel2">
-    <div class="ptitle">Your Risk Profile</div>
-    <div class="psub" id="reg-intro">Based on your answers, here's what applies to your business — including where your data is sitting right now.</div>
+    <div class="ptitle">Your POPIA Gap Report</div>
+    <div class="psub" id="reg-intro">Here's exactly where your business stands against POPIA's requirements — and what's missing.</div>
 
-    <!-- Applicable laws -->
-    <div class="risk-section-label">Applicable Regulations</div>
-    <div class="reg-grid">
-      <div class="reg-card" id="rc-popia"><div class="chk">✓</div><div class="reg-name">POPIA</div><div class="reg-sub">Protection of Personal Information Act · SA</div><div class="reg-body">Required for any business handling personal data of South African residents.</div><span class="reg-badge yes" id="rb-popia">Detected</span></div>
-      <div class="reg-card" id="rc-gdpr"><div class="chk">✓</div><div class="reg-name">GDPR</div><div class="reg-sub">General Data Protection Regulation · EU &amp; UK</div><div class="reg-body">Applies if you have any EU or UK customers regardless of where you are based.</div><span class="reg-badge maybe" id="rb-gdpr">Optional</span></div>
-      <div class="reg-card" id="rc-ccpa"><div class="chk">✓</div><div class="reg-name">CCPA</div><div class="reg-sub">California Consumer Privacy Act · USA</div><div class="reg-body">Applies if you serve California residents. CCPA 2026 now fully in force.</div><span class="reg-badge maybe" id="rb-ccpa">Optional</span></div>
-      <div class="reg-card" id="rc-hipaa"><div class="chk">✓</div><div class="reg-name">HIPAA</div><div class="reg-sub">Health Insurance Portability Act · US Healthcare</div><div class="reg-body">Required if you handle Protected Health Information (PHI).</div><span class="reg-badge maybe" id="rb-hipaa">Optional</span></div>
+    <div class="score-card">
+      <div class="score-ring-wrap">
+        <svg width="88" height="88" viewBox="0 0 88 88">
+          <circle cx="44" cy="44" r="38" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="8"/>
+          <circle id="score-ring-fg" cx="44" cy="44" r="38" fill="none" stroke="#34d399" stroke-width="8" stroke-linecap="round" stroke-dasharray="238.76" stroke-dashoffset="238.76"/>
+        </svg>
+        <div class="score-pct" id="score-pct">0%</div>
+      </div>
+      <div class="score-info">
+        <h3 id="score-heading">Compliance Score</h3>
+        <p id="score-sub">Answer the questionnaire to see your score.</p>
+      </div>
     </div>
 
-    <!-- Documents you likely need -->
-    <div class="risk-section-label" style="margin-top:24px">Documents You Likely Need</div>
-    <div id="docs-needed-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px;"></div>
-
-    <!-- DATA RISK MAP -->
-    <div class="risk-section-label" style="margin-top:24px">
-      Your Data Risk Map
-      <span class="risk-new-badge">New</span>
-    </div>
-    <div class="astrip warn" style="margin-bottom:14px;">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      <span>Most SMEs do not know where their sensitive data lives. Fines often come from <strong>unknown exposure</strong> — not missing documents.</span>
-    </div>
-    <div id="data-risk-map" style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;"></div>
+    <div id="gap-report-body"></div>
 
     <div class="astrip info" style="margin-top:4px">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <span>Select any regulation you want to cover — even if not detected. Useful if you plan to expand internationally.</span>
+      <span>3CH0 currently focuses exclusively on POPIA — built for South African SMEs. Cross-border coverage (e.g. for businesses with a China data connection) is coming soon.</span>
     </div>
 
     <div class="step-nav">
       <button class="btn-ghost" type="button" id="btn-s2-back">← Back</button>
       <button class="btn" type="button" id="btn-s2">
+        Choose Documents to Fix This
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ════ STEP 3: DOCUMENT PICKER ════ -->
+  <div class="panel" id="panel3">
+    <div class="ptitle">Choose Your Documents</div>
+    <div class="psub" id="doc-picker-intro">We've pre-selected the documents that fix the gaps we found. Add or remove anything you'd like.</div>
+
+    <div class="doc-pick-grid" id="doc-pick-grid"></div>
+
+    <div class="step-nav">
+      <button class="btn-ghost" type="button" id="btn-s3-back">← Back</button>
+      <button class="btn" type="button" id="btn-s3">
         Fill In My Details
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </button>
     </div>
   </div>
 
-  <!-- ════ STEP 3: FULL COMPLIANCE FORM ════ -->
-  <div class="panel" id="panel3">
-    <div class="ptitle">Generate Your Compliance Document</div>
-    <div class="psub">Fill in your business details below. Every field shapes your custom document. Emailed in under 10 minutes</div>
+  <!-- ════ STEP 4: FULL COMPLIANCE FORM ════ -->
+  <div class="panel" id="panel4">
+    <div class="ptitle">Generate Your Compliance Documents</div>
+    <div class="psub">Fill in your business details below. Every field shapes your custom documents. Emailed in under 10 minutes</div>
+    <div class="astrip info" id="selected-docs-summary" style="margin-bottom:20px"></div>
 
     <form action="https://hook.us2.make.com/rxu5mdjft2evqirbr9w1rvcqlkvnxslu" method="POST" id="ComplianceFormWebhook">
   <input type="hidden" name="form-name" value="ComplianceFormWebhook" />
@@ -1031,7 +1094,7 @@ footer a{color:#556070;text-decoration:underline;margin:0 8px}
     </div>
 
     <label for="location">Primary Business Location *</label>
-    <input type="text" id="location" name="location" required placeholder="e.g., California, USA or Johannesburg, South Africa">
+    <input type="text" id="location" name="location" required placeholder="e.g., Johannesburg, South Africa">
   </div>
 
   <!-- ==================== SECTION 2: CONTACT INFORMATION ==================== -->
@@ -1095,12 +1158,7 @@ footer a{color:#556070;text-decoration:underline;margin:0 8px}
     
     <label data-required for="regulations">Primary Compliance Regulation</label>
     <select name="regulations" id="regulations" required>
-      <option value="">Select</option>
-      <option value="GDPR">GDPR (European Union)</option>
-      <option value="CCPA">CCPA/CPRA (California)</option>
-      <option value="HIPAA">HIPAA (US Healthcare)</option>
-      <option value="POPIA">POPIA (South Africa)</option>
-      <option value="Multiple / Global">Multiple / Global</option>
+      <option value="POPIA" selected>POPIA (South Africa)</option>
     </select>
 
     <label data-required for="data">What personal data do you collect?</label>
@@ -1193,761 +1251,6 @@ footer a{color:#556070;text-decoration:underline;margin:0 8px}
         </div>
       </div>
     </div>
-  </div>
-  <!-- ==================== CCPA/CPRA SECTION ==================== -->
-  <div class="field-group ccpa-specific" style="display: none;">
-    <div class="field-group-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:6px;"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg> CCPA/CPRA Core Details</div>
-    
-    <!-- Core Contact Methods -->
-    <div class="form-grid">
-      <div>
-        <label for="ccpa_tollfree">Toll-Free Phone Number (Required)</label>
-        <input type="tel" id="ccpa_tollfree" name="ccpa_tollfree" placeholder="1-800-XXX-XXXX">
-      </div>
-      <div>
-        <label for="ccpa_webform_url">Consumer Request Web Form URL</label>
-        <input type="url" id="ccpa_webform_url" name="ccpa_webform_url" placeholder="https://yoursite.com/privacy-request">
-      </div>
-    </div>
-
-    <!-- Data Categories Checkboxes -->
-    <label><strong>Categories of Personal Information Collected</strong></label>
-    <div class="checkbox-grid">
-      <label><input type="checkbox" name="ccpa_categories[]" value="identifiers"> Identifiers (name, email, IP)</label>
-      <label><input type="checkbox" name="ccpa_categories[]" value="commercial"> Commercial Information</label>
-      <label><input type="checkbox" name="ccpa_categories[]" value="internet"> Internet/Network Activity</label>
-      <label><input type="checkbox" name="ccpa_categories[]" value="geolocation"> Geolocation Data</label>
-      <label><input type="checkbox" name="ccpa_categories[]" value="professional"> Professional Info</label>
-      <label><input type="checkbox" name="ccpa_categories[]" value="inferences"> Inferences/Profiling</label>
-      <label><input type="checkbox" name="ccpa_categories[]" value="biometric"> Biometric Info</label>
-      <label><input type="checkbox" name="ccpa_categories[]" value="sensory"> Sensory Data</label>
-      <label><input type="checkbox" name="ccpa_categories[]" value="education"> Education Info</label>
-    </div>
-
-    <!-- Sensitive Data Checkboxes -->
-    <label><strong>Sensitive Personal Information (CPRA)</strong></label>
-    <div class="checkbox-grid">
-      <label><input type="checkbox" name="ccpa_sensitive[]" value="government_id"> Government IDs (SSN)</label>
-      <label><input type="checkbox" name="ccpa_sensitive[]" value="financial"> Financial Account/Login</label>
-      <label><input type="checkbox" name="ccpa_sensitive[]" value="precise_geo"> Precise Geolocation</label>
-      <label><input type="checkbox" name="ccpa_sensitive[]" value="racial"> Racial/Ethnic Origin</label>
-      <label><input type="checkbox" name="ccpa_sensitive[]" value="health"> Health Information</label>
-      <label><input type="checkbox" name="ccpa_sensitive[]" value="sexual_orientation"> Sexual Orientation</label>
-      <label><input type="checkbox" name="ccpa_sensitive[]" value="union"> Union Membership</label>
-      <label><input type="checkbox" name="ccpa_sensitive[]" value="biometric"> Biometric Data</label>
-      <label><input type="checkbox" name="ccpa_sensitive[]" value="communications"> Email/Text Contents</label>
-      <label><input type="checkbox" name="ccpa_sensitive[]" value="genetic"> Genetic Data</label>
-      <label><input type="checkbox" name="ccpa_sensitive[]" value="neural"> Neural Data</label>
-      <label><input type="checkbox" name="ccpa_sensitive[]" value="religious"> Religious Beliefs</label>
-      <label><input type="checkbox" name="ccpa_sensitive[]" value="immigration"> Immigration Status</label>
-    </div>
-
-    <!-- Core Data Practices -->
-    <div class="form-grid">
-      <div>
-        <label for="ccpa_sell">Do you SELL personal information?</label>
-        <select name="ccpa_sell" id="ccpa_sell">
-          <option value="">Select</option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
-      </div>
-      <div>
-        <label for="ccpa_share">Do you SHARE for targeted ads?</label>
-        <select name="ccpa_share" id="ccpa_share">
-          <option value="">Select</option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="form-grid">
-      <div>
-        <label for="ccpa_retention">Data Retention Period</label>
-        <input type="text" id="ccpa_retention" name="ccpa_retention" placeholder="e.g., 3 years after last interaction">
-      </div>
-      <div>
-        <label for="ccpa_minors">Collect data from minors under 16?</label>
-        <select name="ccpa_minors" id="ccpa_minors">
-          <option value="">Select</option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="form-grid">
-      <div>
-        <label for="ccpa_gpc">Honor Global Privacy Control (GPC)?</label>
-        <select name="ccpa_gpc" id="ccpa_gpc">
-          <option value="">Select</option>
-          <option value="Yes">Yes (Required)</option>
-          <option value="No">No - Need to implement</option>
-          <option value="Implementing">Currently implementing</option>
-        </select>
-      </div>
-      <div>
-        <label for="ccpa_financial_incentives">Offer financial incentives/loyalty?</label>
-        <select name="ccpa_financial_incentives" id="ccpa_financial_incentives">
-          <option value="">Select</option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- Financial Incentives Details (shows when Yes) -->
-    <div id="financial-incentives-details" class="conditional-section" style="display: none;">
-      <label for="financial_incentives">Describe the incentive program</label>
-      <textarea name="financial_incentives" id="financial_incentives" rows="2" placeholder="e.g., 10% discount for loyalty members"></textarea>
-      <div class="form-grid">
-        <div>
-          <label for="incentive_optin">How do consumers opt-in?</label>
-          <input type="text" id="incentive_optin" name="incentive_optin" placeholder="e.g., Sign up at checkout">
-        </div>
-        <div>
-          <label for="incentive_withdraw">How do consumers withdraw?</label>
-          <input type="text" id="incentive_withdraw" name="incentive_withdraw" placeholder="e.g., Email privacy@company.com">
-        </div>
-      </div>
-    </div>
-
-    <div class="form-grid">
-      <div>
-        <label for="ccpa_applicable">Why does CCPA apply?</label>
-        <select name="ccpa_applicable" id="ccpa_applicable">
-          <option value="">Select</option>
-          <option value="Revenue over $25M">Revenue over $25M</option>
-          <option value="50k+ consumers">50k+ consumers' data</option>
-          <option value="50% revenue from data">50%+ revenue from data</option>
-          <option value="Voluntary compliance">Voluntary compliance</option>
-        </select>
-      </div>
-      <div>
-        <label for="business_purposes">Primary Business Purposes</label>
-        <input type="text" id="business_purposes" name="business_purposes" placeholder="e.g., Service delivery, marketing">
-      </div>
-    </div>
-
-    <div class="form-grid">
-      <div>
-        <label for="sp_response_days">Service Provider Response (days)</label>
-        <input type="number" id="sp_response_days" name="sp_response_days" placeholder="e.g., 10" min="1" max="45">
-      </div>
-      <div>
-        <label for="breach_notification_hours">Breach Notification (hours)</label>
-        <input type="number" id="breach_notification_hours" name="breach_notification_hours" placeholder="e.g., 72">
-      </div>
-    </div>
-
-    <div class="form-grid">
-      <div>
-        <label for="log_start_date">Request Log Start Date</label>
-        <input type="date" id="log_start_date" name="log_start_date">
-      </div>
-      <div>
-        <label for="log_end_date">Request Log End Date</label>
-        <input type="date" id="log_end_date" name="log_end_date">
-      </div>
-    </div>
-
-    <label for="plan_version">Breach Response Plan Version</label>
-    <input type="text" id="plan_version" name="plan_version" placeholder="e.g., 1.0 or 2024.1">
-
-    <!-- Purposes Checkboxes -->
-    <label><strong>Purposes for Data Collection</strong></label>
-    <div class="checkbox-grid">
-      <label><input type="checkbox" name="ccpa_purposes[]" value="service_delivery"> Service Delivery</label>
-      <label><input type="checkbox" name="ccpa_purposes[]" value="payment"> Payment Processing</label>
-      <label><input type="checkbox" name="ccpa_purposes[]" value="marketing"> Marketing</label>
-      <label><input type="checkbox" name="ccpa_purposes[]" value="personalization"> Personalization</label>
-      <label><input type="checkbox" name="ccpa_purposes[]" value="security"> Security/Fraud</label>
-      <label><input type="checkbox" name="ccpa_purposes[]" value="analytics"> Analytics</label>
-      <label><input type="checkbox" name="ccpa_purposes[]" value="legal"> Legal Compliance</label>
-      <label><input type="checkbox" name="ccpa_purposes[]" value="auditing"> Auditing</label>
-      <label><input type="checkbox" name="ccpa_purposes[]" value="debugging"> Debugging</label>
-      <label><input type="checkbox" name="ccpa_purposes[]" value="research"> Research</label>
-    </div>
-
-    <!-- Request Methods -->
-    <label><strong>Consumer Request Methods</strong></label>
-    <div class="checkbox-grid">
-      <label><input type="checkbox" name="ccpa_methods[]" value="webform"> Web Form</label>
-      <label><input type="checkbox" name="ccpa_methods[]" value="tollfree"> Toll-Free Phone</label>
-      <label><input type="checkbox" name="ccpa_methods[]" value="email"> Email</label>
-      <label><input type="checkbox" name="ccpa_methods[]" value="postal"> Postal Mail</label>
-    </div>
-
-    <!-- Website Links -->
-    <label><strong>Required Website Links</strong></label>
-    <div class="checkbox-grid">
-      <label><input type="checkbox" name="ccpa_links[]" value="dnss"> "Do Not Sell/Share" Link</label>
-      <label><input type="checkbox" name="ccpa_links[]" value="limit"> "Limit Sensitive PI" Link</label>
-      <label><input type="checkbox" name="ccpa_links[]" value="privacy_footer"> Privacy Policy in Footer</label>
-    </div>
-  </div>
-
-  <!-- ==================== CCPA ADVANCED: SENSITIVE DATA DETAILS ==================== -->
-  <div class="field-group ccpa-specific" style="display: none;">
-    <div class="field-group-title collapsible-header" onclick="toggleSection('ccpa-sensitive-details')">
-      🔒 Advanced: Sensitive Data Collection Details
-      <span class="toggle-icon">▼</span>
-    </div>
-    
-    <div id="ccpa-sensitive-details" class="collapsible-content" style="display: none;">
-      <p class="section-note">Specify Yes/No and purpose for each sensitive data type (used in CCPA templates)</p>
-      
-      <!-- SSN -->
-      <div class="form-grid">
-        <div>
-          <label for="collects_ssn">Collect Social Security Numbers?</label>
-          <select name="collects_ssn" id="collects_ssn">
-            <option value="No">No</option>
-            <option value="Yes">Yes</option>
-          </select>
-        </div>
-        <div>
-          <label for="ssn_purpose">SSN Purpose</label>
-          <input type="text" id="ssn_purpose" name="ssn_purpose" placeholder="e.g., Identity verification, tax reporting">
-        </div>
-      </div>
-
-      <!-- Login Credentials -->
-      <div class="form-grid">
-        <div>
-          <label for="collects_login">Collect Login Credentials?</label>
-          <select name="collects_login" id="collects_login">
-            <option value="No">No</option>
-            <option value="Yes">Yes</option>
-          </select>
-        </div>
-        <div>
-          <label for="login_purpose">Login Purpose</label>
-          <input type="text" id="login_purpose" name="login_purpose" placeholder="e.g., Account security">
-        </div>
-      </div>
-
-      <!-- Geolocation -->
-      <div class="form-grid">
-        <div>
-          <label for="collects_geolocation">Collect Precise Geolocation?</label>
-          <select name="collects_geolocation" id="collects_geolocation">
-            <option value="No">No</option>
-            <option value="Yes">Yes</option>
-          </select>
-        </div>
-        <div>
-          <label for="geolocation_purpose">Geolocation Purpose</label>
-          <input type="text" id="geolocation_purpose" name="geolocation_purpose" placeholder="e.g., Service delivery, fraud prevention">
-        </div>
-      </div>
-
-      <!-- Race -->
-      <div class="form-grid">
-        <div>
-          <label for="collects_race">Collect Racial/Ethnic Data?</label>
-          <select name="collects_race" id="collects_race">
-            <option value="No">No</option>
-            <option value="Yes">Yes</option>
-          </select>
-        </div>
-        <div>
-          <label for="race_purpose">Race/Ethnicity Purpose</label>
-          <input type="text" id="race_purpose" name="race_purpose" placeholder="e.g., Diversity reporting">
-        </div>
-      </div>
-
-      <!-- Religion -->
-      <div class="form-grid">
-        <div>
-          <label for="collects_religion">Collect Religious Beliefs?</label>
-          <select name="collects_religion" id="collects_religion">
-            <option value="No">No</option>
-            <option value="Yes">Yes</option>
-          </select>
-        </div>
-        <div>
-          <label for="religion_purpose">Religion Purpose</label>
-          <input type="text" id="religion_purpose" name="religion_purpose" placeholder="e.g., Accommodation requests">
-        </div>
-      </div>
-
-      <!-- Union -->
-      <div class="form-grid">
-        <div>
-          <label for="collects_union">Collect Union Membership?</label>
-          <select name="collects_union" id="collects_union">
-            <option value="No">No</option>
-            <option value="Yes">Yes</option>
-          </select>
-        </div>
-        <div>
-          <label for="union_purpose">Union Purpose</label>
-          <input type="text" id="union_purpose" name="union_purpose" placeholder="e.g., HR records, payroll">
-        </div>
-      </div>
-
-      <!-- Communications -->
-      <div class="form-grid">
-        <div>
-          <label for="collects_communications">Collect Email/Text Contents?</label>
-          <select name="collects_communications" id="collects_communications">
-            <option value="No">No</option>
-            <option value="Yes">Yes</option>
-          </select>
-        </div>
-        <div>
-          <label for="communications_purpose">Communications Purpose</label>
-          <input type="text" id="communications_purpose" name="communications_purpose" placeholder="e.g., Customer support">
-        </div>
-      </div>
-
-      <!-- Genetic -->
-      <div class="form-grid">
-        <div>
-          <label for="collects_genetic">Collect Genetic Data?</label>
-          <select name="collects_genetic" id="collects_genetic">
-            <option value="No">No</option>
-            <option value="Yes">Yes</option>
-          </select>
-        </div>
-        <div>
-          <label for="genetic_purpose">Genetic Purpose</label>
-          <input type="text" id="genetic_purpose" name="genetic_purpose" placeholder="e.g., Health services">
-        </div>
-      </div>
-
-      <!-- Neural -->
-      <div class="form-grid">
-        <div>
-          <label for="collects_neural">Collect Neural Data?</label>
-          <select name="collects_neural" id="collects_neural">
-            <option value="No">No</option>
-            <option value="Yes">Yes</option>
-          </select>
-        </div>
-        <div>
-          <label for="neural_purpose">Neural Purpose</label>
-          <input type="text" id="neural_purpose" name="neural_purpose" placeholder="e.g., BCI devices">
-        </div>
-      </div>
-
-      <!-- Biometric -->
-      <div class="form-grid">
-        <div>
-          <label for="collects_biometric">Collect Biometric Data?</label>
-          <select name="collects_biometric" id="collects_biometric">
-            <option value="No">No</option>
-            <option value="Yes">Yes</option>
-          </select>
-        </div>
-        <div>
-          <label for="biometric_purpose">Biometric Purpose</label>
-          <input type="text" id="biometric_purpose" name="biometric_purpose" placeholder="e.g., MFA, access control">
-        </div>
-      </div>
-
-      <!-- Health -->
-      <div class="form-grid">
-        <div>
-          <label for="collects_health">Collect Health Information?</label>
-          <select name="collects_health" id="collects_health">
-            <option value="No">No</option>
-            <option value="Yes">Yes</option>
-          </select>
-        </div>
-        <div>
-          <label for="health_purpose">Health Purpose</label>
-          <input type="text" id="health_purpose" name="health_purpose" placeholder="e.g., Healthcare services">
-        </div>
-      </div>
-
-      <!-- Sex Life -->
-      <div class="form-grid">
-        <div>
-          <label for="collects_sex_life">Collect Sexual Orientation?</label>
-          <select name="collects_sex_life" id="collects_sex_life">
-            <option value="No">No</option>
-            <option value="Yes">Yes</option>
-          </select>
-        </div>
-        <div>
-          <label for="sex_life_purpose">Sexual Orientation Purpose</label>
-          <input type="text" id="sex_life_purpose" name="sex_life_purpose" placeholder="e.g., Diversity programs">
-        </div>
-      </div>
-
-      <!-- Citizenship -->
-      <div class="form-grid">
-        <div>
-          <label for="collects_citizenship">Collect Citizenship/Immigration?</label>
-          <select name="collects_citizenship" id="collects_citizenship">
-            <option value="No">No</option>
-            <option value="Yes">Yes</option>
-          </select>
-        </div>
-        <div>
-          <label for="citizenship_purpose">Citizenship Purpose</label>
-          <input type="text" id="citizenship_purpose" name="citizenship_purpose" placeholder="e.g., Employment eligibility">
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ==================== CCPA ADVANCED: INCIDENT RESPONSE TEAM ==================== -->
-  <div class="field-group ccpa-specific" style="display: none;">
-    <div class="field-group-title collapsible-header" onclick="toggleSection('ccpa-incident-team')">
-      🚨 Advanced: Incident Response Team
-      <span class="toggle-icon">▼</span>
-    </div>
-    
-    <div id="ccpa-incident-team" class="collapsible-content" style="display: none;">
-      <p class="section-note">Internal team contacts for your Data Breach Response Plan</p>
-      
-      <!-- Incident Commander -->
-      <div class="form-grid">
-        <div>
-          <label for="incident_commander">Incident Commander</label>
-          <input type="text" id="incident_commander" name="incident_commander" placeholder="Usually COO or executive">
-        </div>
-        <div>
-          <label for="incident_commander_email">IC Email</label>
-          <input type="email" id="incident_commander_email" name="incident_commander_email">
-        </div>
-      </div>
-      <label for="incident_commander_phone">Incident Commander Phone</label>
-      <input type="tel" id="incident_commander_phone" name="incident_commander_phone">
-
-      <!-- IT Security -->
-      <div class="form-grid">
-        <div>
-          <label for="it_security_lead">IT Security Lead</label>
-          <input type="text" id="it_security_lead" name="it_security_lead">
-        </div>
-        <div>
-          <label for="it_security_email">IT Security Email</label>
-          <input type="email" id="it_security_email" name="it_security_email">
-        </div>
-      </div>
-      <label for="it_security_phone">IT Security Phone</label>
-      <input type="tel" id="it_security_phone" name="it_security_phone">
-
-      <!-- Legal -->
-      <div class="form-grid">
-        <div>
-          <label for="legal_counsel">Legal Counsel</label>
-          <input type="text" id="legal_counsel" name="legal_counsel">
-        </div>
-        <div>
-          <label for="legal_email">Legal Email</label>
-          <input type="email" id="legal_email" name="legal_email">
-        </div>
-      </div>
-      <label for="legal_phone">Legal Phone</label>
-      <input type="tel" id="legal_phone" name="legal_phone">
-
-      <!-- Communications -->
-      <div class="form-grid">
-        <div>
-          <label for="comms_lead">Communications Lead</label>
-          <input type="text" id="comms_lead" name="comms_lead">
-        </div>
-        <div>
-          <label for="comms_email">Comms Email</label>
-          <input type="email" id="comms_email" name="comms_email">
-        </div>
-      </div>
-      <label for="comms_phone">Communications Phone</label>
-      <input type="tel" id="comms_phone" name="comms_phone">
-    </div>
-  </div>
-
-  <!-- ==================== CCPA ADVANCED: EXTERNAL CONTACTS ==================== -->
-  <div class="field-group ccpa-specific" style="display: none;">
-    <div class="field-group-title collapsible-header" onclick="toggleSection('ccpa-external-contacts')">
-      📞 Advanced: External Contacts
-      <span class="toggle-icon">▼</span>
-    </div>
-    
-    <div id="ccpa-external-contacts" class="collapsible-content" style="display: none;">
-      <p class="section-note">External vendors for breach response</p>
-      
-      <!-- Outside Counsel -->
-      <div class="form-grid">
-        <div>
-          <label for="outside_counsel">Outside Legal Counsel</label>
-          <input type="text" id="outside_counsel" name="outside_counsel" placeholder="Law firm name">
-        </div>
-        <div>
-          <label for="outside_counsel_phone">Outside Counsel Phone</label>
-          <input type="tel" id="outside_counsel_phone" name="outside_counsel_phone">
-        </div>
-      </div>
-
-      <!-- Forensics -->
-      <div class="form-grid">
-        <div>
-          <label for="forensics_firm">Forensics Firm</label>
-          <input type="text" id="forensics_firm" name="forensics_firm" placeholder="Cybersecurity firm">
-        </div>
-        <div>
-          <label for="forensics_phone">Forensics Phone</label>
-          <input type="tel" id="forensics_phone" name="forensics_phone">
-        </div>
-      </div>
-
-      <!-- Insurance -->
-      <div class="form-grid">
-        <div>
-          <label for="cyber_insurance">Cyber Insurance Company</label>
-          <input type="text" id="cyber_insurance" name="cyber_insurance">
-        </div>
-        <div>
-          <label for="insurance_policy">Policy Number</label>
-          <input type="text" id="insurance_policy" name="insurance_policy">
-        </div>
-      </div>
-      <label for="insurance_phone">Insurance Phone</label>
-      <input type="tel" id="insurance_phone" name="insurance_phone">
-
-      <!-- Credit Monitoring -->
-      <div class="form-grid">
-        <div>
-          <label for="credit_monitoring">Credit Monitoring Service</label>
-          <input type="text" id="credit_monitoring" name="credit_monitoring" placeholder="e.g., IdentityGuard">
-        </div>
-        <div>
-          <label for="credit_monitoring_phone">Credit Monitoring Phone</label>
-          <input type="tel" id="credit_monitoring_phone" name="credit_monitoring_phone">
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- ==================== GDPR SECTION ==================== -->
-  <div class="field-group gdpr-specific" style="display: none;">
-    <div class="field-group-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:6px;"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg> GDPR Data Processing Details</div>
-    
-    <!-- Processing Purposes -->
-    <label><strong>Purposes for processing personal data</strong></label>
-    <div class="checkbox-grid">
-      <label><input type="checkbox" name="processing_purposes[]" value="service_delivery"> Service Delivery</label>
-      <label><input type="checkbox" name="processing_purposes[]" value="marketing"> Marketing</label>
-      <label><input type="checkbox" name="processing_purposes[]" value="analytics"> Analytics</label>
-      <label><input type="checkbox" name="processing_purposes[]" value="legal_compliance"> Legal Compliance</label>
-      <label><input type="checkbox" name="processing_purposes[]" value="employment"> Employment</label>
-      <label><input type="checkbox" name="processing_purposes[]" value="other"> Other</label>
-    </div>
-
-    <!-- Data Categories -->
-    <label><strong>Categories of personal data processed</strong></label>
-    <div class="checkbox-grid">
-      <label><input type="checkbox" name="data_categories[]" value="contact_info"> Contact Information</label>
-      <label><input type="checkbox" name="data_categories[]" value="financial"> Financial Data</label>
-      <label><input type="checkbox" name="data_categories[]" value="health"> Health Data</label>
-      <label><input type="checkbox" name="data_categories[]" value="location"> Location Data</label>
-      <label><input type="checkbox" name="data_categories[]" value="online_identifiers"> Online Identifiers</label>
-      <label><input type="checkbox" name="data_categories[]" value="biometric"> Biometric Data</label>
-    </div>
-
-    <!-- Data Subjects -->
-    <label><strong>Who are your data subjects?</strong></label>
-    <div class="checkbox-grid">
-      <label><input type="checkbox" name="data_subjects[]" value="customers"> Customers</label>
-      <label><input type="checkbox" name="data_subjects[]" value="employees"> Employees</label>
-      <label><input type="checkbox" name="data_subjects[]" value="website_visitors"> Website Visitors</label>
-      <label><input type="checkbox" name="data_subjects[]" value="prospects"> Prospects/Leads</label>
-      <label><input type="checkbox" name="data_subjects[]" value="suppliers"> Suppliers/Vendors</label>
-      <label><input type="checkbox" name="data_subjects[]" value="minors"> Minors (under 18)</label>
-    </div>
-
-    <!-- Legal Basis - NEW -->
-    <label for="legal_basis">Legal Basis for Processing (Article 6)</label>
-    <select name="legal_basis" id="legal_basis">
-      <option value="">Select</option>
-      <option value="consent">Consent (Article 6(1)(a))</option>
-      <option value="contract">Contract Performance (Article 6(1)(b))</option>
-      <option value="legal_obligation">Legal Obligation (Article 6(1)(c))</option>
-      <option value="vital_interests">Vital Interests (Article 6(1)(d))</option>
-      <option value="public_task">Public Task (Article 6(1)(e))</option>
-      <option value="legitimate_interests">Legitimate Interests (Article 6(1)(f))</option>
-      <option value="multiple">Multiple Legal Bases</option>
-    </select>
-
-    <!-- Data Retention Period - NEW -->
-    <label for="data_retention_period">Data Retention Period</label>
-    <select name="data_retention_period" id="data_retention_period">
-      <option value="">Select</option>
-      <option value="6_months">6 months</option>
-      <option value="1_year">1 year</option>
-      <option value="2_years">2 years</option>
-      <option value="3_years">3 years</option>
-      <option value="5_years">5 years</option>
-      <option value="7_years">7 years</option>
-      <option value="10_years">10+ years</option>
-      <option value="until_purpose_fulfilled">Until purpose is fulfilled</option>
-      <option value="until_consent_withdrawn">Until consent is withdrawn</option>
-      <option value="as_required_by_law">As required by law</option>
-    </select>
-
-    <!-- International Transfers -->
-    <div class="form-grid">
-      <div>
-        <label for="international_transfers">International Data Transfers</label>
-        <select name="international_transfers" id="international_transfers">
-          <option value="">Select</option>
-          <option value="no">No international transfers</option>
-          <option value="within_eea">Within EEA only</option>
-          <option value="outside_eea">Outside EEA</option>
-        </select>
-      </div>
-      <div>
-        <label for="transfer_countries">If outside EEA, which countries?</label>
-        <input type="text" id="transfer_countries" name="transfer_countries" placeholder="e.g., USA, India, Singapore">
-      </div>
-    </div>
-
-    <!-- Transfer Safeguards - NEW -->
-    <label for="transfer_safeguards">Transfer Safeguards (if outside EEA)</label>
-    <select name="transfer_safeguards" id="transfer_safeguards">
-      <option value="">Select</option>
-      <option value="adequacy_decision">Adequacy Decision (e.g., UK, Japan, Canada)</option>
-      <option value="sccs">Standard Contractual Clauses (SCCs)</option>
-      <option value="bcrs">Binding Corporate Rules (BCRs)</option>
-      <option value="codes_of_conduct">Approved Codes of Conduct</option>
-      <option value="certification">Approved Certification Mechanisms</option>
-      <option value="consent">Explicit Consent</option>
-      <option value="contract_necessity">Contract Necessity</option>
-      <option value="legal_claims">Legal Claims</option>
-      <option value="public_interest">Public Interest</option>
-      <option value="not_applicable">Not Applicable</option>
-    </select>
-
-    <!-- Security Measures -->
-    <label><strong>Security measures in place</strong></label>
-    <div class="checkbox-grid">
-      <label><input type="checkbox" name="security_measures[]" value="encryption"> Data Encryption</label>
-      <label><input type="checkbox" name="security_measures[]" value="access_controls"> Access Controls</label>
-      <label><input type="checkbox" name="security_measures[]" value="training"> Employee Training</label>
-      <label><input type="checkbox" name="security_measures[]" value="backups"> Regular Backups</label>
-      <label><input type="checkbox" name="security_measures[]" value="mfa"> Multi-Factor Auth</label>
-      <label><input type="checkbox" name="security_measures[]" value="monitoring"> Security Monitoring</label>
-      <label><input type="checkbox" name="security_measures[]" value="pseudonymisation"> Pseudonymisation</label>
-      <label><input type="checkbox" name="security_measures[]" value="incident_response"> Incident Response Plan</label>
-    </div>
-
-    <!-- Automated Decisions - NEW -->
-    <div class="form-grid">
-      <div>
-        <label for="automated_decisions">Automated Decision-Making/Profiling? (Article 22)</label>
-        <select name="automated_decisions" id="automated_decisions">
-          <option value="">Select</option>
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
-      </div>
-      <div>
-        <label for="automated_decisions_details">If yes, describe the logic</label>
-        <input type="text" id="automated_decisions_details" name="automated_decisions_details" placeholder="e.g., Credit scoring, personalization algorithms">
-      </div>
-    </div>
-  </div>
-
-  <!-- ==================== GDPR ADVANCED: EU REPRESENTATIVE ==================== -->
-  <div class="field-group gdpr-specific" style="display: none;">
-    <div class="field-group-title collapsible-header" onclick="toggleSection('gdpr-eu-rep')">
-      EU Representative (Article 27)
-      <span class="toggle-icon">▼</span>
-    </div>
-    
-    <div id="gdpr-eu-rep" class="collapsible-content" style="display: none;">
-      <p class="section-note">Required if you process EU residents' data but have no establishment in the EU. The representative must be located in one of the EU member states where your data subjects are.</p>
-      
-      <div class="form-grid">
-        <div>
-          <label for="eu_representative">EU Representative Name</label>
-          <input type="text" id="eu_representative" name="eu_representative" placeholder="Person or company name">
-        </div>
-        <div>
-          <label for="eu_representative_email">EU Representative Email</label>
-          <input type="email" id="eu_representative_email" name="eu_representative_email" placeholder="contact@eu-rep.com">
-        </div>
-      </div>
-      
-      <label for="eu_representative_address">EU Representative Address</label>
-      <textarea id="eu_representative_address" name="eu_representative_address" rows="2" placeholder="Full address within the EU (street, city, postal code, country)"></textarea>
-      
-      <div class="form-grid">
-        <div>
-          <label for="eu_representative_phone">EU Representative Phone</label>
-          <input type="tel" id="eu_representative_phone" name="eu_representative_phone" placeholder="+49 XXX XXXXXXX">
-        </div>
-        <div>
-          <label for="eu_representative_country">EU Member State</label>
-          <select name="eu_representative_country" id="eu_representative_country">
-            <option value="">Select</option>
-            <option value="Austria">Austria</option>
-            <option value="Belgium">Belgium</option>
-            <option value="Bulgaria">Bulgaria</option>
-            <option value="Croatia">Croatia</option>
-            <option value="Cyprus">Cyprus</option>
-            <option value="Czech Republic">Czech Republic</option>
-            <option value="Denmark">Denmark</option>
-            <option value="Estonia">Estonia</option>
-            <option value="Finland">Finland</option>
-            <option value="France">France</option>
-            <option value="Germany">Germany</option>
-            <option value="Greece">Greece</option>
-            <option value="Hungary">Hungary</option>
-            <option value="Ireland">Ireland</option>
-            <option value="Italy">Italy</option>
-            <option value="Latvia">Latvia</option>
-            <option value="Lithuania">Lithuania</option>
-            <option value="Luxembourg">Luxembourg</option>
-            <option value="Malta">Malta</option>
-            <option value="Netherlands">Netherlands</option>
-            <option value="Poland">Poland</option>
-            <option value="Portugal">Portugal</option>
-            <option value="Romania">Romania</option>
-            <option value="Slovakia">Slovakia</option>
-            <option value="Slovenia">Slovenia</option>
-            <option value="Spain">Spain</option>
-            <option value="Sweden">Sweden</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ==================== HIPAA SECTION ==================== -->
-  <div class="field-group hipaa-specific" style="display: none;">
-    <div class="field-group-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:6px;"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg> HIPAA Compliance Details</div>
-    
-    <label for="covered_entity_type">HIPAA Covered Entity Type</label>
-    <select name="covered_entity_type" id="covered_entity_type">
-      <option value="">Select</option>
-      <option value="Healthcare Provider">Healthcare Provider</option>
-      <option value="Health Plan">Health Plan</option>
-      <option value="Healthcare Clearinghouse">Healthcare Clearinghouse</option>
-      <option value="Business Associate">Business Associate</option>
-    </select>
-
-    <label for="phi_types">Types of PHI handled</label>
-    <textarea name="phi_types" id="phi_types" rows="3" placeholder="E.g., medical records, billing info, insurance data, treatment plans, lab results"></textarea>
-
-    <div class="form-grid">
-      <div>
-        <label for="patient_volume">Patient/Individual Count</label>
-        <input type="number" id="patient_volume" name="patient_volume" placeholder="e.g., 5000">
-      </div>
-      <div>
-        <label for="hipaa_compliance_date">Last HIPAA Review Date</label>
-        <input type="date" id="hipaa_compliance_date" name="hipaa_compliance_date">
-      </div>
-    </div>
-
-    <label for="business_associates">Business Associates Handling PHI</label>
-    <textarea name="business_associates" id="business_associates" rows="3" placeholder="E.g., AWS, Stripe, DocuSign, Zoom"></textarea>
   </div>
   <!-- ==================== POPIA CORE SECTION ==================== -->
   <div class="field-group popia-specific" style="display: none;">
@@ -2056,7 +1359,7 @@ footer a{color:#556070;text-decoration:underline;margin:0 8px}
       </div>
       <div>
         <label for="recipient_countries">Which Countries?</label>
-        <input type="text" id="recipient_countries" name="recipient_countries" placeholder="e.g., USA, EU, UK">
+        <input type="text" id="recipient_countries" name="recipient_countries" placeholder="e.g., none, or USA (cloud hosting)">
       </div>
     </div>
 
@@ -2205,20 +1508,21 @@ footer a{color:#556070;text-decoration:underline;margin:0 8px}
         </div>
       </div>
 
-      <h4 class="subsection-title">Schedule D: Cross-Border Transfers</h4>
+      <h4 class="subsection-title">Schedule D: Transfers Outside South Africa</h4>
       <div class="form-grid">
         <div>
-          <label for="approved_transfer_countries">Approved Countries</label>
-          <input type="text" id="approved_transfer_countries" name="approved_transfer_countries" placeholder="e.g., USA (SCCs), EU">
+          <label for="approved_transfer_countries">Countries Where Data Is Sent (if any)</label>
+          <input type="text" id="approved_transfer_countries" name="approved_transfer_countries" placeholder="e.g., USA (cloud hosting), none">
         </div>
         <div>
-          <label for="transfer_mechanism">Transfer Mechanism</label>
+          <label for="transfer_mechanism">Lawful Basis for Transfer — POPIA s72(1)</label>
           <select name="transfer_mechanism" id="transfer_mechanism">
             <option value="">Select</option>
-            <option value="Standard Contractual Clauses">SCCs</option>
-            <option value="Binding Corporate Rules">BCRs</option>
-            <option value="Consent">Consent</option>
-            <option value="Adequacy Decision">Adequacy</option>
+            <option value="Adequate law/binding rules (s72(1)(a))">Recipient bound by adequate law / binding corporate rules (s72(1)(a))</option>
+            <option value="Data subject consent (s72(1)(b))">Data subject consent (s72(1)(b))</option>
+            <option value="Contract necessity (s72(1)(c)/(d))">Necessary for performance of a contract (s72(1)(c)/(d))</option>
+            <option value="Benefit of data subject (s72(1)(e))">For the benefit of the data subject (s72(1)(e))</option>
+            <option value="Not applicable">Not applicable — no data leaves South Africa</option>
           </select>
         </div>
       </div>
@@ -2827,48 +2131,23 @@ footer a{color:#556070;text-decoration:underline;margin:0 8px}
     </div>
   </div>
   <!-- ==================== DOCUMENT SELECTION ==================== -->
-  <div class="field-group">
+  <!-- This field is now set automatically per-document during generation, based on the Document Picker step -->
+  <div class="field-group" style="display:none">
     <div class="field-group-title">📄 Document Selection</div>
     
     <label data-required for="docs-needed">Which document do you need?</label>
-    <select name="docs" id="docs-needed" required>
+    <select name="docs" id="docs-needed">
       <option value="">Select a document</option>
       
-      <optgroup label="── Core Documents (All Regulations) ──">
+      <optgroup label="── Core Documents ──">
         <option value="Privacy Policy">Privacy Policy</option>
         <option value="Data Processing Agreement">Data Processing Agreement</option>
         <option value="Employee Training Script">Employee Training Script</option>
         <option value="Audit-Ready Documentation">Audit-Ready Documentation</option>
       </optgroup>
       
-      <optgroup label="── GDPR Specific ──">
-        <option value="GDPR - DPIA">DPIA (Data Protection Impact Assessment)</option>
-        <option value="GDPR - DSAR Procedure">DSAR Procedure</option>
-        <option value="GDPR - ROPA">Records of Processing Activities</option>
-      </optgroup>
-      
-      <optgroup label="── CCPA/CPRA Specific ──">
-        <option value="CCPA - Consumer Request Form">Consumer Request Form</option>
-        <option value="CCPA - Request Log Template">Consumer Request Log</option>
-        <option value="CCPA - Vendor Assessment">Vendor Assessment Checklist</option>
-        <option value="CCPA - Breach Response Plan">Data Breach Response Plan</option>
-                <option value="CCPA - Quick Reference Guide">Quick Reference Guide</option>
-        <option value="CCPA - Service Provider Agreement">Service Provider Agreement</option>
-
-      </optgroup>
-      
-      <optgroup label="── HIPAA Specific ──">
-        <option value="HIPAA - Business Associate Agreement">Business Associate Agreement</option>
-        <option value="HIPAA - Authorization Form">Patient Authorization Form</option>
-        <option value="HIPAA - Breach Notification Policy">Breach Notification Policy</option>
-        <option value="HIPAA - Sanction Policy">Sanction Policy</option>
-        <option value="HIPAA - Risk Assessment">Risk Assessment Template</option>
-
-      </optgroup>
-      
       <optgroup label="── POPIA Specific ──">
         <option value="POPIA - PAIA Manual">PAIA Manual</option>
-        <option value="POPIA - Impact Assessment">POPIA Impact Assessment </option>
         <option value="POPIA - Consent Form">Consent Form </option>
         <option value="POPIA - IO Appointment">Information Officer Appointment Letter </option>
         <option value="POPIA - Data Subject Rights Procedure">Data Subject Rights Procedure </option>
@@ -2878,7 +2157,8 @@ footer a{color:#556070;text-decoration:underline;margin:0 8px}
       </optgroup>
 
     </select>
-
+  </div>
+  <div class="field-group">
     <label for="updates">Real-time legal update tracking?</label>
     <select name="updates" id="updates" required>
       <option value="">Select</option>
@@ -2907,32 +2187,39 @@ footer a{color:#556070;text-decoration:underline;margin:0 8px}
 </form>
 
     <div class="step-nav" style="margin-top:24px">
-      <button class="btn-ghost" type="button" id="btn-s3-back">← Back</button >
-      <button class="btn" type="button" id="btn-s3-generate">
+      <button class="btn-ghost" type="button" id="btn-s4-back">← Back</button >
+      <button class="btn" type="button" id="btn-s4-generate">
    Review My Info
       </button>
     </div>
   </div>
 
 
-  <!-- ════ STEP 4: REVIEW ════ -->
-  <div class="panel" id="panel4">
+  <!-- ════ STEP 5: REVIEW ════ -->
+  <div class="panel" id="panel5">
     <div class="ptitle">Review Your Answers</div>
     <div class="psub">Check everything before generating. Click <strong>Edit Details</strong> to go back and change anything.</div>
 
     <div id="review-body" style="display:flex;flex-direction:column;gap:16px;"></div>
 
+    <div id="gen-gate-error" style="display:none;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:12px;padding:16px 20px;margin-top:20px;color:#fca5a5;">
+      <div style="display:flex;align-items:flex-start;gap:12px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div><strong style="color:#f87171;display:block;margin-bottom:6px;">Please fix the following:</strong><ul id="gen-gate-error-list" style="margin:0;padding-left:18px;font-size:13px;"></ul></div>
+      </div>
+    </div>
+
     <div class="step-nav" style="margin-top:28px">
-      <button class="btn-ghost" type="button" id="btn-s4-back">← Edit Details</button>
-      <button class="btn" type="button" id="btn-s4-confirm">
+      <button class="btn-ghost" type="button" id="btn-s5-back">← Edit Details</button>
+      <button class="btn" type="button" id="btn-s5-confirm">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
         Confirm &amp; Generate
       </button>
     </div>
   </div>
 
-  <!-- ════ STEP 5: GENERATE ════ -->
-  <div class="panel" id="panel5">
+  <!-- ════ STEP 6: GENERATE ════ -->
+  <div class="panel" id="panel6">
     <div class="gen-center" id="gen-loading">
       <div class="gen-icon loading"><div class="spinner"></div></div>
       <div class="gen-title">Generating Your Document…</div>
@@ -2944,7 +2231,7 @@ footer a{color:#556070;text-decoration:underline;margin:0 8px}
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
       <div class="gen-title ok" id="gen-doc-title">Your Document is Ready</div>
-      <div class="gen-sub">Custom-made for your business, compliant with applicable laws.</div>
+      <div class="gen-sub">Custom-made for your business, based on the actual POPIA text.</div>
       <div class="email-confirm" id="gen-email-line">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         Sent to your inbox ✓
@@ -2955,11 +2242,22 @@ footer a{color:#556070;text-decoration:underline;margin:0 8px}
       </div>
       <div class="upsell">
         <h4>Don't stop at one document.</h4>
-        <p>Regulations change. Your documents need to stay current. A 3CH0 subscription gives you unlimited regenerations, automatic update alerts, and every document your business needs.</p>
+        <p>POPIA requirements change. Your documents need to stay current. Compliance Pro gives you unlimited regenerations, automatic update alerts, and every document your business needs.</p>
         <div class="upsell-btns">
           <a href="pricing.html" class="btn btn-sm">View Plans from R1 499/month</a>
           <button class="btn-ghost" type="button" onclick="this.closest('.upsell').style.display='none'">Maybe later</button>
         </div>
+      </div>
+    </div>
+    <div class="gen-center" id="gen-error" style="display:none">
+      <div class="gen-icon" style="background:rgba(248,113,113,.15);border-color:rgba(248,113,113,.3)">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </div>
+      <div class="gen-title" style="color:#f87171" id="gen-error-title">Something Went Wrong</div>
+      <div class="gen-sub" id="gen-error-sub">One or more documents couldn't be generated. Nothing was charged — please try again, or contact us if it keeps happening.</div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px">
+        <button class="btn btn-sm" type="button" id="btn-retry">Try Again</button>
+        <a href="mailto:3CH0.The.Only@gmail.com" class="btn-ghost">Email Support</a>
       </div>
     </div>
   </div>
@@ -2970,7 +2268,7 @@ footer a{color:#556070;text-decoration:underline;margin:0 8px}
   &copy; 3CH0 Compliance Pty Ltd. All rights reserved. &nbsp;|&nbsp;
   <a href="settings.html">Privacy &amp; Terms</a> &nbsp;|&nbsp;
   <a href="mailto:3CH0.The.Only@gmail.com">Support</a> &nbsp;|&nbsp;
-  <a href="https://discord.gg/W5SrbqK7j3" target="_blank">Community</a>
+  <a href="https://t.me/+CLp8JWCKhqE5YmQ0" target="_blank">Community</a>
 </footer>
 
 <div class="sec-badge">
@@ -2980,7 +2278,7 @@ footer a{color:#556070;text-decoration:underline;margin:0 8px}
 
 <script>
 /* ════ STATE ════ */
-var S = { country:'', type:'', customers:[], data:'', size:'', regs:[] };
+var S = { country:'ZA', type:'', data:'', size:'', regs:[], answers:{}, gapResult:null, selectedDocs:null };
 var curStep = 1;
 
 /* ════ SCROLL ════ */
@@ -2993,58 +2291,342 @@ if(el_hnc) el_hnc.addEventListener('click',function(e){e.preventDefault();sf();}
 /* ════ STEP BAR ════ */
 function checkSVG(){ return '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'; }
 function updateBar(n){
-  for(var i=1;i<=5;i++){
+  var stepFor = n<=3 ? n : 4; /* panels 4 (Details), 5 (Review), 6 (Generate) all show as step 4 */
+  for(var i=1;i<=4;i++){
     var c=document.getElementById('sc'+i);
     var l=document.getElementById('sl'+i);
     var ln=document.getElementById('ln'+i);
     if(!c) continue;
     c.className='sc';l.className='sl';
     if(ln) ln.className='sline';
-    if(i<n){c.className='sc done';c.innerHTML=checkSVG();if(ln)ln.className='sline done';}
-    else if(i===n){c.className='sc active';c.textContent=i;l.className='sl active';}
+    if(i<stepFor){c.className='sc done';c.innerHTML=checkSVG();if(ln)ln.className='sline done';}
+    else if(i===stepFor){c.className='sc active';c.textContent=i;l.className='sl active';}
     else{c.textContent=i;}
   }
 }
 function showPanel(n){
-  for(var i=1;i<=5;i++){var p=document.getElementById('panel'+i);if(p)p.classList.remove('active');}
+  for(var i=1;i<=6;i++){var p=document.getElementById('panel'+i);if(p)p.classList.remove('active');}
   var t=document.getElementById('panel'+n);
   if(t)t.classList.add('active');
   curStep=n;updateBar(n);sf();
 }
 
+/* ════ COMPLIANCE QUESTIONNAIRE — covers every POPIA condition ════ */
+var QUESTIONS = [
+  {id:'q_io', section:'Accountability', cite:'Section 8, 55–56', type:'yn',
+   text:'Have you appointed someone as your Information Officer, responsible for POPIA compliance?',
+   docs:['io_appointment'], fail:'Without a named Information Officer, no one is accountable for POPIA compliance in your business.'},
+  {id:'q_io_reg', section:'Accountability', cite:'Section 55–56', type:'yn',
+   text:'Is your Information Officer registered with the Information Regulator on the eServices Portal?',
+   docs:['io_appointment'], fail:'An unregistered Information Officer cannot lawfully take up their POPIA duties.'},
+
+  {id:'q_basis', section:'Processing Limitation', cite:'Section 9–11', type:'ynp',
+   text:'Do you have a documented lawful basis (consent, contract, legal obligation, legitimate interest, etc.) for each category of personal information you collect?',
+   docs:['privacy_policy','consent'], fail:'Processing personal information without a documented lawful basis breaches Condition 2.'},
+  {id:'q_minimal', section:'Processing Limitation', cite:'Section 10', type:'yn',
+   text:'Do you collect only the personal information you actually need for your stated purpose (nothing excessive)?',
+   docs:['privacy_policy'], fail:'Collecting excessive or irrelevant personal information breaches the minimality condition.'},
+  {id:'q_consent_rec', section:'Processing Limitation', cite:'Section 11', type:'ynp',
+   text:'Where consent is your lawful basis, do you obtain and keep a record of that consent?',
+   docs:['consent'], fail:'You bear the burden of proving consent was given — without a record, you can\u2019t prove it.'},
+
+  {id:'q_purpose', section:'Purpose Specification', cite:'Section 13, 18', type:'yn',
+   text:'Do you tell people the specific purpose you\u2019re collecting their information for, at the point of collection?',
+   docs:['privacy_policy'], fail:'Data subjects must be told the specific purpose of collection at or before the time it happens.'},
+  {id:'q_retention', section:'Purpose Specification', cite:'Section 14', type:'yn',
+   text:'Do you have a documented data retention schedule (how long you keep each type of data, and when/how it\u2019s deleted)?',
+   docs:['retention'], fail:'Records may not be retained longer than necessary for the purpose they were collected for.'},
+
+  {id:'q_further', section:'Further Processing Limitation', cite:'Section 15', type:'yn',
+   text:'Do you avoid using personal information for purposes incompatible with why it was originally collected?',
+   docs:['privacy_policy'], fail:'Repurposing data incompatibly with its original collection purpose breaches Condition 4.'},
+
+  {id:'q_quality', section:'Information Quality', cite:'Section 16', type:'yn',
+   text:'Do you have a process for keeping personal information accurate, complete, and up to date?',
+   docs:['subject_rights'], fail:'You must take reasonably practicable steps to keep personal information accurate and current.'},
+
+  {id:'q_paia', section:'Openness', cite:'Section 17', type:'yn',
+   text:'Do you have a PAIA manual describing the records your business holds and how to request access to them?',
+   docs:['paia'], fail:'A PAIA manual is a specific, near-universal requirement most SMEs miss entirely.'},
+  {id:'q_privacy_policy', section:'Openness', cite:'Section 18', type:'yn',
+   text:'Do you have a published Privacy Policy that tells people what data you collect, why, and their rights?',
+   docs:['privacy_policy'], fail:'Section 18 requires this information to be given to data subjects at or before collection.'},
+
+  {id:'q_security', section:'Security Safeguards', cite:'Section 19', type:'ynp',
+   text:'Have you implemented technical and organisational security measures (encryption, access controls, etc.) to protect personal information?',
+   docs:['audit','incident'], fail:'Failing to secure personal information against loss, damage, or unlawful access breaches Condition 7.'},
+  {id:'q_dpa', section:'Security Safeguards', cite:'Section 20–21', type:'yn',
+   text:'Do you have signed Operator agreements with every third party who processes personal data for you (CRM, payroll provider, cloud host, etc.)?',
+   docs:['dpa'], fail:'Operators must be bound by a written contract obliging them to keep information confidential and secure.'},
+  {id:'q_breach', section:'Security Safeguards', cite:'Section 22', type:'yn',
+   text:'Do you have a documented data breach response procedure — including notifying the Regulator and affected data subjects?',
+   docs:['incident'], fail:'Security compromises must be notified to the Regulator and data subjects as soon as reasonably possible.'},
+
+  {id:'q_dsr', section:'Data Subject Participation', cite:'Section 23–25', type:'yn',
+   text:'Do you have a documented process for handling requests from people to access, correct, or delete their personal information?',
+   docs:['subject_rights'], fail:'Data subjects have a statutory right to request access to, and correction of, their information.'},
+
+  {id:'q_special', section:'Special Personal Information', cite:'Section 26', type:'yn', isParent:true,
+   text:'Do you process any special personal information — health/sex life, race/ethnicity, religious/political belief, trade union membership, criminal behaviour, or biometric data?'},
+  {id:'q_special_consent', section:'Special Personal Information', cite:'Section 27\u201333', type:'yn', conditional:{parent:'q_special',showIf:'yes'},
+   text:'Do you have a documented lawful basis and specific consent for processing this special personal information?',
+   docs:['consent'], fail:'Processing special personal information is prohibited unless a Section 27\u201333 exception applies.'},
+
+  {id:'q_children', section:'Children\u2019s Data', cite:'Section 34', type:'yn', isParent:true,
+   text:'Do you collect or hold personal information belonging to anyone under 18?'},
+  {id:'q_children_consent', section:'Children\u2019s Data', cite:'Section 35', type:'yn', conditional:{parent:'q_children',showIf:'yes'},
+   text:'Do you have a parental/guardian consent process for this?',
+   docs:['consent'], fail:'Processing a child\u2019s personal information is prohibited without a parent/guardian\u2019s consent.'},
+
+  {id:'q_marketing', section:'Direct Marketing', cite:'Section 69', type:'yn', isParent:true,
+   text:'Do you send direct marketing (email/SMS) to customers or prospects?'},
+  {id:'q_marketing_consent', section:'Direct Marketing', cite:'Section 69', type:'yn', conditional:{parent:'q_marketing',showIf:'yes'},
+   text:'Do you have documented consent (or existing-customer basis) plus a working opt-out for every contact?',
+   docs:['consent','privacy_policy'], fail:'Direct marketing without consent or opt-out is a named Information Regulator enforcement priority.'},
+
+  {id:'q_priorauth', section:'Prior Authorisation Triggers', cite:'Section 57', type:'yn', isParent:true,
+   text:'Do any of these apply: linking ID numbers across organisations for a new purpose, processing criminal/credit data for third parties, or sending special/children\u2019s data to a country without adequate protection?'},
+  {id:'q_priorauth_obtained', section:'Prior Authorisation Triggers', cite:'Section 58\u201359', type:'yn', conditional:{parent:'q_priorauth',showIf:'yes'},
+   text:'Have you obtained (or applied for) Prior Authorisation from the Information Regulator for this?',
+   docs:['prior_auth'], fail:'Processing that requires prior authorisation without obtaining it is a criminal offence under Section 59.'},
+
+  {id:'q_training', section:'Staff Awareness', cite:'General duty', type:'yn',
+   text:'Have your staff been trained on what they can and can\u2019t do with personal information?',
+   docs:['training'], fail:'Untrained staff are the most common source of accidental POPIA breaches.'},
+
+  {id:'q_audit', section:'Documentation \u0026 Audit Readiness', cite:'Section 17', type:'yn',
+   text:'Could you produce a central record of your data processing activities if the Regulator or an auditor asked for it tomorrow?',
+   docs:['audit'], fail:'You must maintain documentation of your processing operations.'}
+];
+
+var DOC_META = {
+  privacy_policy: {label:'Privacy Policy', value:'Privacy Policy', desc:'Tells customers what data you collect, why, and their rights. Required by Section 18.'},
+  paia:           {label:'PAIA Manual', value:'POPIA - PAIA Manual', desc:'Describes the records your business holds and how to request access. Required by Section 17.'},
+  dpa:            {label:'Data Processing Agreement', value:'Data Processing Agreement', desc:'Binds your vendors/operators to keep data secure and confidential.'},
+  consent:        {label:'Consent Form', value:'POPIA - Consent Form', desc:'Documents lawful consent — for collection, special information, children\u2019s data, or marketing.'},
+  io_appointment: {label:'Information Officer Appointment Letter', value:'POPIA - IO Appointment', desc:'Formally appoints and documents your Information Officer, ready for Regulator registration.'},
+  subject_rights: {label:'Data Subject Rights Procedure', value:'POPIA - Data Subject Rights Procedure', desc:'A documented process for handling access, correction, and deletion requests.'},
+  retention:      {label:'Data Retention Schedule', value:'POPIA - Data Retention Schedule', desc:'States how long you keep each type of data, and when/how it\u2019s deleted.'},
+  incident:       {label:'Incident Response Procedure', value:'POPIA - Incident Response', desc:'What to do — and who to notify — if personal data is breached.'},
+  prior_auth:     {label:'Prior Authorisation Register', value:'POPIA - Prior Authorisation Register', desc:'Tracks processing activities that require Regulator pre-approval before you start.'},
+  training:       {label:'Employee Training Script', value:'Employee Training Script', desc:'A short script to train staff on what they can and can\u2019t do with personal data.'},
+  audit:          {label:'Audit-Ready Documentation', value:'Audit-Ready Documentation', desc:'A central record of your processing activities you can show the Regulator or an auditor.'}
+};
+
+function renderQuestionnaire(){
+  var wrap = document.getElementById('qcontainer');
+  if(!wrap) return;
+  var sections = [];
+  var seenSec = {};
+  QUESTIONS.forEach(function(q){ if(!seenSec[q.section]){ seenSec[q.section]=true; sections.push(q.section); } });
+  var html = '';
+  sections.forEach(function(sec){
+    var first = QUESTIONS.filter(function(q){ return q.section===sec; })[0];
+    html += '<div class="qsection"><div class="qsection-head"><span class="qsection-name">'+sec+'</span><span class="qsection-cite">POPIA '+first.cite+'</span></div>';
+    QUESTIONS.filter(function(q){ return q.section===sec; }).forEach(function(q){
+      var condAttr = q.conditional ? ' data-parent="'+q.conditional.parent+'" data-showif="'+q.conditional.showIf+'"' : '';
+      var rowClass = q.conditional ? 'qrow conditional' : 'qrow';
+      var styleAttr = q.conditional ? ' style="display:none"' : '';
+      html += '<div class="'+rowClass+'" id="row-'+q.id+'"'+condAttr+styleAttr+'>';
+      html += '<div class="qrow-text">'+q.text+'</div>';
+      html += '<div class="ynp" data-qid="'+q.id+'">';
+      html += '<div class="ynp-btn" data-val="yes">Yes</div>';
+      if(q.type==='ynp') html += '<div class="ynp-btn" data-val="partial">Partially</div>';
+      html += '<div class="ynp-btn" data-val="no">No</div>';
+      html += '</div></div>';
+    });
+    html += '</div>';
+  });
+  wrap.innerHTML = html;
+
+  wrap.querySelectorAll('.ynp').forEach(function(group){
+    var qid = group.getAttribute('data-qid');
+    group.querySelectorAll('.ynp-btn').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var val = btn.getAttribute('data-val');
+        group.querySelectorAll('.ynp-btn').forEach(function(b){ b.className='ynp-btn'; });
+        btn.className = 'ynp-btn sel-'+val;
+        S.answers[qid] = val;
+        wrap.querySelectorAll('[data-parent="'+qid+'"]').forEach(function(childRow){
+          var showIf = childRow.getAttribute('data-showif');
+          if(val===showIf){ childRow.style.display='block'; }
+          else {
+            childRow.style.display='none';
+            var childQid = childRow.id.replace('row-','');
+            delete S.answers[childQid];
+            childRow.querySelectorAll('.ynp-btn').forEach(function(b){ b.className='ynp-btn'; });
+          }
+        });
+        updateQProgress();
+      });
+    });
+  });
+  updateQProgress();
+}
+
+function updateQProgress(){
+  var wrap = document.getElementById('qcontainer');
+  if(!wrap) return;
+  var rows = Array.prototype.slice.call(wrap.querySelectorAll('.qrow')).filter(function(r){ return r.style.display!=='none'; });
+  var answered = rows.filter(function(r){ return !!S.answers[r.id.replace('row-','')]; });
+  var pct = rows.length ? Math.round(answered.length/rows.length*100) : 0;
+  var fillEl = document.getElementById('qprogress-fill');
+  var lblEl  = document.getElementById('qprogress-label');
+  if(fillEl) fillEl.style.width = pct+'%';
+  if(lblEl)  lblEl.textContent = answered.length+' of '+rows.length+' questions answered';
+}
+
+function computeGapAnalysis(){
+  var wrap = document.getElementById('qcontainer');
+  var visible = QUESTIONS.filter(function(q){
+    var row = document.getElementById('row-'+q.id);
+    return row && row.style.display!=='none';
+  });
+  var gaps = [];
+  var compliant = [];
+  var docsNeeded = {};
+  var scorable = visible.filter(function(q){ return !q.isParent; });
+  scorable.forEach(function(q){
+    var ans = S.answers[q.id];
+    if(ans==='yes'){
+      compliant.push(q);
+    } else if(ans==='partial'){
+      gaps.push({q:q, severity:'warn'});
+      (q.docs||[]).forEach(function(d){ docsNeeded[d]=true; });
+    } else {
+      gaps.push({q:q, severity:'bad'});
+      (q.docs||[]).forEach(function(d){ docsNeeded[d]=true; });
+    }
+  });
+  return { gaps:gaps, compliant:compliant, total:scorable.length, compliantCount:compliant.length, docsNeeded:Object.keys(docsNeeded) };
+}
+
+function renderGapReport(){
+  var result = computeGapAnalysis();
+  S.gapResult = result;
+  var pct = result.total ? Math.round(result.compliantCount/result.total*100) : 0;
+  var circumference = 238.76;
+  var ring = document.getElementById('score-ring-fg');
+  if(ring){
+    ring.setAttribute('stroke-dashoffset', circumference - (circumference*pct/100));
+    ring.setAttribute('stroke', pct>=80?'#34d399':(pct>=50?'#f5c542':'#f87171'));
+  }
+  var pctEl = document.getElementById('score-pct');
+  if(pctEl) pctEl.textContent = pct+'%';
+  var heading = document.getElementById('score-heading');
+  var sub = document.getElementById('score-sub');
+  var gapWord = result.gaps.length===1?'gap':'gaps';
+  if(pct===100){ heading.textContent='Fully Compliant'; sub.textContent='You meet every POPIA requirement we checked. Nice work.'; }
+  else if(pct>=70){ heading.textContent='Mostly Compliant'; sub.textContent=result.gaps.length+' '+gapWord+' found \u2014 a few things to fix.'; }
+  else if(pct>=40){ heading.textContent='Partially Compliant'; sub.textContent=result.gaps.length+' '+gapWord+' found \u2014 meaningful work needed.'; }
+  else { heading.textContent='Significant Gaps'; sub.textContent=result.gaps.length+' '+gapWord+' found across most POPIA conditions.'; }
+
+  var body = document.getElementById('gap-report-body');
+  var html = '';
+  var sectionsOrder = [];
+  var seenSec = {};
+  QUESTIONS.forEach(function(q){ if(!seenSec[q.section]){ seenSec[q.section]=true; sectionsOrder.push(q.section); } });
+  sectionsOrder.forEach(function(sec){
+    var items = [];
+    result.gaps.filter(function(g){ return g.q.section===sec; }).forEach(function(g){ items.push({q:g.q, ok:false, severity:g.severity}); });
+    result.compliant.filter(function(q){ return q.section===sec; }).forEach(function(q){ items.push({q:q, ok:true}); });
+    if(!items.length) return;
+    html += '<div class="gap-group"><div class="gap-group-title">'+sec+'</div>';
+    items.forEach(function(item){
+      var q = item.q;
+      if(item.ok){
+        html += '<div class="gap-item ok"><div class="gap-icon ok"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>'
+              + '<div class="gap-body"><div class="gap-title">'+q.text+'</div><div class="gap-cite">POPIA '+q.cite+' \u2014 compliant</div></div></div>';
+      } else {
+        var iconSvg = item.severity==='warn'
+          ? '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="8" x2="12" y2="13"/><circle cx="12" cy="16.5" r=".7" fill="currentColor"/></svg>'
+          : '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+        var docsLabel = (q.docs||[]).map(function(d){ return DOC_META[d]?DOC_META[d].label:d; }).join(', ');
+        html += '<div class="gap-item '+item.severity+'"><div class="gap-icon '+item.severity+'">'+iconSvg+'</div>'
+              + '<div class="gap-body"><div class="gap-title">'+q.text+'</div><div class="gap-cite">POPIA '+q.cite+'</div>'
+              + '<div class="gap-desc">'+q.fail+'</div>'
+              + (docsLabel ? '<span class="gap-fix">Fixed by: '+docsLabel+'</span>' : '')
+              + '</div></div>';
+      }
+    });
+    html += '</div>';
+  });
+  body.innerHTML = html;
+}
+
+function renderDocPicker(){
+  var wrap = document.getElementById('doc-pick-grid');
+  var result = S.gapResult || computeGapAnalysis();
+  var recommended = result.docsNeeded || [];
+  if(!S.selectedDocs){ S.selectedDocs = recommended.slice(); }
+  var intro = document.getElementById('doc-picker-intro');
+  if(intro){
+    intro.textContent = recommended.length===0
+      ? 'Great news \u2014 we didn\u2019t find any gaps. You can still generate any of these for extra peace of mind.'
+      : 'We\u2019ve pre-selected the '+recommended.length+' document'+(recommended.length===1?'':'s')+' that fix the gaps we found. Add or remove anything you\u2019d like.';
+  }
+  var html = '';
+  Object.keys(DOC_META).forEach(function(key){
+    var meta = DOC_META[key];
+    var isRec = recommended.indexOf(key)!==-1;
+    var checked = S.selectedDocs.indexOf(key)!==-1;
+    html += '<label class="doc-pick-card'+(checked?' checked':'')+'" data-key="'+key+'">'
+          + '<input type="checkbox" '+(checked?'checked':'')+' tabindex="-1">'
+          + '<div class="doc-pick-box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>'
+          + '<div><div class="doc-pick-name">'+meta.label+(isRec?'<span class="doc-pick-tag gap">Gap found</span>':'<span class="doc-pick-tag extra">Optional</span>')+'</div>'
+          + '<div class="doc-pick-desc">'+meta.desc+'</div></div>'
+          + '</label>';
+  });
+  wrap.innerHTML = html;
+  wrap.querySelectorAll('.doc-pick-card').forEach(function(card){
+    card.addEventListener('click',function(e){
+      e.preventDefault();
+      var key = card.getAttribute('data-key');
+      var idx = S.selectedDocs.indexOf(key);
+      var cb = card.querySelector('input');
+      if(idx===-1){ S.selectedDocs.push(key); card.classList.add('checked'); cb.checked=true; }
+      else { S.selectedDocs.splice(idx,1); card.classList.remove('checked'); cb.checked=false; }
+    });
+  });
+}
+
+renderQuestionnaire();
+
+/* ════ SAFETY NET: block native form submission ════
+   #ComplianceFormWebhook has action/method attributes (kept as a graceful-degradation
+   fallback) and one <button type="submit"> (hidden via CSS). Pressing Enter in any
+   text field inside the form triggers the browser's *implicit submission* on that
+   button even though it's hidden and never clicked — which would POST the raw,
+   unprocessed field values straight to the Make webhook URL and navigate the whole
+   page away, bypassing the security/CSRF/required-field gate, the per-document
+   payload building (N/A defaults, numeric/date coercion, risk_*/documents_batch
+   fields), and the multi-document send loop entirely. This intercepts that native
+   submit and no-ops it; the only real submission path is the explicit btn-s5-confirm
+   handler below, via fetch(). */
+var el_complianceForm = document.getElementById('ComplianceFormWebhook');
+if(el_complianceForm) el_complianceForm.addEventListener('submit', function(e){ e.preventDefault(); });
+
 /* ════ STEP 1 → 2 ════ */
 var el_btn_s1 = document.getElementById('btn-s1');
 if(el_btn_s1) el_btn_s1.addEventListener('click',function(){
-  S.country = document.getElementById('r-country').value;
-  S.type    = document.getElementById('r-type').value;
-  S.data    = document.getElementById('r-data').value;
-  S.size    = document.getElementById('r-size').value;
-  S.customers = [];
-  if(document.getElementById('c-za').checked)    S.customers.push('South Africa');
-  if(document.getElementById('c-eu').checked)    S.customers.push('EU/UK');
-  if(document.getElementById('c-us').checked)    S.customers.push('US');
-  if(document.getElementById('c-other').checked) S.customers.push('Other');
-  window._S_customers = S.customers.join(', ');
-  // Collect new data storage selections
-  S.storage = [];
-  if(document.getElementById('ds-gdrive').checked)   S.storage.push('Google Drive');
-  if(document.getElementById('ds-onedrive').checked) S.storage.push('OneDrive/SharePoint');
-  if(document.getElementById('ds-crm').checked)      S.storage.push('CRM');
-  if(document.getElementById('ds-email').checked)    S.storage.push('Email');
-  if(document.getElementById('ds-sheets').checked)   S.storage.push('Spreadsheets');
-  if(document.getElementById('ds-pos').checked)      S.storage.push('POS/Payment');
-  if(document.getElementById('ds-cloud').checked)    S.storage.push('Cloud DB');
-  if(document.getElementById('ds-local').checked)    S.storage.push('Local devices');
-  // Collect access control selections
-  S.access = [];
-  if(document.getElementById('ac-all').checked)    S.access.push('everyone');
-  if(document.getElementById('ac-roles').checked)  S.access.push('roles');
-  if(document.getElementById('ac-3p').checked)     S.access.push('third-party');
-  if(document.getElementById('ac-unsure').checked) S.access.push('unsure');
-  if(!S.country||!S.type||!S.data){ alert('Please answer all questions to continue.'); return; }
-  buildRegGrid();
-  buildDataRiskMap();
-  buildDocsNeededList();
+  S.country = 'ZA';
+  S.type = document.getElementById('r-type').value;
+  S.data = document.getElementById('r-data').value;
+  S.size = document.getElementById('r-size').value;
+  if(!S.type||!S.data){ alert('Please answer the business questions above to continue.'); return; }
+  var wrap = document.getElementById('qcontainer');
+  var unanswered = Array.prototype.slice.call(wrap.querySelectorAll('.qrow')).filter(function(r){
+    return r.style.display!=='none' && !S.answers[r.id.replace('row-','')];
+  });
+  if(unanswered.length){
+    alert('Please answer all remaining questions ('+unanswered.length+' left) to see your gap report.');
+    unanswered[0].scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  S.regs = ['popia'];
+  var regEl = document.getElementById('regulations');
+  if(regEl){ regEl.value = 'POPIA'; }
+  renderGapReport();
   showPanel(2);
 });
 var el_btn_s2_back = document.getElementById('btn-s2-back');
@@ -3063,60 +2645,34 @@ if(el_btn_s2_back) el_btn_s2_back.addEventListener('click',function(){ showPanel
   }
 })();
 
-/* ════ REGULATION GRID ════ */
-var RD = {
-  popia:{ fn:function(s){ return s.country==='ZA'||s.customers.indexOf('South Africa')!==-1; } },
-  gdpr: { fn:function(s){ return s.country==='EU'||s.country==='UK'||s.customers.indexOf('EU/UK')!==-1; } },
-  ccpa: { fn:function(s){ return s.country==='US'||s.customers.indexOf('US')!==-1; } },
-  hipaa:{ fn:function(s){ return s.type==='healthcare'&&(s.country==='US'||s.customers.indexOf('US')!==-1); } }
-};
-function buildRegGrid(){
-  S.regs=[];
-  Object.keys(RD).forEach(function(k){
-    var det=RD[k].fn(S);
-    var card=document.getElementById('rc-'+k);
-    var badge=document.getElementById('rb-'+k);
-    if(!card) return;
-    if(det){card.classList.add('selected');S.regs.push(k);badge.textContent='Applies to you';badge.className='reg-badge yes';}
-    else{card.classList.remove('selected');badge.textContent='Optional';badge.className='reg-badge maybe';}
-  });
-  var n=S.regs.length;
-  document.getElementById('reg-intro').textContent = n>0
-    ? n+' regulation'+(n>1?'s':'')+' detected for your business. Add others if expanding internationally.'
-    : 'No regulations auto-detected. Select any that apply to your plans.';
-  /* Reset regulations dropdown to blank — user selects it themselves in Step 3 */
-  var regEl = document.getElementById('regulations');
-  if(regEl){
-    regEl.value = '';
-    regEl.dispatchEvent(new Event('change',{bubbles:true}));
-  }
-}
-['popia','gdpr','ccpa','hipaa'].forEach(function(k){
-  var card=document.getElementById('rc-'+k);
-  if(!card) return;
-  card.addEventListener('click',function(){
-    var badge=document.getElementById('rb-'+k);
-    var idx=S.regs.indexOf(k);
-    if(idx===-1){S.regs.push(k);card.classList.add('selected');badge.textContent='Selected';badge.className='reg-badge yes';}
-    else{S.regs.splice(idx,1);card.classList.remove('selected');badge.textContent='Optional';badge.className='reg-badge maybe';}
-  });
-});
-
-/* ════ STEP 2 → 3 ════ */
+/* ════ STEP 2 → 3: DOCUMENT PICKER ════ */
 var el_btn_s2 = document.getElementById('btn-s2');
 if(el_btn_s2) el_btn_s2.addEventListener('click',function(){
-  if(!S.regs.length){ alert('Please select at least one regulation.'); return; }
+  renderDocPicker();
   showPanel(3);
 });
 var el_btn_s3_back = document.getElementById('btn-s3-back');
 if(el_btn_s3_back) el_btn_s3_back.addEventListener('click',function(){ showPanel(2); });
 
-/* ════ STEP 3: GENERATE ════ */
-var GEN_STEPS=['Identifying applicable regulations…','Mapping regulation clauses…','Personalising to your business…','Formatting legal language…','Triggering email delivery…'];
-var el_btn_s3_generate = document.getElementById('btn-s3-generate');
-if(el_btn_s3_generate) el_btn_s3_generate.addEventListener('click',function(){
-  buildReview();
+/* ════ STEP 3 → 4: FILL IN DETAILS ════ */
+var el_btn_s3 = document.getElementById('btn-s3');
+if(el_btn_s3) el_btn_s3.addEventListener('click',function(){
+  if(!S.selectedDocs || !S.selectedDocs.length){ alert('Please select at least one document to generate.'); return; }
+  var labels = S.selectedDocs.map(function(k){ return DOC_META[k]?DOC_META[k].label:k; });
+  var summary = document.getElementById('selected-docs-summary');
+  if(summary){
+    summary.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span>Generating '+S.selectedDocs.length+' document'+(S.selectedDocs.length===1?'':'s')+': <strong>'+labels.join(', ')+'</strong></span>';
+  }
   showPanel(4);
+});
+
+var el_btn_s4_back = document.getElementById('btn-s4-back');
+if(el_btn_s4_back) el_btn_s4_back.addEventListener('click',function(){ showPanel(3); });
+
+var el_btn_s4_generate = document.getElementById('btn-s4-generate');
+if(el_btn_s4_generate) el_btn_s4_generate.addEventListener('click',function(){
+  buildReview();
+  showPanel(5);
 });
 
 /* ════ REVIEW STEP ════ */
@@ -3146,7 +2702,6 @@ function buildReview() {
     ]},
     { title: 'Compliance Focus', icon: 'M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 0 2-2h2a2 2 0 0 0 2 2', fields: [
       { label: 'Regulation',            id: 'regulations' },
-      { label: 'Document',              id: 'docs-needed' },
       { label: 'Retention Period',      id: 'retention_period' },
       { label: 'Data Collected',        id: 'data' },
       { label: 'Third-party Tools',     id: 'thirdparty' },
@@ -3158,6 +2713,23 @@ function buildReview() {
   ];
 
   var html = '';
+
+  /* Documents to generate — driven by the document picker, not a single field */
+  if(S.selectedDocs && S.selectedDocs.length){
+    var docRows = S.selectedDocs.map(function(k){
+      var label = (typeof DOC_META!=='undefined' && DOC_META[k]) ? DOC_META[k].label : k;
+      return '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:13px;color:var(--txt);">'
+           + '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+           + label + '</div>';
+    }).join('');
+    html += '<div style="background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px 22px;">'
+          + '<div style="display:flex;align-items:center;gap:9px;margin-bottom:10px;font-size:13px;font-weight:700;color:var(--accent);">'
+          + '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>'
+          + 'Documents to Generate ('+S.selectedDocs.length+')</div>'
+          + docRows
+          + '</div>';
+  }
+
   GROUPS.forEach(function(group) {
     var rows = '';
     group.fields.forEach(function(f) {
@@ -3186,47 +2758,59 @@ function buildReview() {
 }
 
 /* ── Review nav buttons ── */
-var el_btn_s4_back = document.getElementById('btn-s4-back');
-if(el_btn_s4_back) el_btn_s4_back.addEventListener('click',function(){ showPanel(3); });
+var el_btn_s5_back = document.getElementById('btn-s5-back');
+if(el_btn_s5_back) el_btn_s5_back.addEventListener('click',function(){ showPanel(4); });
 
-var el_btn_s4_confirm = document.getElementById('btn-s4-confirm');
-if(el_btn_s4_confirm) el_btn_s4_confirm.addEventListener('click',function(){
-  showPanel(5);
+var el_btn_s5_confirm = document.getElementById('btn-s5-confirm');
+if(el_btn_s5_confirm) el_btn_s5_confirm.addEventListener('click',function(){
+  var gateForm = document.getElementById('ComplianceFormWebhook');
+  var gateErrorBox  = document.getElementById('gen-gate-error');
+  var gateErrorList = document.getElementById('gen-gate-error-list');
+
+  if(gateForm && window.SecureFormHandler){
+    var checks = SecureFormHandler.performSecurityChecks(gateForm);
+    if(!checks.isValid){
+      if(gateErrorList) gateErrorList.innerHTML = checks.errors.map(function(e){ return '<li>'+e+'</li>'; }).join('');
+      if(gateErrorBox) gateErrorBox.style.display = 'block';
+      gateErrorBox && gateErrorBox.scrollIntoView({behavior:'smooth',block:'center'});
+      return; /* stop here — no webhook calls fire */
+    }
+  }
+  if(gateErrorBox) gateErrorBox.style.display = 'none';
+
+  showPanel(6);
   document.getElementById('gen-loading').style.display='block';
   document.getElementById('gen-done').style.display='none';
+  document.getElementById('gen-error').style.display='none';
   var wrap=document.getElementById('gen-steps');
   wrap.innerHTML='';
-  var GEN_STEPS=[
-    'Identifying applicable regulations…',
-    'Mapping regulation clauses…',
-    'Personalising to your business…',
-    'Formatting legal language…',
-    'Triggering email delivery…'
-  ];
+
+  var docsToGenerate = (S.selectedDocs||[]).slice();
+  if(!docsToGenerate.length) docsToGenerate = ['audit']; /* safety fallback */
+  var docLabels = docsToGenerate.map(function(k){ return DOC_META[k]?DOC_META[k].label:k; });
+
+  var stepMsgs = docLabels.map(function(l){ return 'Building your '+l+'…'; });
+  stepMsgs.push('Triggering email delivery…');
   var si=0;
   var iv=setInterval(function(){
-    if(si<GEN_STEPS.length){
-      var s=document.createElement('span');s.className='gen-step';s.textContent=GEN_STEPS[si];si++;wrap.appendChild(s);
+    if(si<stepMsgs.length){
+      var s=document.createElement('span');s.className='gen-step';s.textContent=stepMsgs[si];si++;wrap.appendChild(s);
     } else { clearInterval(iv); }
   },650);
+
   var emailEl  = document.querySelector('#ComplianceFormWebhook [name="email"]');
   var docsEl   = document.querySelector('#ComplianceFormWebhook [name="docs"]');
-  var emailVal = emailEl  ? emailEl.value  : '';
-  var docLabel = (docsEl&&docsEl.selectedIndex>0) ? docsEl.options[docsEl.selectedIndex].text : 'Document';
-  (function sendToWebhook(){
-    var WEBHOOK = 'https://hook.us2.make.com/rxu5mdjft2evqirbr9w1rvcqlkvnxslu';
+  var emailVal = emailEl ? emailEl.value : '';
+
+  function buildBasePayload(){
+    var WEBHOOK_UNUSED; /* placeholder to keep scoping consistent */
     var form = document.getElementById('ComplianceFormWebhook');
-    if(!form){ console.error('Form not found'); return; }
-
-    /* ── Collect all form data ── */
     var payload = {};
+    if(!form) return payload;
 
-    /* Hidden fields first */
     form.querySelectorAll('input[type="hidden"]').forEach(function(el){
       if(el.name) payload[el.name] = el.value||'';
     });
-
-    /* All visible fields */
     form.querySelectorAll('input:not([type="hidden"]),select,textarea').forEach(function(el){
       if(!el.name) return;
       var key = el.name.replace(/\[\]$/,'');
@@ -3238,7 +2822,6 @@ if(el_btn_s4_confirm) el_btn_s4_confirm.addEventListener('click',function(){
       }
     });
 
-    /* ── Null-safe: ALL number cols → integer or null ── */
     var NUM_COLS = [
       'breach_notification_hours','sp_response_days','patient_volume',
       'data_subjects_popia','employees_trained','requests_last_year',
@@ -3250,7 +2833,6 @@ if(el_btn_s4_confirm) el_btn_s4_confirm.addEventListener('click',function(){
       payload[k] = isNaN(n) ? null : n;
     });
 
-    /* ── Null-safe: ALL date cols → null if empty/N/A ── */
     var DATE_COLS = [
       'last_audit_date','last_training_date','last_retention_review',
       'next_retention_review','last_incident_test','io_appointment_date',
@@ -3268,7 +2850,6 @@ if(el_btn_s4_confirm) el_btn_s4_confirm.addEventListener('click',function(){
       }
     });
 
-    /* ── All other empty strings → 'N/A' (text columns) ── */
     Object.keys(payload).forEach(function(k){
       if(payload[k]===null || payload[k]===undefined) return;
       if(typeof payload[k]==='number') return;
@@ -3277,7 +2858,6 @@ if(el_btn_s4_confirm) el_btn_s4_confirm.addEventListener('click',function(){
       if(String(payload[k]).trim()==='') payload[k]='N/A';
     });
 
-    /* ── Critical NOT NULL columns ── */
     ['company','email','regulations','docs','privacy_officer','security_officer',
      'authorized_signatory','signatory_title','information_officer',
      'information_officer_email','data','thirdparty','retention_period',
@@ -3287,240 +2867,88 @@ if(el_btn_s4_confirm) el_btn_s4_confirm.addEventListener('click',function(){
       if(!payload[k]||String(payload[k]).trim()==='') payload[k]='N/A';
     });
 
-    /* ── Risk check data from step 1 ── */
-    payload.risk_country   = (document.getElementById('r-country')||{}).value||'N/A';
-    payload.risk_type      = (document.getElementById('r-type')||{}).value||'N/A';
-    payload.risk_data      = (document.getElementById('r-data')||{}).value||'N/A';
-    payload.risk_size      = (document.getElementById('r-size')||{}).value||'N/A';
-    payload.risk_customers = window._S_customers||'N/A';
+    payload.risk_country = 'ZA';
+    payload.risk_type    = (document.getElementById('r-type')||{}).value||'N/A';
+    payload.risk_data    = (document.getElementById('r-data')||{}).value||'N/A';
+    payload.risk_size    = (document.getElementById('r-size')||{}).value||'N/A';
+    var gr = S.gapResult || {gaps:[]};
+    payload.risk_gaps_found  = gr.gaps ? gr.gaps.length : 0;
+    payload.risk_score_pct   = gr.total ? Math.round(gr.compliantCount/gr.total*100) : 'N/A';
+    payload.documents_batch  = docLabels.join(', ');
 
-    console.log('3CH0 webhook payload keys:', Object.keys(payload).length, '| email:', payload.email, '| docs:', payload.docs);
+    return payload;
+  }
 
+  /* ── Send one webhook POST per selected document, sequentially ── */
+  var WEBHOOK = 'https://hook.us2.make.com/rxu5mdjft2evqirbr9w1rvcqlkvnxslu';
+  var idx = 0;
+  var hasErrors = false;
+  var completedCount = 0;
+  function sendNext(){
+    if(idx>=docsToGenerate.length) return;
+    var key = docsToGenerate[idx];
+    var meta = DOC_META[key];
+    if(docsEl && meta) docsEl.value = meta.value;
+    var payload = buildBasePayload();
     fetch(WEBHOOK,{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
+      headers:{'Content-Type':'application/json','x-make-apikey':'dDUr1cKsY6onP6GENzGcgtLgyqoKltV2ksjqGunbELA'},
       body:JSON.stringify(payload)
     })
-    .then(function(r){
-      console.log('3CH0 webhook response:', r.status, r.ok?'OK':'ERROR');
-    })
-    .catch(function(err){
-      console.error('3CH0 webhook error:', err);
+    .then(function(r){ if(r.ok){ completedCount++; } else { hasErrors = true; } })
+    .catch(function(){ hasErrors = true; })
+    .finally(function(){
+      idx++;
+      setTimeout(sendNext, 900); /* small gap between doc requests */
     });
-  })();
+  }
+  sendNext();
+
+  var totalWait = 1200 + (docsToGenerate.length*900) + 1800;
   setTimeout(function(){
     clearInterval(iv);
     document.getElementById('gen-loading').style.display='none';
+
+    if(hasErrors && completedCount===0){
+      /* Every document failed — show the error state, nothing to celebrate */
+      document.getElementById('gen-done').style.display='none';
+      document.getElementById('gen-error').style.display='block';
+      return;
+    }
+
     document.getElementById('gen-done').style.display='block';
-    document.getElementById('gen-doc-title').textContent='Your '+docLabel+' is Ready';
+    var titleText = docsToGenerate.length===1
+      ? 'Your '+docLabels[0]+' is Ready'
+      : 'Your '+docsToGenerate.length+' Documents are Ready';
+    if(hasErrors && completedCount>0){
+      titleText = completedCount+' of '+docsToGenerate.length+' Documents Ready';
+    }
+    document.getElementById('gen-doc-title').textContent = titleText;
     var el=document.getElementById('gen-email-line');
-    el.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Sent to '+(emailVal||'your inbox')+' ✓';
+    if(hasErrors && completedCount>0){
+      el.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Some documents failed to send — try again, or email support if it persists.';
+    } else {
+      el.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Sent to '+escapeHtml(emailVal||'your inbox')+' ✓';
+    }
     try{
       var g=JSON.parse(localStorage.getItem('3ch0_docs')||'{}');
-      var dk=docsEl?docsEl.value:'doc';
-      g[dk]={ts:Date.now(),email:emailVal};
+      docsToGenerate.forEach(function(k){ g[k]={ts:Date.now(),email:emailVal}; });
       localStorage.setItem('3ch0_docs',JSON.stringify(g));
     }catch(e){}
+    if(window.SecureFormHandler && !hasErrors) SecureFormHandler.recordSuccessfulSubmission();
     updateFreePlanBar();
-  },3600);
+  }, totalWait);
+});
+
+var el_btn_retry = document.getElementById('btn-retry');
+if(el_btn_retry) el_btn_retry.addEventListener('click',function(){
+  showPanel(5);
 });
 
 
-/* ════ DATA RISK MAP ════ */
-function buildDataRiskMap(){
-  var el = document.getElementById('data-risk-map');
-  if(!el) return;
 
-  var risks = [];
 
-  /* ── Storage-based risks ── */
-  var storageRisks = {
-    'Google Drive': {
-      level:'med',
-      title:'Google Drive — Shared folder exposure',
-      body:'Google Drive files shared with "Anyone with link" are publicly accessible. Former employees may still have access to folders they were never removed from.',
-      fix:'Audit sharing settings. Remove ex-employee access. Enable Drive audit logs.'
-    },
-    'OneDrive/SharePoint': {
-      level:'high',
-      title:'OneDrive / SharePoint — Inherited permissions',
-      body:'SharePoint uses inherited permissions — one misconfigured parent folder can silently expose all subfolders containing PII to the entire organisation.',
-      fix:'Run a permissions audit. Restrict access by role. Enable sensitivity labels.'
-    },
-    'Spreadsheets': {
-      level:'high',
-      title:'Spreadsheets — Uncontrolled PII copies',
-      body:'Customer or employee data exported to Excel/Sheets becomes an untracked copy. These files are often emailed, stored locally, or forgotten in shared drives.',
-      fix:'Restrict data exports. Use your CRM/database as the single source of truth.'
-    },
-    'Email': {
-      level:'med',
-      title:'Email — PII in inboxes and attachments',
-      body:'Customer data sent via email (quotes, invoices, onboarding forms) creates unstructured PII sitting in mailboxes with no retention policy.',
-      fix:'Define an email retention policy. Avoid sending raw PII via email.'
-    },
-    'CRM': {
-      level:'low',
-      title:'CRM — Third-party data processor',
-      body:'Your CRM is a data processor under POPIA/GDPR. You need a signed Data Processing Agreement (DPA) and must confirm they are GDPR/POPIA compliant.',
-      fix:'Get a DPA in place with your CRM provider. Confirm their compliance status.'
-    },
-    'Local devices': {
-      level:'high',
-      title:'Local devices — Unencrypted endpoints',
-      body:'Customer data on laptops or hard drives is unencrypted in most SME environments. A stolen device = a notifiable data breach under POPIA and GDPR.',
-      fix:'Enable full-disk encryption on all devices. Implement a remote wipe policy.'
-    },
-    'POS/Payment': {
-      level:'med',
-      title:'POS / Payment system — Payment data scope',
-      body:'Payment systems store or process cardholder data. Even if you use a processor, your POS configuration may bring you into PCI-DSS scope unexpectedly.',
-      fix:'Confirm your PCI-DSS scope with your payment provider. Get a signed DPA.'
-    },
-    'Cloud DB': {
-      level:'med',
-      title:'Cloud database — Misconfiguration exposure',
-      body:'Misconfigured S3 buckets and Azure Blob containers have leaked millions of records. Public-read permissions are the most common misconfiguration.',
-      fix:'Audit bucket/container permissions. Enable access logging and alerts.'
-    }
-  };
-
-  /* ── Access-based risks ── */
-  if(S.access.indexOf('everyone')!==-1){
-    risks.push({
-      level:'high',
-      title:'Unrestricted data access — Whole team',
-      body:'All employees can access customer data. This violates the POPIA/GDPR principle of data minimisation — people should only access data they need for their role.',
-      fix:'Implement role-based access controls (RBAC). Document who has access to what.'
-    });
-  }
-  if(S.access.indexOf('third-party')!==-1){
-    risks.push({
-      level:'high',
-      title:'Third-party vendor access — Operator agreement required',
-      body:'Vendors or contractors with access to personal data are "operators" under POPIA and "processors" under GDPR. Without signed agreements, you are non-compliant.',
-      fix:'Get a signed Operator/Data Processing Agreement for every vendor with data access.'
-    });
-  }
-  if(S.access.indexOf('unsure')!==-1){
-    risks.push({
-      level:'high',
-      title:'Access visibility gap \u2014 You don\u2019t know who can see what',
-      body:'This is the most common SME compliance failure. Auditors want proof of control. "Not sure" is not an answer — it is evidence of non-compliance.',
-      fix:'Map your data flows and permissions before your next audit. Start with your top 3 data stores.'
-    });
-  }
-
-  /* ── Add storage risks from selections ── */
-  (S.storage||[]).forEach(function(store){
-    if(storageRisks[store]) risks.push(storageRisks[store]);
-  });
-
-  /* ── Data sensitivity risks ── */
-  if(S.data==='sensitive'){
-    risks.unshift({
-      level:'high',
-      title:'Sensitive data — Heightened obligations',
-      body:'Health, financial, or biometric data triggers special requirements: explicit consent, stricter breach timelines, and mandatory Data Protection Impact Assessments (DPIA) under GDPR/POPIA.',
-      fix:'Conduct a DPIA. Update your Privacy Policy to disclose sensitive data handling.'
-    });
-  }
-
-  /* ── No risks found ── */
-  if(!risks.length){
-    el.innerHTML='<div class="astrip ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>No major data exposure risks detected based on your selections. Good start.</span></div>';
-    return;
-  }
-
-  /* ── Sort: high first ── */
-  var order={high:0,med:1,low:2};
-  risks.sort(function(a,b){ return order[a.level]-order[b.level]; });
-
-  var icons = {
-    high:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
-    med: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
-    low: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
-  };
-  var labels = {high:'High Risk', med:'Medium Risk', low:'Low Risk'};
-
-  el.innerHTML = risks.map(function(r){
-    return '<div class="risk-row '+r.level+'">'
-      +'<div class="risk-row-icon">'+icons[r.level]+'</div>'
-      +'<div class="risk-row-body">'
-      +'<div class="risk-row-title">'+r.title+'<span class="risk-pill '+r.level+'">'+labels[r.level]+'</span></div>'
-      +'<p>'+r.body+'</p>'
-      +'<div class="risk-row-fix"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>Fix: '+r.fix+'</div>'
-      +'</div></div>';
-  }).join('');
-}
-
-/* ════ DOCUMENTS NEEDED LIST ════ */
-function buildDocsNeededList(){
-  var el = document.getElementById('docs-needed-list');
-  if(!el) return;
-
-  /* Map regulations to required documents */
-  var DOC_MAP = {
-    popia: [
-      {name:'Privacy Policy',          required:true},
-      {name:'PAIA Manual',             required:true},
-      {name:'Data Processing Agreement', required:true},
-      {name:'Data Retention Schedule', required:false},
-      {name:'Incident Response Procedure', required:false},
-      {name:'Employee Training Script', required:false},
-    ],
-    gdpr: [
-      {name:'Privacy Policy',          required:true},
-      {name:'Data Processing Agreement', required:true},
-      {name:'DSAR Procedure',          required:true},
-      {name:'DPIA',                    required:false},
-      {name:'Records of Processing Activities', required:false},
-    ],
-    ccpa: [
-      {name:'Privacy Policy',          required:true},
-      {name:'Consumer Request Form',   required:true},
-      {name:'Service Provider Agreement', required:true},
-      {name:'Data Breach Response Plan', required:false},
-    ],
-    hipaa: [
-      {name:'Business Associate Agreement', required:true},
-      {name:'Privacy Policy',          required:true},
-      {name:'Breach Notification Policy', required:true},
-      {name:'Employee Training Script', required:false},
-    ]
-  };
-
-  var seen = {};
-  var docs = [];
-  (S.regs||[]).forEach(function(reg){
-    var list = DOC_MAP[reg]||[];
-    list.forEach(function(d){
-      if(!seen[d.name]){
-        seen[d.name]=true;
-        docs.push({name:d.name, required:d.required, reg:reg.toUpperCase()});
-      }
-    });
-  });
-
-  if(!docs.length){
-    el.innerHTML='';
-    return;
-  }
-
-  var icon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>';
-
-  el.innerHTML = docs.map(function(d){
-    return '<div class="doc-row">'
-      +'<div class="doc-row-icon">'+icon+'</div>'
-      +'<span class="doc-row-name">'+d.name+'</span>'
-      +'<span class="doc-row-reg">'+d.reg+'</span>'
-      +(d.required ? '<span class="doc-row-required">Required</span>' : '')
-      +'</div>';
-  }).join('');
-}
-
-/* ── Also add .astrip.ok style ── */
-/* ════ FREE PLAN BAR ════ */
+/* ════ DATA RISK MAP (legacy — kept only if referenced elsewhere) ════ */
 function getThisMonthCount(){
   try{
     var g=JSON.parse(localStorage.getItem('3ch0_docs')||'{}');
@@ -3568,12 +2996,6 @@ if(el_btn_another) el_btn_another.addEventListener('click', function(){
 <script>
 
     // ======================
-    // TESTING MODE TOGGLE
-    // ======================
-    // Set to true for unlimited testing, false for production
-    const TESTING_MODE = false;  // ← CHANGE TO false BEFORE GOING LIVE!
-
-    // ======================
     // COLLAPSIBLE SECTIONS HANDLER (NEW)
     // ======================
     function toggleSection(sectionId) {
@@ -3601,33 +3023,10 @@ if(el_btn_another) el_btn_another.addEventListener('click', function(){
         
         if (regulationsSelect) {
             regulationsSelect.addEventListener('change', function() {
-                var selectedRegulation = this.value;
-                
-                // Hide all regulation-specific fields
-                var allSpecific = document.querySelectorAll('.ccpa-specific, .gdpr-specific, .hipaa-specific, .popia-specific');
-                for (var i = 0; i < allSpecific.length; i++) {
-                    allSpecific[i].style.display = 'none';
-                }
-                
-                // Show fields for selected regulation
-                var classToShow = '';
-                if (selectedRegulation === 'CCPA') {
-                    classToShow = '.ccpa-specific';
-                } else if (selectedRegulation === 'GDPR') {
-                    classToShow = '.gdpr-specific';
-                } else if (selectedRegulation === 'HIPAA') {
-                    classToShow = '.hipaa-specific';
-                } else if (selectedRegulation === 'POPIA') {
-                    classToShow = '.popia-specific';
-                } else if (selectedRegulation === 'Multiple / Global') {
-                    classToShow = '.ccpa-specific, .gdpr-specific, .hipaa-specific, .popia-specific';
-                }
-                
-                if (classToShow) {
-                    var toShow = document.querySelectorAll(classToShow);
-                    for (var j = 0; j < toShow.length; j++) {
-                        toShow[j].style.display = 'block';
-                    }
+                // Only POPIA is supported — always show POPIA-specific fields
+                var toShow = document.querySelectorAll('.popia-specific');
+                for (var j = 0; j < toShow.length; j++) {
+                    toShow[j].style.display = 'block';
                 }
                 
                 // Reset collapsible sections
@@ -3653,17 +3052,6 @@ if(el_btn_another) el_btn_another.addEventListener('click', function(){
     // CONDITIONAL FIELD HANDLERS (NEW)
     // ======================
     function initializeConditionalFields() {
-        // CCPA Financial Incentives
-        var financialSelect = document.getElementById('ccpa_financial_incentives');
-        if (financialSelect) {
-            financialSelect.addEventListener('change', function() {
-                var details = document.getElementById('financial-incentives-details');
-                if (details) {
-                    details.style.display = this.value === 'Yes' ? 'block' : 'none';
-                }
-            });
-        }
-
         // PA Status handlers
         var paStatuses = ['001', '002', '003'];
         for (var i = 0; i < paStatuses.length; i++) {
@@ -3696,12 +3084,19 @@ if(el_btn_another) el_btn_another.addEventListener('click', function(){
         docsSelect.value = '';
     }
 
+    // Basic HTML-escaping helper — used anywhere untrusted or
+    // user/API-supplied text is inserted via innerHTML.
+    function escapeHtml(str) {
+        return String(str == null ? '' : str).replace(/[&<>"']/g, function(ch) {
+            return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[ch];
+        });
+    }
+
     // ======================
     // SECURITY CONFIGURATION
     // ======================
     var SECURITY_CONFIG = {
         webhookUrl: 'https://hook.us2.make.com/rxu5mdjft2evqirbr9w1rvcqlkvnxslu',
-        newsApiKey: 'f639d0fd3bd742a3a179f80f0c23edb5',
         enableCSRF: true,
         enableInputSanitization: true,
         enableRateLimiting: true,
@@ -3729,10 +3124,6 @@ if(el_btn_another) el_btn_another.addEventListener('click', function(){
         },
 
         validateCSRFToken: function(token) {
-            if (TESTING_MODE) {
-                console.log('🧪 TESTING MODE: Skipping CSRF validation');
-                return true;
-            }
             var storedToken = localStorage.getItem('csrf_token');
             var timestamp = localStorage.getItem('csrf_timestamp');
             var now = Date.now();
@@ -3768,23 +3159,18 @@ if(el_btn_another) el_btn_another.addEventListener('click', function(){
         },
 
         logSecurityEvent: function(eventType, details) {
+            /* Kept local-only on purpose: this used to POST to the same Make.com
+               webhook that generates compliance documents, which meant every
+               security event (honeypot trips, page loads, etc.) wrote a junk
+               row into the same Supabase log as real submissions. */
             var eventData = {
                 type: eventType,
                 timestamp: new Date().toISOString(),
-                url: window.location.href,
-                userAgent: navigator.userAgent,
-                details: details,
-                testingMode: TESTING_MODE
+                details: details
             };
-            console.log('🔒 Security Event:', eventData);
-            
-            if (['form_submission_success', 'form_submission_error', 'honeypot_triggered'].indexOf(eventType) !== -1) {
-                fetch(SECURITY_CONFIG.webhookUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ security_event: true, ...eventData })
-                }).catch(function(err) { console.error(err); });
-            }
+            this._recentEvents = this._recentEvents || [];
+            this._recentEvents.push(eventData);
+            if (this._recentEvents.length > 20) this._recentEvents.shift();
         }
     };
 
@@ -3806,20 +3192,10 @@ if(el_btn_another) el_btn_another.addEventListener('click', function(){
         },
 
         showTestingModeIndicator: function() {
-            if (TESTING_MODE) {
-                var indicator = document.createElement('div');
-                indicator.id = 'testing-mode-indicator';
-                indicator.innerHTML = '<div style="position: fixed; top: 90px; right: 20px; background: rgba(245, 158, 11, 0.9); color: #000; padding: 10px 16px; border-radius: 8px; font-size: 12px; font-weight: 600; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"><span style="font-size: 16px;">🧪</span> TESTING MODE</div>';
-                document.body.appendChild(indicator);
-                console.log('🧪 TESTING MODE ACTIVE');
-            }
+            /* No-op in production */
         },
 
         cleanupOldData: function() {
-            if (TESTING_MODE) {
-                localStorage.removeItem('lastSubmissionTime');
-                return;
-            }
             var lastSubmission = localStorage.getItem('lastSubmissionTime');
             if (lastSubmission) {
                 var now = Date.now();
@@ -3859,7 +3235,7 @@ if(el_btn_another) el_btn_another.addEventListener('click', function(){
             var self = this;
             if (form) {
                 // Submit listener removed — triggered explicitly by btn-s4-confirm only
-                // form.addEventListener('submit', function(e) { self.handleSecureSubmit(e); });
+                // Native form submit is unused — generation is triggered explicitly by btn-s5-confirm
                 this.addInputSanitization(form);
             }
         },
@@ -3875,34 +3251,10 @@ if(el_btn_another) el_btn_another.addEventListener('click', function(){
             }
         },
 
-        handleSecureSubmit: function(e) {
-            e.preventDefault();
-            var form = e.target;
-            var securityChecks = this.performSecurityChecks(form);
-            if (!securityChecks.isValid) {
-                this.showSecurityError(securityChecks.errors);
-                return;
-            }
-            var formData = this.prepareSecureFormData(form);
-            this.submitToMakeWebhook(formData);
-        },
-
         performSecurityChecks: function(form) {
             var errors = [];
             var now = Date.now();
             var formFillTime = now - this.formStartTime;
-
-            if (TESTING_MODE) {
-                var requiredFields = form.querySelectorAll('[required]');
-                for (var i = 0; i < requiredFields.length; i++) {
-                    if (!requiredFields[i].value.trim()) {
-                        var label = form.querySelector('label[for="' + requiredFields[i].id + '"]');
-                        var labelText = label ? label.textContent : requiredFields[i].name;
-                        errors.push(labelText.replace('*', '').trim() + ' is required');
-                    }
-                }
-                return { isValid: errors.length === 0, errors: errors };
-            }
 
             if (formFillTime < SECURITY_CONFIG.minFormFillTime) {
                 errors.push('Please take a moment to review the form before submitting');
@@ -3945,145 +3297,7 @@ if(el_btn_another) el_btn_another.addEventListener('click', function(){
             return { isValid: errors.length === 0, errors: errors };
         },
 
-        prepareSecureFormData: function(form) {
-            var secureData = {};
-
-            // ── Step 1: hidden root inputs (csrf, form-name, risk_* etc.) ──
-            var rootHidden = form.querySelectorAll(':scope > input[type="hidden"]');
-            rootHidden.forEach(function(el) {
-                if (el.name) secureData[el.name] = el.value || '';
-            });
-
-            // ── Step 2: ALL visible form fields (the full form is always shown) ──
-            var allFields = form.querySelectorAll('input, select, textarea');
-            allFields.forEach(function(el) {
-                if (!el.name || el.type === 'hidden') return;
-                var key = el.name.replace(/\[\]$/, '');
-                var val = '';
-                if (el.type === 'checkbox' || el.type === 'radio') {
-                    if (!el.checked) return;
-                    val = el.value;
-                    // Accumulate multi-select checkboxes as comma-separated
-                    if (secureData[key]) {
-                        secureData[key] = secureData[key] + ', ' + val;
-                        return;
-                    }
-                } else {
-                    val = el.value;
-                }
-                secureData[key] = SecurityUtils.sanitizeInput(val);
-            });
-
-            // ── Step 3: Typed columns — number fields send null not 'N/A' ──
-            var NUMBER_FIELDS = ['breach_notification_hours','sp_response_days','patient_volume','data_subjects_popia','employees_trained','requests_last_year','incidents_last_year','number_of_operators'];
-            NUMBER_FIELDS.forEach(function(f) {
-                var v = secureData[f];
-                if (v !== undefined && v !== null) {
-                    var n = parseInt(v, 10);
-                    secureData[f] = isNaN(n) ? null : n;
-                }
-            });
-
-            // ── Step 4: Date fields — send ISO string or null ──
-            var DATE_FIELDS = ['last_audit_date','last_training_date','last_retention_review',
-                               'next_retention_review','last_incident_test','io_appointment_date',
-                               'paia_manual_last_update','log_start_date','log_end_date',
-                               'io_registration_date','last_pa_review','next_pa_review',
-                               'pa_001_date','pa_002_date','pa_003_date','audit_start_date',
-                               'audit_end_date','next_review_date','risk_assessment_date',
-                               'last_risk_assessment','next_risk_assessment',
-                               'cybersecurity_audit_date','next_incident_test'];
-            DATE_FIELDS.forEach(function(f) {
-                var v = secureData[f];
-                if (!v || String(v).trim() === '') secureData[f] = null;
-            });
-
-            // ── Step 5: ALL other string fields — 'N/A' if empty ──
-            Object.keys(secureData).forEach(function(k) {
-                if (NUMBER_FIELDS.indexOf(k) !== -1) return;
-                if (DATE_FIELDS.indexOf(k) !== -1) return;
-                var v = secureData[k];
-                if (v === null || v === undefined || String(v).trim() === '') {
-                    secureData[k] = 'N/A';
-                }
-            });
-
-            // ── Step 6: Ensure critical NOT NULL columns always have a value ──
-            var REQUIRED_TEXT = [
-                'company','email','regulations','docs','privacy_officer','security_officer',
-                'authorized_signatory','signatory_title','information_officer',
-                'information_officer_email','data','thirdparty','retention_period',
-                'location','industry','phone_number','website_url','company_address',
-                'dpo_name','trainer_name','service_provider_name','sell_data'
-            ];
-            REQUIRED_TEXT.forEach(function(k) {
-                if (!secureData[k] || String(secureData[k]).trim() === '') {
-                    secureData[k] = 'N/A';
-                }
-            });
-
-            secureData.security_metadata = {
-                submission_time: new Date().toISOString(),
-                user_agent: navigator.userAgent,
-                form_fill_time: Date.now() - this.formStartTime,
-                testing_mode: TESTING_MODE
-            };
-            return secureData;
-        },
-
-        submitToMakeWebhook: function(formData) {
-            var self = this;
-            this.setLoadingState(true);
-            
-            fetch(SECURITY_CONFIG.webhookUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            })
-            .then(function(response) {
-                if (response.ok) {
-                    if (!TESTING_MODE) {
-                        self.recordSuccessfulSubmission();
-                        self.updateSubmissionCounter();
-                    }
-                    SecurityUtils.logSecurityEvent('form_submission_success', {});
-                    self.showSuccessMessage();
-                } else {
-                    throw new Error('Server error: ' + response.status);
-                }
-            })
-            .catch(function(error) {
-                SecurityUtils.logSecurityEvent('form_submission_error', { error: error.message });
-                self.showError('Submission failed. Please check your connection and try again.');
-            })
-            .finally(function() {
-                self.setLoadingState(false);
-            });
-        },
-
-        showSuccessMessage: function() {
-            var formContainer = document.getElementById('form-container');
-            if (formContainer) {
-                if (TESTING_MODE) {
-                    formContainer.innerHTML = '<div style="text-align: center; padding: 60px 20px;"><div style="font-size: 64px; margin-bottom: 20px;"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><h2 style="color: #10b981; margin-bottom: 12px;">Test Submission Successful!</h2><p style="color: #a0a0a0; margin-bottom: 24px;">Check your Make.com scenario to verify the data.</p><button onclick="location.reload()" class="btn" style="padding: 14px 32px; background: var(--gradient); color: #0a0a0a; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">Try Again</button></div>';
-                } else {
-                    formContainer.innerHTML = '<div style="text-align: center; padding: 60px 20px;"><div style="font-size: 64px; margin-bottom: 20px;"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><h2 style="color: #10b981; margin-bottom: 12px;">Request Submitted Successfully!</h2><p style="color: #a0a0a0; margin-bottom: 24px;">Your compliance documents are being generated.</p><a href="checkout-agency.html" class="btn" style="display: inline-block; padding: 14px 32px; background: var(--gradient); color: #0a0a0a; text-decoration: none; border-radius: 8px; font-weight: 600;">Continue to Payment</a></div>';
-                }
-            }
-        },
-
-        updateSubmissionCounter: function() {
-            var now = new Date();
-            var storageKey = 'submissions-' + now.getMonth() + '-' + now.getFullYear();
-            var currentCount = parseInt(localStorage.getItem(storageKey) || SECURITY_CONFIG.freeSubmissions);
-            var newCount = currentCount - 1;
-            localStorage.setItem(storageKey, newCount);
-            var counterEl = document.getElementById('submissions-count');
-            if (counterEl) counterEl.textContent = newCount;
-        },
-
         isRateLimited: function() {
-            if (TESTING_MODE) return false;
             var lastSubmission = localStorage.getItem('lastSubmissionTime');
             var now = Date.now();
             return lastSubmission && (now - parseInt(lastSubmission)) < SECURITY_CONFIG.rateLimitPeriod;
@@ -4119,15 +3333,6 @@ if(el_btn_another) el_btn_another.addEventListener('click', function(){
             this.showSecurityError([message]);
         },
 
-        setLoadingState: function(loading) {
-            var submitBtn = document.querySelector('.submit-btn');
-            if (submitBtn) {
-                submitBtn.disabled = loading;
-                submitBtn.textContent = loading ? 'Generating Documents...' : 'Generate My Compliance Document';
-                submitBtn.style.opacity = loading ? '0.7' : '1';
-            }
-        },
-
         initializeSecurityMonitoring: function() {
             // Simplified monitoring
         }
@@ -4150,11 +3355,6 @@ if(el_btn_another) el_btn_another.addEventListener('click', function(){
     }
     
     function checkRateLimit() {
-        if (TESTING_MODE) {
-            var msg = document.getElementById('rateLimitMessage');
-            if (msg) msg.style.display = 'none';
-            return false;
-        }
         var lastSubmission = localStorage.getItem('lastSubmissionTime');
         var now = Date.now();
         var msg = document.getElementById('rateLimitMessage');
@@ -4228,14 +3428,14 @@ if(el_btn_another) el_btn_another.addEventListener('click', function(){
                 }
             }
         } catch(e) {
-            console.warn('News fetch failed, using fallback:', e);
+            /* News fetch failed — fall through to static fallback below */
         }
 
         // Fallback static news if API fails
         renderNewsArticles([
-            { title: 'EU AI Act Enforcement Begins August 2026', description: 'Businesses deploying AI systems in the EU must comply with disclosure and transparency requirements. Non-compliance penalties can reach €30M or 6% of global turnover.', source: '3CH0 Compliance', date: 'Apr 2026', category: 'Regulation' },
             { title: 'POPIA Enforcement Ramps Up in South Africa', description: 'The Information Regulator has issued its first major fines under POPIA. South African businesses are urged to review data processing agreements and breach notification procedures.', source: '3CH0 Compliance', date: 'Apr 2026', category: 'Regulation' },
-            { title: 'CCPA 2026 Updates Require New Risk Assessments', description: 'California\'s updated privacy regulations now require mandatory cybersecurity risk assessments for businesses processing sensitive data. Businesses must update consumer request workflows by mid-2026.', source: '3CH0 Compliance', date: 'Apr 2026', category: 'Regulation' }
+            { title: 'Direct Marketing a Named POPIA Enforcement Focus', description: 'The Information Regulator has flagged unsolicited direct marketing as a priority enforcement area. SMEs using customer data for marketing should confirm opt-in consent is properly recorded.', source: '3CH0 Compliance', date: 'Apr 2026', category: 'Regulation' },
+            { title: 'Information Officer Registration Still Widely Overlooked', description: 'Many South African SMEs are unaware they are legally required to register an Information Officer with the Regulator. Registration is quick, low-cost, and often the first compliance gap found in an audit.', source: '3CH0 Compliance', date: 'Apr 2026', category: 'Regulation' }
         ]);
     }
 
@@ -4261,13 +3461,13 @@ if(el_btn_another) el_btn_another.addEventListener('click', function(){
             card.innerHTML =
                 '<div class="news-content">' +
                   '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">' +
-                    '<span style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;background:' + col.bg + ';color:' + col.color + ';border:1px solid ' + col.border + ';">' + (a.category || 'News') + '</span>' +
-                    '<span style="font-size:11px;color:#666;">' + (a.date || '') + '</span>' +
+                    '<span style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;background:' + col.bg + ';color:' + col.color + ';border:1px solid ' + col.border + ';">' + escapeHtml(a.category || 'News') + '</span>' +
+                    '<span style="font-size:11px;color:#666;">' + escapeHtml(a.date || '') + '</span>' +
                   '</div>' +
-                  '<h3 class="news-title" style="margin-bottom:10px;">' + (a.title || '') + '</h3>' +
-                  '<p class="news-desc">' + (a.description || '') + '</p>' +
+                  '<h3 class="news-title" style="margin-bottom:10px;">' + escapeHtml(a.title || '') + '</h3>' +
+                  '<p class="news-desc">' + escapeHtml(a.description || '') + '</p>' +
                   '<div class="news-meta" style="margin-top:12px;">' +
-                    '<span style="display:flex;align-items:center;gap:5px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>' + (a.source || '') + '</span>' +
+                    '<span style="display:flex;align-items:center;gap:5px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>' + escapeHtml(a.source || '') + '</span>' +
                   '</div>' +
                 '</div>';
             newsContainer.appendChild(card);
@@ -4289,7 +3489,7 @@ if(el_btn_another) el_btn_another.addEventListener('click', function(){
         var currentCount = localStorage.getItem(storageKey) || SECURITY_CONFIG.freeSubmissions;
         var counterEl = document.getElementById('submissions-count');
         if (counterEl) {
-            counterEl.textContent = TESTING_MODE ? '∞' : currentCount;
+            counterEl.textContent = currentCount;
         }
 
         // Initialize form handler only if form exists
@@ -4370,12 +3570,6 @@ if(el_btn_another) el_btn_another.addEventListener('click', function(){
             localStorage.removeItem('currentInvoice');
         }, 30 * 60 * 1000);
     }
-    document.addEventListener('mousemove', function() {
-        clearTimeout(window._idleTimer);
-        window._idleTimer = setTimeout(function() {
-            console.log('User idle');
-        }, 30 * 60 * 1000);
-    });
   
 </script>
 </body>
