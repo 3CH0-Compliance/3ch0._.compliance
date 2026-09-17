@@ -1179,6 +1179,17 @@ footer a{color:#556070;text-decoration:underline;margin:0 8px}
       <option value="7+ years">7+ years</option>
       <option value="Until deletion requested">Until deletion requested</option>
     </select>
+
+    <label for="cookie_retention_period">Cookie Retention Period</label>
+    <select name="cookie_retention_period" id="cookie_retention_period">
+      <option value="">Select (leave blank if you don't use cookies)</option>
+      <option value="Session only">Session only</option>
+      <option value="30 days">30 days</option>
+      <option value="90 days">90 days</option>
+      <option value="6 months">6 months</option>
+      <option value="1 year">1 year</option>
+      <option value="2+ years">2+ years</option>
+    </select>
   </div>
 
   <!-- ==================== SECTION 4: SERVICE PROVIDER / OPERATOR ==================== -->
@@ -1386,7 +1397,7 @@ footer a{color:#556070;text-decoration:underline;margin:0 8px}
     <div class="form-grid">
       <div>
         <label for="automated_decisions_popia">Automated Decisions? (S.71)</label>
-        <select name="automated_decisions_popia" id="automated_decisions_popia">
+        <select name="automated_decisions" id="automated_decisions_popia">
           <option value="">Select</option>
           <option value="Yes">Yes</option>
           <option value="No">No</option>
@@ -1478,7 +1489,7 @@ footer a{color:#556070;text-decoration:underline;margin:0 8px}
       <div class="form-grid">
         <div>
           <label for="processing_purpose">Purpose of Processing</label>
-          <input type="text" id="processing_purpose" name="processing_purpose" placeholder="e.g., Service delivery">
+          <input type="text" id="processing_purpose" name="processing_purposes" placeholder="e.g., Service delivery">
         </div>
         <div>
           <label for="processing_duration">Duration of Processing</label>
@@ -2097,7 +2108,7 @@ footer a{color:#556070;text-decoration:underline;margin:0 8px}
       
       <div class="form-grid">
         <div>
-          <label for="it_security_contact">IT Security Contact</label>
+          <label for="it_security_contact">IT Security Contact (name)</label>
           <input type="text" id="it_security_contact" name="it_security_contact">
         </div>
         <div>
@@ -2107,9 +2118,25 @@ footer a{color:#556070;text-decoration:underline;margin:0 8px}
       </div>
       <div class="form-grid">
         <div>
-          <label for="legal_contact">Legal Contact</label>
+          <label for="it_security_email">IT Security Email</label>
+          <input type="email" id="it_security_email" name="it_security_email">
+        </div>
+        <div>
+          <label for="it_security_phone">IT Security Phone</label>
+          <input type="tel" id="it_security_phone" name="it_security_phone">
+        </div>
+      </div>
+      <div class="form-grid">
+        <div>
+          <label for="legal_contact">Legal Contact (name)</label>
           <input type="text" id="legal_contact" name="legal_contact">
         </div>
+        <div>
+          <label for="legal_email">Legal Contact Email</label>
+          <input type="email" id="legal_email" name="legal_email">
+        </div>
+      </div>
+      <div class="form-grid">
         <div>
           <label for="communications_contact">Comms Contact</label>
           <input type="text" id="communications_contact" name="communications_contact">
@@ -2599,7 +2626,7 @@ renderQuestionnaire();
    button even though it's hidden and never clicked — which would POST the raw,
    unprocessed field values straight to the Make webhook URL and navigate the whole
    page away, bypassing the security/CSRF/required-field gate, the per-document
-   payload building (N/A defaults, numeric/date coercion, risk_*/documents_batch
+   payload building (N/A defaults, numeric/date coercion, risk_ and documents_batch
    fields), and the multi-document send loop entirely. This intercepts that native
    submit and no-ops it; the only real submission path is the explicit btn-s5-confirm
    handler below, via fetch(). */
