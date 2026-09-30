@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Settings - 3CH0</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self'">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
   <meta name="description" content="Manage your privacy, data, and preferences on 3CH0.">
   <link rel="icon" href="3CH0 logo.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
@@ -400,105 +404,14 @@ footer a{color:#888;text-decoration:underline;margin:0 8px}
 
     </br>
 
-      <!-- Country Selector -->
-      <h1>Select Your Country</h1>
-
-      <div class="select">
-        <div class="selected" data-default="Choose your country" data-selected="">
-          <span class="selected-text">Choose your country</span>
-          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512" class="arrow">
-            <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path>
-          </svg>
-        </div>
-        <div class="options">
-          <!-- Americas -->
-          <div class="option">
-            <input id="us" name="country" type="radio" value="US" data-title="United States" />
-            <label for="us">
-              <img src="https://flagcdn.com/w20/us.png" class="flag" alt="US Flag">
-              <span class="country-name">United States</span>
-            </label>
-          </div>
-          <div class="option">
-            <input id="ca" name="country" type="radio" value="CA" data-title="Canada" />
-            <label for="ca">
-              <img src="https://flagcdn.com/w20/ca.png" class="flag" alt="Canada Flag">
-              <span class="country-name">Canada</span>
-            </label>
-          </div>
-
-          <!-- Europe -->
-          <div class="option">
-            <input id="gb" name="country" type="radio" value="GB" data-title="United Kingdom" />
-            <label for="gb">
-              <img src="https://flagcdn.com/w20/gb.png" class="flag" alt="UK Flag">
-              <span class="country-name">United Kingdom</span>
-            </label>
-          </div>
-          <div class="option">
-            <input id="de" name="country" type="radio" value="DE" data-title="Germany" />
-            <label for="de">
-              <img src="https://flagcdn.com/w20/de.png" class="flag" alt="Germany Flag">
-              <span class="country-name">Germany</span>
-            </label>
-          </div>
-          <div class="option">
-            <input id="fr" name="country" type="radio" value="FR" data-title="France" />
-            <label for="fr">
-              <img src="https://flagcdn.com/w20/fr.png" class="flag" alt="France Flag">
-              <span class="country-name">France</span>
-            </label>
-          </div>
-          <div class="option">
-            <input id="it" name="country" type="radio" value="IT" data-title="Italy" />
-            <label for="it">
-              <img src="https://flagcdn.com/w20/it.png" class="flag" alt="Italy Flag">
-              <span class="country-name">Italy</span>
-            </label>
-          </div>
-          <div class="option">
-            <input id="es" name="country" type="radio" value="ES" data-title="Spain" />
-            <label for="es">
-              <img src="https://flagcdn.com/w20/es.png" class="flag" alt="Spain Flag">
-              <span class="country-name">Spain</span>
-            </label>
-          </div>
-          <div class="option">
-            <input id="nl" name="country" type="radio" value="NL" data-title="Netherlands" />
-            <label for="nl">
-              <img src="https://flagcdn.com/w20/nl.png" class="flag" alt="Netherlands Flag">
-              <span class="country-name">Netherlands</span>
-            </label>
-          </div>
-          <div class="option">
-            <input id="se" name="country" type="radio" value="SE" data-title="Sweden" />
-            <label for="se">
-              <img src="https://flagcdn.com/w20/se.png" class="flag" alt="Sweden Flag">
-              <span class="country-name">Sweden</span>
-            </label>
-          </div>
-          <div class="option">
-            <input id="ch" name="country" type="radio" value="CH" data-title="Switzerland" />
-            <label for="ch">
-              <img src="https://flagcdn.com/w20/ch.png" class="flag" alt="Switzerland Flag">
-              <span class="country-name">Switzerland</span>
-            </label>
-          </div>
-          <div class="option">
-            <input id="be" name="country" type="radio" value="BE" data-title="Belgium" />
-            <label for="be">
-              <img src="https://flagcdn.com/w20/be.png" class="flag" alt="Belgium Flag">
-              <span class="country-name">Belgium</span>
-            </label>
-          </div>
-          
-          <!-- South Africa -->
-          <div class="option">
-            <input id="za" name="country" type="radio" value="ZA" data-title="South Africa" />
-            <label for="za">
-              <img src="https://flagcdn.com/w20/za.png" class="flag" alt="South Africa Flag">
-              <span class="country-name">South Africa</span>
-            </label>
+      <!-- Region & Currency -->
+      <h1>Region & Currency</h1>
+      <div class="section">
+        <div class="card glass-panel" style="padding:20px 24px;display:flex;align-items:center;gap:14px;">
+          <img src="https://flagcdn.com/w20/za.png" class="flag" alt="South Africa Flag" style="border-radius:3px;">
+          <div>
+            <strong>South Africa</strong>
+            <p style="margin:2px 0 0;color:var(--secondary-text);font-size:14px;">3CH0 currently serves South African businesses only. All pricing is shown in ZAR (R).</p>
           </div>
         </div>
       </div>
@@ -570,118 +483,11 @@ footer a{color:#888;text-decoration:underline;margin:0 8px}
 </footer>
 
   <script>
+    // 3CH0 currently serves South Africa only — currency is fixed to ZAR.
     document.addEventListener('DOMContentLoaded', function() {
-      const select = document.querySelector('.select');
-      const selected = select.querySelector('.selected');
-      const options = select.querySelector('.options');
-      const selectedText = select.querySelector('.selected-text');
-      
-      // Fixed currency mapping
-      const CURRENCY_MAP = {
-        // USD countries
-        US: { currency: 'USD', symbol: '$' },
-        CA: { currency: 'USD', symbol: '$' },
-        MX: { currency: 'USD', symbol: '$' },
-        
-        // EUR countries
-        DE: { currency: 'EUR', symbol: '€' },
-        FR: { currency: 'EUR', symbol: '€' },
-        IT: { currency: 'EUR', symbol: '€' },
-        ES: { currency: 'EUR', symbol: '€' },
-        NL: { currency: 'EUR', symbol: '€' },
-        BE: { currency: 'EUR', symbol: '€' },
-        IE: { currency: 'EUR', symbol: '€' },
-        PT: { currency: 'EUR', symbol: '€' },
-        AT: { currency: 'EUR', symbol: '€' },
-        
-        // GBP countries
-        GB: { currency: 'GBP', symbol: '£' },
-        
-        // ZAR countries
-        ZA: { currency: 'ZAR', symbol: 'R' }
-      };
-
-      // 1. Load saved selection or auto-detect
-      let savedCountry = localStorage.getItem('userCountry');
-      let savedCurrency = localStorage.getItem('userCurrency');
-      
-      // Auto-detect if no saved preference
-      if (!savedCountry) {
-        try {
-          const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-          if (timezone.includes("Europe")) {
-            savedCountry = 'DE'; // Default to Germany for EU
-            savedCurrency = 'EUR';
-          } else if (timezone.includes("London")) {
-            savedCountry = 'GB';
-            savedCurrency = 'GBP';
-          } else if (timezone.includes("Africa")) {
-            savedCountry = 'ZA';
-            savedCurrency = 'ZAR';
-          } else {
-            savedCountry = 'US';
-            savedCurrency = 'USD';
-          }
-        } catch {
-          savedCountry = 'US';
-          savedCurrency = 'USD';
-        }
-      }
-
-      // 2. Set initial selected country
-      const initialOption = document.querySelector(`input[value="${savedCountry}"]`);
-      if (initialOption) {
-        initialOption.checked = true;
-        selectedText.textContent = initialOption.getAttribute('data-title');
-        localStorage.setItem('userCountry', savedCountry);
-        localStorage.setItem('userCurrency', savedCurrency);
-      }
-
-      // 3. Toggle dropdown
-      selected.addEventListener('click', function(e) {
-        e.stopPropagation();
-        document.querySelectorAll('.select').forEach(s => {
-          if (s !== select) s.classList.remove('active');
-        });
-        select.classList.toggle('active');
-      });
-
-      // 4. Close when clicking outside
-      document.addEventListener('click', function(e) {
-        if (!select.contains(e.target)) {
-          select.classList.remove('active');
-        }
-      });
-
-      // 5. Country selection handler
-      select.querySelectorAll('.option').forEach(item => {
-        item.addEventListener('click', function(e) {
-          e.stopPropagation();
-          const radio = item.querySelector('input[type="radio"]');
-          const countryCode = radio.value;
-          const countryName = radio.getAttribute('data-title');
-          
-          // Update UI
-          selectedText.textContent = countryName;
-          select.classList.remove('active');
-          
-          // Get currency from our fixed mapping
-          const currencyData = CURRENCY_MAP[countryCode] || { currency: 'USD', symbol: '$' };
-          
-          // Save to storage
-          localStorage.setItem('userCountry', countryCode);
-          localStorage.setItem('userCurrency', currencyData.currency);
-          localStorage.setItem('currencySymbol', currencyData.symbol);
-          
-          // Notify other tabs
-          window.dispatchEvent(new StorageEvent('storage', {
-            key: 'userCountry',
-            newValue: countryCode
-          }));
-          
-          console.log(`Country set to: ${countryCode}, Currency: ${currencyData.currency}`);
-        });
-      });
+      localStorage.setItem('userCountry', 'ZA');
+      localStorage.setItem('userCurrency', 'ZAR');
+      localStorage.setItem('currencySymbol', 'R');
     });
   </script>
 </body>
