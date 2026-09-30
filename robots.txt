@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Disallow: /bank-invoice.html
+Disallow: /bank-invoice-international.html
+Disallow: /bank-invoice-test.html
+Disallow: /thank-you.html
+Disallow: /thank-you-paid.html
+Disallow: /thank-you-applying.html
+Disallow: /settings.html
+Disallow: /compliance_dashboard.html
+Disallow: /loading.html
+
+Sitemap: https://3ch0compliance.vercel.app/sitemap.xml
